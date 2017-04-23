@@ -1,0 +1,143 @@
+\documentclass{article}
+
+% Packages
+\usepackage[margin=1.5cm, includefoot, footskip=30pt]{geometry}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{xstring}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{standalone}
+\usepackage{fancyvrb}
+
+\usepackage{tikz}
+\usetikzlibrary{calc, shapes, patterns}
+
+\usepackage[backend=biber, firstinits=false, backref=false, url=true,
+            isbn=true, style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
+
+% Title
+\title{IPD Strategies created with Reinforcement Learning}
+\author{Marc Harper \and Vincent Knight} % TODO Authors?
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+Key points:
+* We trained several different strategies and they all are tournament
+winners
+* works for standard, noisy, and moran
+* Complex strategies can fare well
+* the best strategies are cooperative yet punitive
+* handshakes evolved naturally (ref art of war paper)
+* copious references to W. and D. Ashlock
+
+Todo:
+* better title
+
+Optional Todos:
+* train lookerup that doesn't use first rounds
+* train score diff mem-one -- is it ZD?
+
+
+\begin{abstract}
+    We present several powerful strategies for the Iterated
+    Prisoner's Dilemma created using reinforcement learning techniques
+    (evolutionary and particle swarm algorithms). These strategies are
+    trained to perform well against a corpus of over 100 distinct
+    opponents from the literature and all the trained strategies
+    win standard tournaments against the total collection of other opponents.
+    The best of these strategies use features derived from the history
+    of play beyond the last round. We also trained variants to win
+    noisy tournaments and the Moran process.
+\end{abstract} 
+
+\section{Introduction}\label{sec:introduction}
+
+* Update on Axelrod Library
+Description of strategy space and tournament capabilities
+Includes many prior tournament winners (OmegaTFT, ZDGTFT2)
+Some original strategies but mostly from the literature
+
+\section{The Strategy Archetypes}
+
+Lookup Table: LookerUp
+* Uses first two rounds of opponent's play (first impressions matter)
+and last two trailing rounds
+
+
+PSO Gambler
+* Stocastic variant of Lookup Table
+* Trained using particle swarm algorithm
+* ``mostly deterministic'' and performs a bit better
+
+Memory one strategies are a special case of PSO Gambler
+* Trained a memory one variant it does well but not the best
+* Not a ZD strategy
+
+
+ANN
+* Uses a collection of history derived features
+* One hidden layer of 5-10 nodes
+* Cite Ashlock as prior work
+
+FSM
+* Finite state machines (Ashlock et al)
+* deterministic, moves depend on the state and the last round of play
+* easy to encode TFT, WSLS, and handshake behaviors
+* quick to train and execute
+* represents a large portion of strategy space
+* The library contains several FSMs from Ashlock et al
+
+HMM
+* Stochastic version of FSM
+* Mimics a Hidden Markov Model
+
+Meta*
+* Mimics ensemble methods from ML
+* Initially good strategies but not as good as trained strategies
+
+\section{Results}
+
+Standard Tournament run
+Noisy Tournament run
+
+Moran process fixations
+
+
+\section{Methods}
+
+Training Parameters
+Objectives:
+* total score
+* total moran wins (fixation)
+* score differece (unused, maybe leads to ZD?)
+
+\section{Discussion}
+
+Discussion:
+* ML better at creating strategies
+* possible to train an NN for predicting next move very accurate
+but not straightforward to turn into a useful strategy
+since some strategies grudge
+
+Future work:
+* spatial tournaments and other variants
+* Additional strategy archetypes by the Ashlocks, e.g. function stacks
+* further refine features and training parameters
+
+
+\section{Conclusion}\label{sec:conclusion}
+
+\section*{Acknowledgements}
+
+This work was performed using the computational facilities of the Advanced
+Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
+
+\printbibliography
