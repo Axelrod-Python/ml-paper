@@ -29,9 +29,11 @@ def main(players=players, processes=4):
     tournament = axl.Tournament(players, turns=turns,
                                 repetitions=repetitions, noise=noise)
 
-    results = tournament.play(filename=filename, processes=processes)
+    results = tournament.play(filename=filename, processes=processes,
+                              progress_bar=False)
     plot = axl.Plot(results)
-    plot.save_all_plots(prefix="assets/noisy")
+    plot.save_all_plots(prefix='assets/noisy', progress_bar=False,
+                        title_prefix='noisy')
     results.write_summary('assets/noisy_summary.csv')
 
 if __name__ == "__main__":
