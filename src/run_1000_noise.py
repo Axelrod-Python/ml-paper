@@ -2,11 +2,11 @@ import axelrod as axl
 import os
 
 turns = 200
-repetitions = 10000
+repetitions = 1000
 
 seed = 1
 noise = 0.01
-filename = "data/strategies_noisy_10000_interactions.csv"
+filename = "data/strategies_noisy_1000_interactions.csv"
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]
