@@ -5,7 +5,7 @@ turns = 200
 repetitions = 1000
 
 seed = 1
-filename = "data/strategies_std_1000_interactions.csv"
+filename = "data/strategies_std_{}_interactions.csv".format(repetitions)
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]
@@ -31,9 +31,9 @@ def main(players=players, processes=4):
     results = tournament.play(filename=filename, processes=processes,
                               progress_bar=False)
     plot = axl.Plot(results)
-    plot.save_all_plots(prefix='assets/std', progress_bar=False,
+    plot.save_all_plots(prefix='assets/std_{}'.format(repetitions), progress_bar=False,
                         title_prefix='standard')
-    results.write_summary('assets/std_summary.csv')
+    results.write_summary('assets/std_summary_{}.csv'.format(repetitions))
 
 if __name__ == "__main__":
     import sys

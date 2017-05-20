@@ -2,7 +2,7 @@ import axelrod as axl
 import os
 
 turns = 200
-repetitions = 2000
+repetitions = 10000
 
 seed = 1
 filename = "data/strategies_std_{}_interactions.csv".format(repetitions)

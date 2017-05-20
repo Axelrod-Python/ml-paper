@@ -5,7 +5,7 @@ turns = 200
 repetitions = 5000
 
 seed = 1
-filename = "data/strategies_std_1000_interactions.csv"
+filename = "data/strategies_std_{}_interactions.csv".format(repetitions)
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]

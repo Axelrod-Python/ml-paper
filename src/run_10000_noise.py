@@ -2,10 +2,11 @@ import axelrod as axl
 import os
 
 turns = 200
-repetitions = 2000
+repetitions = 10000
 
 seed = 1
-filename = "data/strategies_std_{}_interactions.csv".format(repetitions)
+noise = 0.01
+filename = "data/strategies_noisy_{}_interactions.csv".format(repetitions)
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]
@@ -26,15 +27,14 @@ def main(players=players, processes=4):
     print("Seed", seed)
 
     tournament = axl.Tournament(players, turns=turns,
-                                repetitions=repetitions)
+                                repetitions=repetitions, noise=noise)
 
     results = tournament.play(filename=filename, processes=processes,
                               progress_bar=False)
     plot = axl.Plot(results)
-    plot.save_all_plots(prefix='assets/std_{}'.format(repetitions),
-                        progress_bar=False,
-                        title_prefix='standard')
-    results.write_summary('assets/std_summary_{}.csv'.format(repetitions))
+    plot.save_all_plots(prefix='assets/noisy_{}'.format(repetitions), progress_bar=False,
+                        title_prefix='noisy')
+    results.write_summary('assets/noisy_summary_{}.csv'.format(repetitions))
 
 if __name__ == "__main__":
     import sys

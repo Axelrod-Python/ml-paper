@@ -6,7 +6,7 @@ repetitions = 5000
 
 seed = 1
 noise = 0.01
-filename = "data/strategies_noisy_1000_interactions.csv"
+filename = "data/strategies_noisy_{}_interactions.csv".format(repetitions)
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]

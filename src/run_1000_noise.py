@@ -6,7 +6,7 @@ repetitions = 1000
 
 seed = 1
 noise = 0.01
-filename = "data/strategies_noisy_1000_interactions.csv"
+filename = "data/strategies_noisy_{}_interactions.csv".format(repetitions)
 
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]
@@ -32,9 +32,9 @@ def main(players=players, processes=4):
     results = tournament.play(filename=filename, processes=processes,
                               progress_bar=False)
     plot = axl.Plot(results)
-    plot.save_all_plots(prefix='assets/noisy', progress_bar=False,
+    plot.save_all_plots(prefix='assets/noisy_{}'.format(repetitions), progress_bar=False,
                         title_prefix='noisy')
-    results.write_summary('assets/noisy_summary.csv')
+    results.write_summary('assets/noisy_summary_{}.csv'.format(repetitions))
 
 if __name__ == "__main__":
     import sys
