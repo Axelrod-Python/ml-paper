@@ -33,7 +33,7 @@ def main(players=players, processes=4):
     plot = axl.Plot(results)
     plot.save_all_plots(prefix='assets/std_{}'.format(repetitions),
                         progress_bar=False,
-                        title_prefix='standard')
+                        title_prefix='standard', filetype="pdf")
     results.write_summary('assets/std_summary_{}.csv'.format(repetitions))
 
 if __name__ == "__main__":
