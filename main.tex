@@ -50,7 +50,7 @@ Todo:
     opponents, including many well-known strategies from the literature, and all
     the trained strategies win standard tournaments against the total collection
     of other opponents. We also trained variants to win noisy tournaments.
-\end{abstract} 
+\end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
@@ -75,13 +75,16 @@ based on the opponent's first $n_1$ moves, the opponent's last $m_1$ moves, and
 the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
 depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
-training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$. 
+training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
 First impressions matter in the IPD. The library includes a strategy
 called EvolvedLookerUp2_2_2 which is among the top strategies in the library.
 
+% TODO Draw diagram for lookerup
+
 This archetype can be used to train memory-$n$ strategies with the parameters
 $n_1=0$ and $m_1=m_2=n$. For $n=1$, the result is WSLS.
-% TODO: doublecheck that it is WSLS 
+% TODO: doublecheck that it is WSLS
+
 
 \subsection{PSO Gambler}
 
@@ -91,6 +94,8 @@ used to choose cooperation or defection. The library includes a player trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2_2_2.
+
+% TODO Draw diagram for gambler
 
 This strategy type can be used to train arbitrary memory-$n$ strategies and a
 memory one strategy was trained and is called PSO Gambler Mem 1, with
@@ -113,6 +118,8 @@ noisy tournaments. The output of the ANN used in this work is deterministic and
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
 
+% TODO Draw diagram for ANN
+
 % TODO: Cite earlier ANN papers including Ashlock
 % TODO: list features
 
@@ -126,6 +133,8 @@ of other strategies, including classic strategies like TitForTat, encode
 handshakes, and gruding strategies that always defect after an opponent
 defection.
 
+% TODO Draw diagram for FSM
+
 % TODO: Cite Ashlock FSM papers
 % TODO: One or more diagrams
 
@@ -138,6 +147,8 @@ with various probabilities at each state. These are the best performing
 stochastic strategies in the library but take longer to train due to their
 stochasticity.
 
+% TODO Draw diagram for HMM
+
 \subsection{Meta Strategies}
 
 Last but not least there are several strategies based on ensemble methods that
@@ -148,13 +159,15 @@ consensus vote in the case of MetaMajority or the best individual performance
 in the case of MetaWinner. These strategies were among the best in the library
 before the inclusion of those trained by reinforcement learning.
 
+% TODO Draw diagram for meta strategies
+
 \section{Results}
 
 \subsection{Standard Tournament}
 
 We conducted a tournament with all strategies in the Axelrod library. The top
 11 performing strategies by mean payoff are all strategies trained to maximize
-total payoff against a subset of the strategies (Figure \ref{}). The next strategy is 
+total payoff against a subset of the strategies (Figure \ref{}). The next strategy is
 Desired Belief Strategy (DBS) which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table, and
 Fool Me Once, a strategy that defects indefinitely on the second defection.
@@ -201,6 +214,9 @@ evaluating the performance against each opponent for many repetitions. The
 best performing strategies in each generation are persisted, variants created,
 and objective functions computed again. This process continues for approxaimtely
 200 generations or until strategies no longer improve significantly.
+
+% TODO Draw diagram on evolutionary algorithm
+% TODO Draw diagram on PSO
 
 % Diagram with ANN training performance
 
