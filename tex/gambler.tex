@@ -1,0 +1,71 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc, shapes, patterns}
+
+\begin{document}
+\begin{tikzpicture}[scale=.9]
+    \tikzstyle{cooperator} = [rectangle, pattern=north west lines, pattern
+        color=blue!70, draw=blue, text width=.25cm]
+    \tikzstyle{defector} = [rectangle, pattern=north east lines, pattern
+        color=red!70, draw=red, text width=.25cm]
+
+
+    % Histories ----------------------------------------
+    \node (A) at (-.5, 0) {Player};
+    \node (A1) at ($(A) + (0, -.55)$) [cooperator] {C};
+    \node (A2) at ($(A1) + (0, -.55)$) [cooperator] {C};
+    \node (A3) at ($(A2) + (0, -.55)$) [defector] {D};
+    \node (A4) at ($(A3) + (0, -.55)$) [defector] {D};
+    \node (A5) at ($(A4) + (0, -.55)$) {$\vdots$};
+    \node (A6) at ($(A5) + (0, -.75)$) [defector] {D};
+    \node (A7) at ($(A6) + (0, -.55)$) [cooperator] {C};
+    \node (A8) at ($(A7) + (0, -.55)$) [cooperator] {C};
+    \node (A9) at ($(A8) + (0, -.55)$) [cooperator] {C};
+    \node (A10) at ($(A9) + (0, -.55)$) [cooperator] {C};
+
+
+    \node (B) at ($(A) + (2, 0)$) {Opponent};
+    \node (B1) at ($(B) + (0, -.55)$) [cooperator] {C};
+    \node (B2) at ($(B1) + (0, -.55)$) [defector] {D};
+    \node (B3) at ($(B2) + (0, -.55)$) [cooperator] {C};
+    \node (B4) at ($(B3) + (0, -.55)$) [cooperator] {C};
+    \node (B5) at ($(B4) + (0, -.55)$) {$\vdots$};
+    \node (B6) at ($(B5) + (0, -.75)$) [defector] {D};
+    \node (B7) at ($(B6) + (0, -.55)$) [defector] {D};
+    \node (B8) at ($(B7) + (0, -.55)$) [defector] {D};
+    \node (B9) at ($(B8) + (0, -.55)$) [cooperator] {C};
+    \node (B10) at ($(B9) + (0, -.55)$) [cooperator] {C};
+    % ---------------------------------------------------
+
+    % Identifying inputs --------------------------------
+    \draw[very thick, black, dashed] ($(B1) + (-.3, .3)$)  rectangle ($(B2) + (.3, -.3)$);
+    \draw[very thick, black, dashed] ($(A7) + (-.3, .3)$)  rectangle ($(A10) + (.3, -.3)$);
+    \draw[very thick, black, dashed] ($(B8) + (-.3, .3)$)  rectangle ($(B10) + (.3, -.3)$);
+
+    % Strategy inputs
+    \node (opp_start) at (4, -2.7) [right] {CD};
+    \node (player_history) at (4, -3.2) [right] {CCCC};
+    \node (opp_history) at (4, -3.7) [right] {DCC};
+
+    \draw [very thick, black, dashed, ->] ($(B1)!0.5!(B2) + (.3, 0)$) --
+        ($(B1)!0.5!(B2) + (2, 0)$) -- ($(opp_start) + (-.25, .25)$);
+    \draw [very thick, black, dashed, ->] ($(A7)!0.5!(A10) + (.3, 0)$) --
+        ($(A7)!0.5!(A10) + (.6, 0)$) -- ($(A7)!0.5!(A10) + (.6, 1.7)$) --
+        ($(player_history) + (-.6, 0)$);
+    \draw [very thick, black, dashed, ->] ($(B8)!0.5!(B10) + (.3, 0)$) --
+        ($(B8)!0.5!(B10) + (2, 0)$) -- ($(opp_history) + (-.25, -.25)$);
+
+    % Strategy outputs
+
+    \draw [very thick, gray] ($(opp_start) + (-.3, .2)$) rectangle
+    ($(opp_history) + (.75, -.2)$);
+
+
+    \node (output) at ($(player_history) + (2, 0)$) [cooperator] {C};
+    \node (pc) at ($(player_history) + (2, -.55)$) {\(p_c\)};
+    \node at ($(output) + (.55, 0)$) [defector] {D};
+    \node (pc) at ($(pc) + (.55, 0)$) {\(p_d\)};
+
+    \draw [->, very thick] ($(player_history) + (.65, 0)$) -- (output);
+\end{tikzpicture}
+\end{document}
