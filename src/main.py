@@ -11,7 +11,7 @@ def main(players=players, processes=None, seed=1, turns=200, repetitions=10000,
         processes = multiprocessing.cpu_count()
 
     kind = "std" if noise == 0 else "noisy"
-    prefix = "Standard" if noise == 0 else "Noisy"
+    prefix = "Standard" if noise == 0 else "Noisy ({})".format(noise)
     filename = "data/strategies_{}_{}_interactions.csv".format(kind,
                                                                repetitions)
     # Deleting the file if it exists
