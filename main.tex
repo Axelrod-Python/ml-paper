@@ -79,9 +79,14 @@ training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
 First impressions matter in the IPD. The library includes a strategy
 called EvolvedLookerUp2_2_2 which is among the top strategies in the library.
 
-This archetype can be used to train memory-$n$ strategies with the parameters
-$n_1=0$ and $m_1=m_2=n$. For $n=1$, the result is WSLS.
-% TODO: doublecheck that it is WSLS 
+This archetype can be used to train deterministic memory-$n$ strategies with the
+parameters $n_1=0$ and $m_1=m_2=n$. For $n=1$, the resulting strategy cooperates
+if the last round was mutual cooperation and defects otherwise.
+
+Two strategies in the library, Winner12 and Winner21, from \cite{Mathieu2015},
+are based on lookup tables for $n_1 = 0$, $m_1 = 1$, and $m_2=2$. The strategy
+Winner12 emerged in less than 10 generations of training in our framework using
+a score maximizing objective.
 
 \subsection{PSO Gambler}
 
@@ -148,6 +153,10 @@ consensus vote in the case of MetaMajority or the best individual performance
 in the case of MetaWinner. These strategies were among the best in the library
 before the inclusion of those trained by reinforcement learning.
 
+Because these strategies inherit many of the properties of the strategies
+on which they are based, including using the match length to defect on the last
+rounds of play, these strategies were omitted from the tournament results.
+
 \section{Results}
 
 \subsection{Standard Tournament}
@@ -164,10 +173,8 @@ shows that the many strategies achieve mutual cooperation with each other and
 that the top performing strategies never defect first but are able to exploit
 weaker strategies that attempt to defect.
 
-The strategies that win the most matches are Defector, Aggrevater, and then a
-series of ensemble strategies called MetaWinner, that combine the strategies
-of many other strategies and take a consensus vote for each move. These are
-followed by handshaking and zero determinant strategies.
+The strategies that win the most matches are Defector, Aggravater, followed by
+handshaking and zero determinant strategies.
 
 % Table of best strategies
 % \includegraphics{strategies_std_boxplot.svg}
@@ -204,7 +211,7 @@ and objective functions computed again. This process continues for approxaimtely
 
 % Diagram with ANN training performance
 
-All training code is available on github. The are objective functions for
+All training code is available on github. There are objective functions for
 * total payoff
 * total payoff difference
 * total Moran process wins (fixation probability)
