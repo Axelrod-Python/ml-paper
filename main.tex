@@ -30,17 +30,6 @@ Iterated Prisoner's Dilemma}
 
 \maketitle
 
-Key points:
-* We trained several different strategies and they all are tournament
-winners
-* works for standard, noisy, and moran
-* Complex strategies can fare well
-* the best strategies are cooperative yet punitive
-* copious references to W. and D. Ashlock
-
-Todo:
-* better title
-
 
 \begin{abstract}
     We present several powerful strategies for the Iterated
@@ -55,11 +44,24 @@ Todo:
 \section{Introduction}\label{sec:introduction}
 
 * Update on Axelrod Library
-Description of strategy space and tournament capabilities
-Includes many prior tournament winners (OmegaTFT, ZDGTFT2)
-Some original strategies but mostly from the literature
+
+The Axelrod library \cite{knight2016open} now contains over 200 strategies,
+many from the scientific
+literature, including classic strategies like Win Stay Lose Shift
+\cite{nowak1993strategy} and
+previous tournament winners such as OmegaTFT \cite{slany2007some},
+ Adaptive Pavlov \cite{li2007design}, and ZDGTFT2 \cite{stewart2012extortion}.
 
 % TODO: cite earlier tournaments
+
+There are several previous publications that use evolutionary algorithms to
+evolve IPD strategies in various circumstances \cite{fogel1993evolving} \cite{ashlock2006training}
+\cite{ashlock2006changes} \cite{vassiliades2010multiagent} \cite{ashlock2014shaped}
+\cite{ashlock2014evolution} \cite{ashlock2015multiple} \cite{barlow2015varying}
+\cite{sudo2015effects}. See also \cite{gaudesi2016exploiting} for a strategy trained to win against
+a collection of well-known IPD opponents. Our results are unique in that we are
+able to train against a large collection of well-known strategies available in
+the scientific literature.
 
 \section{The Strategy Archetypes}
 
@@ -86,7 +88,8 @@ if the last round was mutual cooperation and defects otherwise.
 Two strategies in the library, Winner12 and Winner21, from \cite{Mathieu2015},
 are based on lookup tables for $n_1 = 0$, $m_1 = 1$, and $m_2=2$. The strategy
 Winner12 emerged in less than 10 generations of training in our framework using
-a score maximizing objective.
+a score maximizing objective. Strategies nearly identical to Winner21 arise
+from training with a Moran process objective.
 
 \subsection{PSO Gambler}
 
@@ -99,12 +102,16 @@ EvolvedLookerUp2_2_2.
 
 This strategy type can be used to train arbitrary memory-$n$ strategies and a
 memory one strategy was trained and is called PSO Gambler Mem 1, with
-probabilities $\ldots$. Though it performs well in deterministic tournaments
+probabilities $(\text{Pr(C|CC)}, \text{Pr(C|CD)}, \text{Pr(C|DC)}, \text{Pr(C|DD)}) = (1, 0.5217, 0, 0.121)$. Though it performs well in deterministic tournaments
 it is not as good as the longer memory strategies, and is bested by a similar
 strategy that also uses the first round of play.
 
+These strategies are trained with a particle swarm algorithm rather than an
+evolutionary algorithm (though the former would suffice). Particle swarm
+algorithms have been used to trained IPD strategies previously
+\cite{franken2005particle}.
+
 % TODO: quantify how stochastic
-% TODO: include memory one four vector
 
 \subsection{ANN}
 
@@ -118,7 +125,6 @@ noisy tournaments. The output of the ANN used in this work is deterministic and
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
 
-% TODO: Cite earlier ANN papers including Ashlock
 % TODO: list features
 
 \subsection{Finite State Machines}
@@ -128,10 +134,9 @@ strategies. These strategies are deterministic and are efficient computational.
 At each state the machine transitions to a new state and plays a specified move
 depending on the opponent's last action. These strategies can encode a variety
 of other strategies, including classic strategies like TitForTat, encode
-handshakes, and gruding strategies that always defect after an opponent
+handshakes, and grudging strategies that always defect after an opponent
 defection.
 
-% TODO: Cite Ashlock FSM papers
 % TODO: One or more diagrams
 
 \subsection{Hidden Markov Models}
@@ -259,8 +264,8 @@ sometimes shuffle, and are not retrained regularly. The precise parameters
 that are optimal will depend on the pool of opponents. Moreover we have not
 extensively trained strategies to determine the minimum parameters that are
 sufficient -- neural networks with fewer nodes and features and finite state
-machines with fewer states may suffice.
-% TODO: Cite Ashlock paper on parameter capacity for trained strategies
+machines with fewer states may suffice. See \cite{ashlock2013impact} for
+discussion of resource availability for IPD strategies.
 
 
 Future work:
