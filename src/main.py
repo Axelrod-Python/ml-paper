@@ -12,8 +12,9 @@ def main(players=players, processes=None, seed=1, turns=200, repetitions=10000,
 
     kind = "std" if noise == 0 else "noisy"
     prefix = "Standard" if noise == 0 else "Noisy ({})".format(noise)
-    filename = "data/strategies_{}_{}_interactions.csv".format(kind,
-                                                               repetitions)
+    filename = "data/strategies_{}_{}_{}_interactions.csv".format(kind,
+                                                               repetitions,
+                                                               seed)
     # Deleting the file if it exists
     try:
         os.remove(filename)
@@ -29,22 +30,19 @@ def main(players=players, processes=None, seed=1, turns=200, repetitions=10000,
     tournament = axl.Tournament(players, turns=turns, repetitions=repetitions,
                                 noise=noise)
 
-    results = tournament.play(filename=filename, processes=processes,
-                              progress_bar=False)
-    plot = axl.Plot(results)
-    plot.save_all_plots(prefix='assets/{}_{}'.format(kind, repetitions),
-                        progress_bar=False,
-                        title_prefix=prefix, filetype="pdf")
-    results.write_summary('assets/{}_summary_{}.csv'.format(kind, repetitions))
+    tournament.play(filename=filename, processes=processes,
+                    build_results=False, progress_bar=False)
 
 if __name__ == "__main__":
     import sys
     args = sys.argv[1:]
 
     repetitions = int(args[0])
+    seed = int(args[1])
+
     try:
-        noise = float(args[1])
+        noise = float(args[2])
     except IndexError:
         noise = 0
 
-    main(repetitions=repetitions, noise=noise)
+    main(repetitions=repetitions, seed=seed, noise=noise)
