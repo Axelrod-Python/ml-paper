@@ -6,9 +6,10 @@ def main(filename):
 
     prefix = "Standard" if "standard" in filename else "Noisy"
     results = axl.ResultSetFromFile(filename=filename, progress_bar=False)
-    plot = axl.Plot(results)
-    plot.save_all_plots(prefix="assets/{}".format(prefix), progress_bar=False,
-                        title_prefix=prefix, filetype="pdf")
+    # plot = axl.Plot(results)
+    # plot.save_all_plots(prefix="assets/{}".format(prefix), progress_bar=False,
+                        # title_prefix=prefix, filetype="pdf")
+    results.write_summary("assets/{}_summary.csv".format(prefix))
 
 if __name__ == "__main__":
     import sys
