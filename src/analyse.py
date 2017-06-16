@@ -18,7 +18,7 @@ def main(filename):
     # i of the tournament.
     scores_per_tournament = np.array(results.scores).transpose()
     np.savetxt(fname="assets/{}_scores.gz".format(prefix),
-               X=scores_per_tournament)
+               X=scores_per_tournament, delimiter=",")
 
     # Write the payoff of each player against every other player to "assets/".
     # This data is a #players (rows) by #players (rows) array with X_{ij}
@@ -33,7 +33,7 @@ def main(filename):
     # against player j
     payoff_stdev_matrix = np.array(results.payoff_stddevs)
     np.savetxt(fname="assets/{}_payoff_stdev_matrix.gz".format(prefix),
-               X=payoff_matrix, delimiter=",")
+               X=payoff_stdev_matrix, delimiter=",")
 
 
 
