@@ -12,6 +12,8 @@
 \usepackage{standalone}
 \usepackage{fancyvrb}
 
+\usepackage{pdflscape}
+
 \usepackage{tikz}
 \usetikzlibrary{calc, shapes, patterns}
 
@@ -32,7 +34,7 @@ Iterated Prisoner's Dilemma}
 
 
 \begin{abstract}
-    We present several powerful strategies for the Iterated
+    We present tournament results and several powerful strategies for the Iterated
     Prisoner's Dilemma created using reinforcement learning techniques
     (evolutionary and particle swarm algorithms). These strategies are
     trained to perform well against a corpus of over 100 distinct
@@ -45,14 +47,15 @@ Iterated Prisoner's Dilemma}
 
 * Update on Axelrod Library
 
-The Axelrod library \cite{knight2016open} now contains over 200 strategies,
-many from the scientific
-literature, including classic strategies like Win Stay Lose Shift
-\cite{nowak1993strategy} and
-previous tournament winners such as OmegaTFT \cite{slany2007some},
- Adaptive Pavlov \cite{li2007design}, and ZDGTFT2 \cite{stewart2012extortion}.
+% TODO: more
 
-% TODO: cite earlier tournaments
+The Axelrod library \cite{knight2016open} now contains over 200 strategies,
+many from the scientific literature, including classic strategies like Win Stay
+Lose Shift \cite{nowak1993strategy} and previous tournament winners such as
+OmegaTFT \cite{slany2007some}, Adaptive Pavlov \cite{li2007design}, and
+ZDGTFT2 \cite{stewart2012extortion}.
+
+% TODO: discuss earlier tournaments
 
 There are several previous publications that use evolutionary algorithms to
 evolve IPD strategies in various circumstances \cite{marks1989niche} \cite{fogel1993evolving} \cite{ashlock2006training}
@@ -80,7 +83,7 @@ depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$. 
 First impressions matter in the IPD. The library includes a strategy
-called EvolvedLookerUp2_2_2 which is among the top strategies in the library.
+called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
 parameters $n_1=0$ and $m_1=m_2=n$. For $n=1$, the resulting strategy cooperates
@@ -99,7 +102,7 @@ encoded moves the lookup table emits probabilities which are
 used to choose cooperation or defection. The library includes a player trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
-EvolvedLookerUp2_2_2.
+EvolvedLookerUp2\_2\_2.
 
 This strategy type can be used to train arbitrary memory-$n$ strategies and a
 memory one strategy was trained and is called PSO Gambler Mem 1, with
@@ -114,7 +117,7 @@ algorithms have been used to trained IPD strategies previously
 
 % TODO: quantify how stochastic
 
-\subsection{ANN}
+\subsection{ANN: Single Layer Artificial Neural Network}
 
 Strategies based on artificial neural networks can also be trained with an
 evolutionary algorithm. A variety of features are computed from the history
@@ -138,7 +141,7 @@ of other strategies, including classic strategies like TitForTat, encode
 handshakes, and grudging strategies that always defect after an opponent
 defection.
 
-% TODO: One or more diagrams
+% TODO: One or more FSM diagrams
 
 \subsection{Hidden Markov Models}
 
@@ -169,20 +172,43 @@ rounds of play, these strategies were omitted from the tournament results.
 
 We conducted a tournament with all strategies in the Axelrod library. The top
 11 performing strategies by mean payoff are all strategies trained to maximize
-total payoff against a subset of the strategies (Figure \ref{}). The next strategy is 
+total payoff against a subset of the strategies (Table \ref{tbl:standard_score}).
+The next strategy is
 Desired Belief Strategy (DBS) which actively analyzes the opponent and responds
-accordingly. The next two strategies are Winner12, based on a lookup table, and
-Fool Me Once, a strategy that defects indefinitely on the second defection.
+accordingly. The next two strategies are Winner12, based on a lookup table,
+Omega TFT, and Fool Me Once, a grudging strategy that defects indefinitely on
+the second defection. All strategies in the tournament follow a simple set of
+rules in accordance with earlier tournaments:
+\begin{itemize}
+  \item Players carry no acquired state between matches
+  \item Players cannot observe the outcome of other matches
+  \item Players cannot identify their opponent by any label or identifier
+  \item Players cannot manipulate or inspect their opponents in any way
+\end{itemize}
 
-Pairwise payoff results are given as a heatmap (Figure \ref{}) which
-shows that the many strategies achieve mutual cooperation with each other and
+Pairwise payoff results are given as a heatmap (Figure ) which
+shows that many strategies achieve mutual cooperation with each other and
 that the top performing strategies never defect first but are able to exploit
 weaker strategies that attempt to defect.
 
 The strategies that win the most matches are Defector, Aggravater, followed by
-handshaking and zero determinant strategies.
+handshaking and zero determinant strategies. This includes two handshaking
+strategies that were the result of training to maximize Moran process fixation.
+No strategies were trained specifically to win matches. None of the top scoring
+strategies appear in the top 20 list of strategies ranked by match wins.
 
 % Table of best strategies
+\begin{table}[!hbtp]
+    \centering
+        \input{./tex/standard_scores.tex}
+        \caption{Standard Tournament: Top Ranking Strategies by Median Score in 15,000 Tournaments}
+        \label{tbl:standard_score}
+\end{table}
+
+\begin{landscape}
+    \includegraphics[width=\paperwidth]{plots/Standard_boxplot.pdf}
+\end{landscape}
+
 % \includegraphics{strategies_std_boxplot.svg}
 % \includegraphics{strategies_std_payoff.svg}
 % \includegraphics{strategies_std_winplot.svg}
@@ -191,17 +217,37 @@ handshaking and zero determinant strategies.
 
 We also ran noisy tournaments in which there is a 5\% chance that an action
 is flipped. The best performing strategies in mean payoff are DBS, designed
-to correct for noise, followed by two finite state machine strategies trained
-in the presence of noise, and OmegaTFT (also designed to handle noise). The
-strategies trained in the presence of noise are also among the best performers
-in the absence of noise.
+to correct for noise, followed by two strategies trained
+in the presence of noise, Spiteful TFT (TFT but defects indefinitely if the
+opponent defects twice consecutively), two strategies trained without noise, then
+OmegaTFT (also designed to handle noise).
 
-The cluster of mutually cooperative strategies is broken by the noise at 5\%. A
-similar collection of players excels at winning matches but again they have
-a poor total payoff.
+The strategies trained in the presence of noise are also among the best performers
+in the absence of noise. The cluster of mutually cooperative strategies is
+broken by the noise at 5\%. A similar collection of players excels at winning
+matches but again they have a poor total payoff.
+
+The strategies tallying the most wins are somewhat similar, with Defector, the
+handshaking CollectiveStrategy, and Aggravate appearing as the top three again,
+followed by Spiteful TFT and strategies designed to be retaliatory. Players ranked
+12, 13, and 15 (TF3, Fool Me Once, and Evolved ANN 5) all appear in the top 15
+strategies by score, indicating that noise breaks the asymmetry between wins
+and scores to some extent.
 
 % Table of best strategies
-% \includegraphics{strategies_noisy_boxplot.svg}
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./tex/noisy_scores.tex}
+        \caption{Noisy Tournament: Top Ranking Strategies by Median Score in a
+        15000 Tournaments with 5\% noise}
+        \label{tbl:noisy_score}
+\end{table}
+
+
+\begin{landscape}
+    \includegraphics[width=\paperwidth]{plots/Noisy_boxplot.pdf}
+\end{landscape}
 % \includegraphics{strategies_noisy_payoff.svg}
 % \includegraphics{strategies_noisy_winplot.svg}
 
@@ -212,10 +258,10 @@ case of PSO Gambler particle swarm algorithms. The evolutionary algorithms
 used standard techniques, varying strategies by mutation and crossover, and
 evaluating the performance against each opponent for many repetitions. The
 best performing strategies in each generation are persisted, variants created,
-and objective functions computed again. This process continues for approxaimtely
+and objective functions computed again. This process continues for approximately
 200 generations or until strategies no longer improve significantly.
 
-% Diagram with ANN training performance
+% Todo: Diagram with ANN training performance?
 
 All training code is available on github. There are objective functions for
 * total payoff
@@ -227,46 +273,48 @@ structure, and probabilistically ending matches.
 
 \section{Discussion}
 
-The tournament results indicate that pretrained strategies are generally better
+The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
 opponents. A simple evolutionary algorithm produces strategies based on multiple
 standard machine learning techniques that are able to achieve a higher mean
-score than any other known opponent. All of the trained strategies use many
-rounds of the history of play (some using all of it) and outperform memory-one
+score than any other known opponent in a standard tournament. Most of the trained
+strategies use multiple rounds of the history of play (some using all of it) and
+outperform memory-one strategies (though the trained memory one strategy performs
+well). The generic structure of the trained strategy did not appear to be
+critical -- strategies based on lookup tables, finite state machines, and stochastic
+variants all performed well. Single layer neural networks also performed well
+though these had some aspect of human involvement in the selection of features.
+The success of the other strategy types suggests that a deeper network that
+incorporates feature engineering would likely also perform well.
+
+In opposition to historical tournament results and community folklore,
+our results show that complex strategies can be very effective for the
+IPD. It is not the complexity of strategies that is disadvantageous; rather that directly
+designing a broadly effective strategy is no easy task. Of all the human-designed
+strategies in the library, only DBS consistently performs well, and it is
+substantially more complex than traditional tournament winners like TFT, OmegaTFT,
+and zero determinant strategies. Furthermore, dealing with noise is difficult
+for most strategies. Two strategies designed specifically to account for noise,
+DBS and OmegaTFT, perform well and only DBS performs better than our trained
 strategies.
 
-Directly designing an effective strategy is no easy task. Of all the actively
-learning strategies in the library, only DBS performs well. The authors trained
-a neural network to predict opponents' next moves with high accuracy but basing
-a strategy on the predictions proved difficult -- it is necessary to consider
-the downstream consequences of a defection and direct training of strategy
-outputs generally performed better.
-
-These results suggest that, in opposition to historical tournament results
-and community folklore, that complex strategies can be very effective for the
-IPD. It is not the complexity of strategies that is disadvantageous, rather it
-is apparently too difficult for humans to design complex yet effective
-strategies, DBS being a notable exception.
-
-Furthermore, dealing with noise is difficult for most strategies. Two strategies
-designed specifically to account for noise, DBS and OmegaTFT, perform well and
-only DBS performs better than directly trained finite state machine strategies.
-
-Of all the strategies trained to maximize their mean score all are generally
+Of the strategies trained to maximize their mean score all are generally
 cooperative, not defecting until the opponent defects. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
 the fact that mutual cooperation is an unstable equilibrium for the prisoner's
-dilemma. Specifically we note that the reinforcement learning process does not
+dilemma. Specifically we note that the reinforcement learning process for maximizing
+payout does not
 lead to exploitative zero determinant strategies, which may be a result of the
-collection of training strategies, many of which retailate harshly.
+collection of training strategies, many of which retaliate harshly.
 
 Finally, we note that as the library grows, the top performing strategies
-sometimes shuffle, and are not retrained regularly. The precise parameters
-that are optimal will depend on the pool of opponents. Moreover we have not
-extensively trained strategies to determine the minimum parameters that are
-sufficient -- neural networks with fewer nodes and features and finite state
-machines with fewer states may suffice. See \cite{ashlock2013impact} for
-discussion of resource availability for IPD strategies.
+sometimes shuffle, and are not retrained regularly. Most of the strategies were
+trained on an earlier version of the library (v2.2.0) that did not include DBS
+and several other opponents. The precise parameters that are optimal will depend
+on the pool of opponents. Moreover we have not extensively trained strategies to
+determine the minimum parameters that are sufficient -- neural networks with
+fewer nodes and features and finite state machines with fewer states may suffice.
+See \cite{ashlock2013impact} for discussion of resource availability for IPD strategies.
 
 
 Future work:
@@ -274,6 +322,8 @@ Future work:
 * Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
 decision players
 * further refine features and training parameters
+
+% TODO: Full strategy list
 
 % TODO: author contributions
 
@@ -283,3 +333,5 @@ This work was performed using the computational facilities of the Advanced
 Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 
 \printbibliography
+
+\end{document}
