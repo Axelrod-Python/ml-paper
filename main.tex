@@ -224,9 +224,41 @@ strategies appear in the top 20 list of strategies ranked by match wins.
     \caption{Pairwise Match results for the Standard Tournament}
 \end{figure}
 
+
+
+Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
+\cite{ashlock2009fingerprint}, we can compare
+strategies. For the top performing noisy strategies there is a striking similarity
+in the fingerprints.
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/EvolvedLookerUp2_2_2.png}
+        \caption{Fingerprint for EvolvedLookerUp\_2\_2\_2}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/Evolved_HMM_5.png}
+        \caption{Fingerprint for Evolved\_HMM\_5}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/Evolved_FSM_16.png}
+        \caption{Fingerprint for Evolved\_FSM\_16}
+    \end{subfigure}%
+
+    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
+    \label{fig:comparison_fingerprint_noisy}
+\end{figure}
+
+
 \subsection{Noisy Tournament}
 
-We also ran noisy tournaments in which there is a 5\% chance that an action
+We also ran noisy tournaments in which there is a 10\% chance that an action
 is flipped. The best performing strategies in mean payoff are DBS, designed
 to correct for noise, followed by two strategies trained
 in the presence of noise, Spiteful TFT (TFT but defects indefinitely if the
@@ -251,7 +283,7 @@ and scores to some extent.
     \centering
         \input{./tex/noisy_scores.tex}
         \caption{Noisy Tournament: Top Ranking Strategies by Median Score in a
-        15000 Tournaments with 5\% noise}
+        15000 Tournaments with 10\% noise}
         \label{tbl:noisy_score}
 \end{table}
 
@@ -274,6 +306,37 @@ and scores to some extent.
     \includegraphics[width=\paperwidth]{plots/Noisy_payoff.pdf}
     \caption{Pairwise Match results for the Noisy Tournament}
 \end{figure}
+
+Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
+\cite{ashlock2009fingerprint}, we can compare
+strategies. For the top performing noisy strategies there is a striking similarity
+in the fingerprints.
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/DBS.png}
+        \caption{Fingerprint for DBS}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/Evolved_ANN_5_Noise_05.png}
+        \caption{Fingerprint for Evolved\_ANN\_5\_Noise\_05}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./plots/Evolved_FSM_16_Noise_05.png}
+        \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
+    \end{subfigure}%
+
+    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
+    \label{fig:comparison_fingerprint_noisy}
+\end{figure}
+
+
 
 \section{Methods}
 
