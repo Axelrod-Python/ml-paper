@@ -20,6 +20,14 @@ def main(filename):
     np.savetxt(fname="assets/{}_scores.gz".format(prefix),
                X=scores_per_tournament, delimiter=",")
 
+    # Write the total wins per tournament for each player to "assets/".
+    # This data is a #repetitions (rows) by #players (columns) array with
+    # X_{ij} corresponding to the TOTAL wins obtained by player j in repetition
+    # i of the tournament.
+    wins_per_tournament = np.array(results.wins).transpose()
+    np.savetxt(fname="assets/{}_wins.gz".format(prefix),
+               X=wins_per_tournament, delimiter=",")
+
     # Write the payoff of each player against every other player to "assets/".
     # This data is a #players (rows) by #players (rows) array with X_{ij}
     # corresponding to the mean score of player i against player j
