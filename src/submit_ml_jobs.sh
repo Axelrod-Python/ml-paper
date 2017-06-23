@@ -18,3 +18,13 @@ qsub pbs_files/ml-8-5-1000.pbs
 qsub pbs_files/ml-8-0-1000.pbs
 qsub pbs_files/ml-9-5-1000.pbs
 qsub pbs_files/ml-9-0-1000.pbs
+qsub pbs_files/ml-10-5-1000.pbs
+qsub pbs_files/ml-10-0-1000.pbs
+qsub pbs_files/ml-11-5-1000.pbs
+qsub pbs_files/ml-11-0-1000.pbs
+qsub pbs_files/ml-12-5-1000.pbs
+qsub pbs_files/ml-12-0-1000.pbs
+qsub pbs_files/ml-13-5-1000.pbs
+qsub pbs_files/ml-13-0-1000.pbs
+qsub pbs_files/ml-14-5-1000.pbs
+qsub pbs_files/ml-14-0-1000.pbs
