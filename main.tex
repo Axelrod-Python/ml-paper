@@ -308,19 +308,19 @@ in the fingerprints.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/EvolvedLookerUp2_2_2.png}
+        \includegraphics[width=\textwidth]{./assets/EvolvedLookerUp2_2_2.png}
         \caption{Fingerprint for EvolvedLookerUp\_2\_2\_2}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/Evolved_HMM_5.png}
+        \includegraphics[width=\textwidth]{./assets/Evolved_HMM_5.png}
         \caption{Fingerprint for Evolved\_HMM\_5}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/Evolved_FSM_16.png}
+        \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16.png}
         \caption{Fingerprint for Evolved\_FSM\_16}
     \end{subfigure}%
 
@@ -331,54 +331,104 @@ in the fingerprints.
 
 \subsection{Noisy Tournament}
 
-We also ran noisy tournaments in which there is a 10\% chance that an action
-is flipped. The best performing strategies in mean payoff are DBS, designed
-to correct for noise, followed by two strategies trained
-in the presence of noise, Spiteful TFT (TFT but defects indefinitely if the
-opponent defects twice consecutively), two strategies trained without noise, then
-OmegaTFT (also designed to handle noise).
-
-The strategies trained in the presence of noise are also among the best performers
-in the absence of noise. The cluster of mutually cooperative strategies is
-broken by the noise at 5\%. A similar collection of players excels at winning
-matches but again they have a poor total payoff.
-
-The strategies tallying the most wins are somewhat similar, with Defector, the
-handshaking CollectiveStrategy, and Aggravate appearing as the top three again,
-followed by Spiteful TFT and strategies designed to be retaliatory. Players ranked
-12, 13, and 15 (TF3, Fool Me Once, and Evolved ANN 5) all appear in the top 15
-strategies by score, indicating that noise breaks the asymmetry between wins
-and scores to some extent.
+We also ran noisy tournaments in which there is a 5\% chance that an action is
+flipped. As shown in Table~\ref{tbl:noisy_score} and
+Figure~\ref{fig:noisy_score}, the best performing strategies in median payoff
+are DBS, designed to correct for noise, followed by two strategies trained in
+the presence of noise and three trained strategies trained without noise. One of
+the strategies trained with noise (PSO Gambler) actually performs less well than
+some of the other high ranking strategies including
+Spiteful TFT (TFT but defects indefinitely if the opponent defects twice
+consecutively) and OmegaTFT (also
+designed to handle noise).
 
 % Table of best strategies
-
 \begin{table}[!hbtp]
     \centering
-        \input{./tex/noisy_scores.tex}
+        \input{./assets/noisy_top_15_scores_summary.tex}
         \caption{Noisy Tournament: Top Ranking Strategies by Median Score in a
-        15000 Tournaments with 10\% noise}
+        15000 Tournaments with 5\% noise}
         \label{tbl:noisy_score}
 \end{table}
 
 
 \begin{landscape}
     \begin{figure}[!hbtp]
-        \includegraphics[width=\paperwidth]{plots/Noisy_boxplot.pdf}
+        \includegraphics[width=\paperwidth]{./assets/noisy_scores_boxplots.pdf}
         \caption{Ranking by Median Payoff for the Noisy Tournament}
+        \label{fig:noisy_score}
     \end{figure}
 \end{landscape}
+
+
+The strategies trained in the presence of noise are also among the best
+performers in the absence of noise. As shown in Figure~\ref{fig:noisy_heatmap}
+the cluster of mutually cooperative strategies is broken by the noise at 5\%. A
+similar collection of players excels at winning matches but again they have a
+poor total payoff.
+
+\begin{figure}[!hbtp]
+    \includegraphics[width=\textwidth]{./assets/noisy_scores_heatmap.pdf}
+    \caption{Pairwise Match results for the Noisy Tournament}
+    \label{fig:noisy_heatmap}
+\end{figure}
+
+As shown in Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins
+are somewhat similar, with Defector, the handshaking CollectiveStrategy, and
+Aggravate appearing as the top three again.
 
 \begin{landscape}
     \begin{figure}[!hbtp]
-        \includegraphics[width=\paperwidth]{plots/Noisy_winplot.pdf}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/noisy_wins_boxplots.pdf}
         \caption{Ranking by Total wins for the Noisy Tournament}
+        \label{fig:noisy_winplot}
     \end{figure}
 \end{landscape}
 
-\begin{figure}[!hbtp]
-    \includegraphics[width=\paperwidth]{plots/Noisy_payoff.pdf}
-    \caption{Pairwise Match results for the Noisy Tournament}
-\end{figure}
+As shown in Table~\ref{tbl:noisy_wins}, the top ranking strategies win a larger
+number of matches in the presence of noise. For example Spiteful Tit For Tat in
+one tournament won almost all it's matches (167).
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_wins_summary.tex}
+        \caption{Noisy Tournament: Number of wins of Top Ranking Strategies
+        by median score (50th percentile) in 15,000 Tournaments}
+        % TODO Update caption as more repetitions are carried out
+        % TODO Potentially remove count from table (including it for now so as
+        % to avoid confusion.
+        \label{tbl:noisy_wins}
+\end{table}
+
+
+Finally, Table~\ref{tbl:noisy_ranks} and
+Figure~\ref{fig:noisy_ranks_boxplot} show the ranks (based on median score)
+of each strategy over the repeated tournaments. We see, that the stochasticity
+of the ranks understandably increases the DBS strategy never ranks lower than
+third and wins 75\% of the time. The two strategies trained for noisy
+tournaments rank in the top three 95\% of the time.
+% TODO Possibly update this with more data.
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_ranks_summary.tex}
+        \caption{Noisy Tournament: Ranks of Top Ranking Strategies
+        by median score (50th percentile) in 15,000 Tournaments}
+        % TODO Update caption as more repetitions are carried out
+        % TODO Potentially remove count from table (including it for now so as
+        % to avoid confusion.
+        \label{tbl:noisy_ranks}
+\end{table}
+
+\begin{landscape}
+    \begin{figure}[!hbtp]
+        \centering
+        \includegraphics[width=\textwidth]{./assets/noisy_ranks_boxplots.pdf}
+        \caption{Rankings over each repeated tournament}
+        \label{fig:noisy_ranks_boxplot}
+    \end{figure}
+\end{landscape}
 
 Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
 \cite{ashlock2009fingerprint}, we can compare
@@ -389,19 +439,19 @@ in the fingerprints.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/DBS.png}
+        \includegraphics[width=\textwidth]{./assets/DBS.png}
         \caption{Fingerprint for DBS}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/Evolved_ANN_5_Noise_05.png}
+        \includegraphics[width=\textwidth]{./assets/Evolved_ANN_5_Noise_05.png}
         \caption{Fingerprint for Evolved\_ANN\_5\_Noise\_05}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./plots/Evolved_FSM_16_Noise_05.png}
+        \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16_Noise_05.png}
         \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
@@ -436,7 +486,7 @@ structure, and probabilistically ending matches.
 The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
 opponents. A simple evolutionary algorithm produces strategies based on multiple
-standard machine learning techniques that are able to achieve a higher mean
+standard machine learning techniques that are able to achieve a higher median
 score than any other known opponent in a standard tournament. Most of the trained
 strategies use multiple rounds of the history of play (some using all of it) and
 outperform memory-one strategies (though the trained memory one strategy performs
@@ -458,7 +508,7 @@ for most strategies. Two strategies designed specifically to account for noise,
 DBS and OmegaTFT, perform well and only DBS performs better than our trained
 strategies.
 
-Of the strategies trained to maximize their mean score all are generally
+Of the strategies trained to maximize their median score all are generally
 cooperative, not defecting until the opponent defects. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
 the fact that mutual cooperation is an unstable equilibrium for the prisoner's
