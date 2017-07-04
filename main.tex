@@ -32,7 +32,6 @@ Iterated Prisoner's Dilemma}
 
 \maketitle
 
-
 \begin{abstract}
     We present tournament results and several powerful strategies for the Iterated
     Prisoner's Dilemma created using reinforcement learning techniques
@@ -201,11 +200,9 @@ rules in accordance with earlier tournaments:
 \begin{table}[!hbtp]
     \centering
         \input{./assets/standard_top_15_scores_summary.tex}
-        \caption{Standard Tournament: Top Ranking Strategies by median score
-        (50th percentile) in 15,000 Tournaments}
-        % TODO Update caption as more repetitions are carried out
-        % TODO Potentially remove count from table (including it for now so as
-        % to avoid confusion.
+        \caption{Standard Tournament: Mean score per turn of top 15 strategies
+            (ranked by median over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{tbl:standard_score}
 \end{table}
 
@@ -215,7 +212,9 @@ ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \includegraphics[width=\paperwidth]{./assets/standard_scores_boxplots.pdf}
-        \caption{Ranking by median score for the Standard Tournament}
+        \caption{Standard Tournament: Mean score per turn (ranked by median
+        over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{fig:standard_boxplot}
     \end{figure}
 \end{landscape}
@@ -227,7 +226,9 @@ weaker strategies that attempt to defect.
 
 \begin{figure}[!hbtp]
     \includegraphics[width=\textwidth]{./assets/standard_scores_heatmap.pdf}
-    \caption{Pairwise Match results for the Standard Tournament}
+    \caption{Standard Tournament: Mean score per turn of row players against
+    column players (ordered by median over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
     \label{fig:standard_heatmap}
 \end{figure}
 
@@ -244,7 +245,9 @@ the number of wins of each strategy is shown.
     \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=\textwidth]{./assets/standard_wins_boxplots.pdf}
-        \caption{Ranking by Total wins for the Standard Tournament}
+        \caption{Standard Tournament: number of wins per tournament (ordered by
+        median over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{fig:standard_winplot}
     \end{figure}
 \end{landscape}
@@ -259,11 +262,9 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
 \begin{table}[!hbtp]
     \centering
         \input{./assets/standard_top_15_wins_summary.tex}
-        \caption{Standard Tournament: Number of wins of Top Ranking Strategies
-        by median score (50th percentile) in 15,000 Tournaments}
-        % TODO Update caption as more repetitions are carried out
-        % TODO Potentially remove count from table (including it for now so as
-        % to avoid confusion.
+        \caption{Standard Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median score over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{tbl:standard_wins}
 \end{table}
 
@@ -278,11 +279,9 @@ is 7th.
 \begin{table}[!hbtp]
     \centering
         \input{./assets/standard_top_15_ranks_summary.tex}
-        \caption{Standard Tournament: Ranks of Top Ranking Strategies
-        by median score (50th percentile) in 15,000 Tournaments}
-        % TODO Update caption as more repetitions are carried out
-        % TODO Potentially remove count from table (including it for now so as
-        % to avoid confusion.
+        \caption{Standard Tournament: Rank in each tournament
+        of top 15 strategies (ranked by median over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{tbl:standard_ranks}
 \end{table}
 
@@ -290,7 +289,9 @@ is 7th.
     \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=\textwidth]{./assets/standard_ranks_boxplots.pdf}
-        \caption{Rankings over each repeated tournament}
+        \caption{Standard Tournament: rank in each tournament (ordered by
+        median over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{fig:standard_ranks_boxplot}
     \end{figure}
 \end{landscape}
@@ -346,8 +347,9 @@ designed to handle noise).
 \begin{table}[!hbtp]
     \centering
         \input{./assets/noisy_top_15_scores_summary.tex}
-        \caption{Noisy Tournament: Top Ranking Strategies by Median Score in a
-        15000 Tournaments with 5\% noise}
+        \caption{Noisy (5\%) Tournament: Mean score per turn of top 15 strategies
+        (ranked by median over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_score}
 \end{table}
 
@@ -355,7 +357,9 @@ designed to handle noise).
 \begin{landscape}
     \begin{figure}[!hbtp]
         \includegraphics[width=\paperwidth]{./assets/noisy_scores_boxplots.pdf}
-        \caption{Ranking by Median Payoff for the Noisy Tournament}
+        \caption{Noisy (5\%) Tournament: Mean score per turn (ranked by median
+        over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{fig:noisy_score}
     \end{figure}
 \end{landscape}
@@ -369,7 +373,9 @@ poor total payoff.
 
 \begin{figure}[!hbtp]
     \includegraphics[width=\textwidth]{./assets/noisy_scores_heatmap.pdf}
-    \caption{Pairwise Match results for the Noisy Tournament}
+    \caption{Noisy (5\%) Tournament: Mean score per turn of row players against
+    column players (ordered by median over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
     \label{fig:noisy_heatmap}
 \end{figure}
 
@@ -381,7 +387,9 @@ Aggravate appearing as the top three again.
     \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=\textwidth]{./assets/noisy_wins_boxplots.pdf}
-        \caption{Ranking by Total wins for the Noisy Tournament}
+        \caption{Noisy (5\%) Tournament: number of wins per tournament (ordered by
+        median over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{fig:noisy_winplot}
     \end{figure}
 \end{landscape}
@@ -393,11 +401,9 @@ one tournament won almost all it's matches (167).
 \begin{table}[!hbtp]
     \centering
         \input{./assets/noisy_top_15_wins_summary.tex}
-        \caption{Noisy Tournament: Number of wins of Top Ranking Strategies
-        by median score (50th percentile) in 15,000 Tournaments}
-        % TODO Update caption as more repetitions are carried out
-        % TODO Potentially remove count from table (including it for now so as
-        % to avoid confusion.
+        \caption{Noisy (5\%) Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median score over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_wins}
 \end{table}
 
@@ -413,11 +419,9 @@ tournaments rank in the top three 95\% of the time.
 \begin{table}[!hbtp]
     \centering
         \input{./assets/noisy_top_15_ranks_summary.tex}
-        \caption{Noisy Tournament: Ranks of Top Ranking Strategies
-        by median score (50th percentile) in 15,000 Tournaments}
-        % TODO Update caption as more repetitions are carried out
-        % TODO Potentially remove count from table (including it for now so as
-        % to avoid confusion.
+        \caption{Noisy (5\%) Tournament: Rank in each tournament
+        of top 15 strategies (ranked by median over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_ranks}
 \end{table}
 
@@ -425,7 +429,9 @@ tournaments rank in the top three 95\% of the time.
     \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=\textwidth]{./assets/noisy_ranks_boxplots.pdf}
-        \caption{Rankings over each repeated tournament}
+        \caption{Noisy (5\%) Tournament: rank in each tournament (ordered by
+        median over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{fig:noisy_ranks_boxplot}
     \end{figure}
 \end{landscape}
