@@ -3,7 +3,7 @@ Write the pbs file (scheduler files for cluster) and a `./submit_ml_jobs.sh`
 script to submit them.
 """
 min_seed = 0
-max_seed = 25  # The number of jobs is max-min
+max_seed = 50  # The number of jobs is max-min
 repetitions = 1000  # The total repetitions = max_seed * repetitions
 noises = [0.05, 0]
 
