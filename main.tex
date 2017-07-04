@@ -41,7 +41,7 @@ Iterated Prisoner's Dilemma}
     opponents, including many well-known strategies from the literature, and all
     the trained strategies win standard tournaments against the total collection
     of other opponents. We also trained variants to win noisy tournaments.
-\end{abstract} 
+\end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
@@ -81,7 +81,7 @@ based on the opponent's first $n_1$ moves, the opponent's last $m_1$ moves, and
 the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
 depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
-training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$. 
+training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
 First impressions matter in the IPD. The library includes a strategy
 called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
 
@@ -170,63 +170,136 @@ rounds of play, these strategies were omitted from the tournament results.
 
 \subsection{Standard Tournament}
 
-We conducted a tournament with all strategies in the Axelrod library. The top
-11 performing strategies by mean payoff are all strategies trained to maximize
-total payoff against a subset of the strategies (Table \ref{tbl:standard_score}).
+We conducted a tournament with all strategies in the Axelrod library, including
+some parametrized strategies. These are listed in
+Appendix~\ref{app:list_of_players}.
+% TODO Add list of players
+The top
+11 performing strategies by median payoff are all strategies trained to maximize
+% TODO Potentially modify this as more repetitions are analysed.
+total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
 The next strategy is
-Desired Belief Strategy (DBS) which actively analyzes the opponent and responds
+Desired Belief Strategy (DBS)
+% TODO Add reference for DBS
+which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table,
-Omega TFT, and Fool Me Once, a grudging strategy that defects indefinitely on
-the second defection. All strategies in the tournament follow a simple set of
+Fool Me Once, a grudging strategy that defects indefinitely on
+the second defection and Omega Tit For Tat.
+% TODO Add a reference for Omega TfT
+All strategies in the tournament follow a simple set of
 rules in accordance with earlier tournaments:
+
 \begin{itemize}
+  \item Players are unaware of the number of turns in a match
   \item Players carry no acquired state between matches
   \item Players cannot observe the outcome of other matches
   \item Players cannot identify their opponent by any label or identifier
   \item Players cannot manipulate or inspect their opponents in any way
 \end{itemize}
 
-Pairwise payoff results are given as a heatmap (Figure ) which
-shows that many strategies achieve mutual cooperation with each other and
+% Table of best strategies
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_scores_summary.tex}
+        \caption{Standard Tournament: Top Ranking Strategies by median score
+        (50th percentile) in 15,000 Tournaments}
+        % TODO Update caption as more repetitions are carried out
+        % TODO Potentially remove count from table (including it for now so as
+        % to avoid confusion.
+        \label{tbl:standard_score}
+\end{table}
+
+Violin plots showing the distribution of the scores of each strategy (again
+ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
+
+\begin{landscape}
+    \begin{figure}[!hbtp]
+        \includegraphics[width=\paperwidth]{./assets/standard_scores_boxplots.pdf}
+        \caption{Ranking by median score for the Standard Tournament}
+        \label{fig:standard_boxplot}
+    \end{figure}
+\end{landscape}
+
+Pairwise payoff results are given as a heatmap (Figure~\ref{fig:standard_heatmap})
+which shows that many strategies achieve mutual cooperation with each other and
 that the top performing strategies never defect first but are able to exploit
 weaker strategies that attempt to defect.
+
+\begin{figure}[!hbtp]
+    \includegraphics[width=\textwidth]{./assets/standard_scores_heatmap.pdf}
+    \caption{Pairwise Match results for the Standard Tournament}
+    \label{fig:standard_heatmap}
+\end{figure}
 
 The strategies that win the most matches are Defector, Aggravater, followed by
 handshaking and zero determinant strategies. This includes two handshaking
 strategies that were the result of training to maximize Moran process fixation.
-No strategies were trained specifically to win matches. None of the top scoring
+No strategies were trained specifically to win matches.
+None of the top scoring
 strategies appear in the top 20 list of strategies ranked by match wins.
+This can be seen in Figure~\ref{fig:standard_winplot} where the distribution of
+the number of wins of each strategy is shown.
 
-% Table of best strategies
+\begin{landscape}
+    \begin{figure}[!hbtp]
+        \centering
+        \includegraphics[width=\textwidth]{./assets/standard_wins_boxplots.pdf}
+        \caption{Ranking by Total wins for the Standard Tournament}
+        \label{fig:standard_winplot}
+    \end{figure}
+\end{landscape}
+
+The number of wins of the top strategies of Table~\ref{tbl:standard_wins} are
+shown in Table~\ref{tbl:standard_wins}. It is evident that although these
+strategies score highly they do not win many matches: the strategy with the most
+number of wins is the Evolved FSM 16 strategy that at most won 60
+(\(60/175\approx34\%\)) matches in a given tournament.
+% TODO Update this when more data comes in.
+
 \begin{table}[!hbtp]
     \centering
-        \input{./tex/standard_scores.tex}
-        \caption{Standard Tournament: Top Ranking Strategies by Median Score in 15,000 Tournaments}
-        \label{tbl:standard_score}
+        \input{./assets/standard_top_15_wins_summary.tex}
+        \caption{Standard Tournament: Number of wins of Top Ranking Strategies
+        by median score (50th percentile) in 15,000 Tournaments}
+        % TODO Update caption as more repetitions are carried out
+        % TODO Potentially remove count from table (including it for now so as
+        % to avoid confusion.
+        \label{tbl:standard_wins}
+\end{table}
+
+Finally, Table~\ref{tbl:standard_ranks} and
+Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
+of each strategy over the repeated tournaments. Whilst there is some
+stochasticity, the top three strategies almost always rank in the top three. For
+example, the worst that the Evolved Lookerup 2 2 2 ranks in a given tournament
+is 7th.
+
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_ranks_summary.tex}
+        \caption{Standard Tournament: Ranks of Top Ranking Strategies
+        by median score (50th percentile) in 15,000 Tournaments}
+        % TODO Update caption as more repetitions are carried out
+        % TODO Potentially remove count from table (including it for now so as
+        % to avoid confusion.
+        \label{tbl:standard_ranks}
 \end{table}
 
 \begin{landscape}
     \begin{figure}[!hbtp]
-        \includegraphics[width=\paperwidth]{plots/Standard_boxplot.pdf}
-        \caption{Ranking by Median Payoff for the Standard Tournament}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/standard_ranks_boxplots.pdf}
+        \caption{Rankings over each repeated tournament}
+        \label{fig:standard_ranks_boxplot}
     \end{figure}
 \end{landscape}
-
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \includegraphics[width=\paperwidth]{plots/Standard_winplot.pdf}
-        \caption{Ranking by Total wins for the Standard Tournament}
-    \end{figure}
-\end{landscape}
-
-\begin{figure}[!hbtp]
-    \includegraphics[width=\paperwidth]{plots/Standard_payoff.pdf}
-    \caption{Pairwise Match results for the Standard Tournament}
-\end{figure}
-
 
 
 Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
+% TODO This is actually a numerical approximation of the fingerprinting
+% described in ashlock's paper. There they consider a fingerprint to be an
+% analytic function.
 \cite{ashlock2009fingerprint}, we can compare
 strategies. For the top performing noisy strategies there is a striking similarity
 in the fingerprints.
