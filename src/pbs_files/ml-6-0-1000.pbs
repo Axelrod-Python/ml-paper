@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -q workq
+#PBS -N 6-0-1000
+#PBS -P PR350
+#PBS -o 6-0.txt
+#PBS -e 6-0.txt
+#PBS -l select=1:ncpus=16:mpiprocs=16
+#PBS -l place=scatter:excl
+#PBS -l walltime=70:00:00
+
+export MPLBACKEND="agg"
+# Run std
+cd /scratch/smavak/ml-paper/src
+/home/smavak/anaconda3/envs/ml-paper/bin/python main.py 1000 6 0
