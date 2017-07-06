@@ -24,7 +24,7 @@
 % Title
 \title{Reinforcement Learning Produces Dominant Strategies for the
 Iterated Prisoner's Dilemma}
-\author{Marc Harper \and Vincent Knight} % TODO Authors?
+\author{Marc Harper \and Vincent Knight} % TODO Authors
 \date{}
 
 
@@ -44,11 +44,16 @@ Iterated Prisoner's Dilemma}
 
 \section{Introduction}\label{sec:introduction}
 
-* Update on Axelrod Library
+The Axelrod library \cite{knight2016open} is an open source software for
+conducting iterated prisoner's dilemma (IPD) research with reproducibilty as a
+principal goal. Written in the Python programming language, to date over the
+library contains source code contibuted by over 50 individuals from a variety
+of geographic locations and technical backgrounds. The library is supported by
+a comprehensive test suite that covers all the intended behaviors of the
+strategies in the library, as well as the features that conduct matches,
+tournaments, and population dynamics.
 
-% TODO: more
-
-The Axelrod library \cite{knight2016open} now contains over 200 strategies,
+As of version 3.0.0, the library contains over 200 strategies,
 many from the scientific literature, including classic strategies like Win Stay
 Lose Shift \cite{nowak1993strategy} and previous tournament winners such as
 OmegaTFT \cite{slany2007some}, Adaptive Pavlov \cite{li2007design}, and
@@ -56,7 +61,12 @@ ZDGTFT2 \cite{stewart2012extortion}.
 
 % TODO: discuss earlier tournaments
 
-There are several previous publications that use evolutionary algorithms to
+In this work we utilize the collection of strategies in the Axelrod library
+to train new strategies specifically to win IPD tournaments. We train these
+strategies using generic strategy archetypes based on e.g. finite state
+machines, arriving at particularly effective parameter choices through
+evolutionary or particle swarm algorithms. There are several
+previous publications that use evolutionary algorithms to
 evolve IPD strategies in various circumstances
 \cite{ashlock2006training, ashlock2015multiple, ashlock2006changes,
       ashlock2014shaped, ashlock2014evolution, barlow2015varying,
@@ -65,7 +75,12 @@ evolve IPD strategies in various circumstances
 strategy trained to win against a collection of well-known IPD opponents and see
 \cite{franken2005particle} for a prior use of particle swarm algorithms. Our
 results are unique in that we are able to train against a large collection of
-well-known strategies available in the scientific literature.
+well-known strategies available in the scientific literature. Crucially, the
+software used in this work is openly available and can be used to train strategies
+in the future in a reliable manner, with confidence that the opponent strategies
+are correctly implemented and documented. Moreover, as of the time of writing,
+we claim that this work contains the best known strategies for the iterated
+prisoner's dilemma.
 
 \section{The Strategy Archetypes}
 
@@ -85,7 +100,7 @@ the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
 depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
-First impressions matter in the IPD\@. The library includes a strategy
+The library includes a strategy
 called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
@@ -107,8 +122,8 @@ with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
 
-This strategy type can be used to train arbitrary memory-$n$ strategies and a
-memory one strategy was trained and is called PSO Gambler Mem 1, with
+This strategy type can be used to train arbitrary memory-$n$ strategies. A
+memory one strategy called PSO Gambler Mem 1 was trained, with
 probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
                 \text{Pr}(\text{C}\;|\;\text{CD}),
                 \text{Pr}(\text{C}\;|\;\text{DC}),
@@ -116,14 +131,12 @@ probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
 Though it performs well in standard tournaments (see
 Table~\ref{tbl:standard_score})
 it is not as good as the longer memory strategies, and is bested by a similar
-strategy that also uses the first round of play: PSO Gamble 1 1 1.
+strategy that also uses the first round of play: PSO Gambler 1 1 1.
 
 These strategies are trained with a particle swarm algorithm rather than an
 evolutionary algorithm (though the former would suffice). Particle swarm
 algorithms have been used to trained IPD strategies previously
 \cite{franken2005particle}.
-
-% TODO: quantify how stochastic
 
 \subsection{ANN: Single Layer Artificial Neural Network}
 
@@ -133,39 +146,40 @@ of play such as the opponents trailing moves, the total number of cooperations
 of the player and the opponent, and several others, which are then input
 into a feed forward neural network with one layer and user-supplied width.
 An inner layer with just five nodes performs quite well in both deterministic and
-noisy tournaments. The output of the ANN used in this work is deterministic and
+noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
-
-% TODO: list features
 
 \subsection{Finite State Machines}
 
 We used strategies based on finite state machines to create a number of
-strategies. These strategies are deterministic and are efficient computational.
-At each state the machine transitions to a new state and plays a specified move
-depending on the opponent's last action. These strategies can encode a variety
-of other strategies, including classic strategies like TitForTat, encode
-handshakes, and grudging strategies that always defect after an opponent
-defection.
+strategies. These strategies are deterministic and are efficient computationally.
+In each round of play the strategy selects an action based on the current state
+and the opponent's last action, transitioning to a new state for the next round.
+These strategies can encode a variety
+of other strategies, including classic strategies like TitForTat, 
+handshake strategies, and grudging strategies that always defect after
+an opponent defection.
 
 % TODO: One or more FSM diagrams
 
 \subsection{Hidden Markov Models}
 
 We also trained stochastic versions of finite state machine players called
-hidden Markov model players or HMMs. These strategies also encode an internal
-state with probabilistic transitions to other states and cooperate or defect
-with various probabilities at each state. These are the best performing
-stochastic strategies in the library but take longer to train due to their
-stochasticity.
+hidden Markov model players or HMMs. Like the finite state machines, these
+strategies also encode an internal
+state with probabilistic transitions based on the prior round of play to other
+states and cooperate or defect with various probabilities at each state. These
+are the best performing stochastic strategies in the library but take longer
+to train due to their stochasticity.
 
 \subsection{Meta Strategies}
 
 Last but not least there are several strategies based on ensemble methods that
 are common in machine learning called Meta strategies. These strategies are
-composed of a team of other strategies and each is polled for its desired next
-move. The ensemble then selects the next move based on some rule, such as the
+composed of a team of other strategies. In each round, each member of the team
+is polled for its desired next
+move. The ensemble then selects the next move based on a rule, such as the
 consensus vote in the case of MetaMajority or the best individual performance
 in the case of MetaWinner. These strategies were among the best in the library
 before the inclusion of those trained by reinforcement learning.
@@ -178,23 +192,19 @@ rounds of play, these strategies were omitted from the tournament results.
 
 \subsection{Standard Tournament}
 
-We conducted a tournament with all strategies in the Axelrod library, including
-% TODO Not all strategies
-some parametrized strategies. These are listed in
+We conducted a tournament with a large collection of strategies from the Axelrod
+library, including some additional parametrized strategies (e.g. various parameter
+choices for Generous Tit For Tat). These are listed in
 Appendix~\ref{app:list_of_players}.
-% TODO Add list of players
-The top
-11 performing strategies by median payoff are all strategies trained to maximize
+The top 11 performing strategies by median payoff are all strategies trained to maximize
 % TODO Potentially modify this as more repetitions are analysed.
 total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
-The next strategy is
-Desired Belief Strategy (DBS)
+The next strategy is Desired Belief Strategy (DBS)
 % TODO Add reference for DBS
 which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table,
 Fool Me Once, a grudging strategy that defects indefinitely on
-the second defection and Omega Tit For Tat.
-% TODO Add a reference for Omega TfT
+the second defection, and Omega Tit For Tat \cite{Slany2007}.
 All strategies in the tournament follow a simple set of
 rules in accordance with earlier tournaments:
 
@@ -206,13 +216,19 @@ rules in accordance with earlier tournaments:
   \item Players cannot manipulate or inspect their opponents in any way
 \end{itemize}
 
+Any strategy that does not follow these rules, such as a strategy that defects
+on the last round of play, was omitted from the tournament presented here (but
+not from the training pool).
+
 % Table of best strategies
 \begin{table}[!hbtp]
         \centering
         \input{./assets/standard_top_15_scores_summary.tex}
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
-        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
+        The leaderboard is dominated by the machine learning strategies. ~$^{*}$
+        indicates that the strategy was trained.}
         \label{tbl:standard_score}
 \end{table}
 
@@ -231,9 +247,9 @@ ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
 \end{landscape}
 
 Pairwise payoff results are given as a heatmap (Figure~\ref{fig:standard_heatmap})
-which shows that many strategies achieve mutual cooperation with each other and
-that the top performing strategies never defect first but are able to exploit
-weaker strategies that attempt to defect.
+which shows that many strategies achieve mutual cooperation. The top performing
+strategies never defect first yet are able to exploit weaker strategies that
+attempt to defect.
 
 \begin{figure}[!hbtp]
     \centering
@@ -247,8 +263,7 @@ weaker strategies that attempt to defect.
 The strategies that win the most matches are Defector, Aggravater, followed by
 handshaking and zero determinant strategies. This includes two handshaking
 strategies that were the result of training to maximize Moran process fixation.
-No strategies were trained specifically to win matches.
-None of the top scoring
+No strategies were trained specifically to win matches. None of the top scoring
 strategies appear in the top 20 list of strategies ranked by match wins.
 This can be seen in Figure~\ref{fig:standard_winplot} where the distribution of
 the number of wins of each strategy is shown.
@@ -285,7 +300,7 @@ Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. Whilst there is some
 stochasticity, the top three strategies almost always rank in the top three. For
 example, the worst that the Evolved Lookerup 2 2 2 ranks in a given tournament
-is 7th.
+is 8th.
 
 
 \begin{table}[!hbtp]
@@ -352,8 +367,7 @@ the presence of noise and three trained strategies trained without noise. One of
 the strategies trained with noise (PSO Gambler) actually performs less well than
 some of the other high ranking strategies including
 Spiteful TFT (TFT but defects indefinitely if the opponent defects twice
-consecutively) and OmegaTFT (also
-designed to handle noise).
+consecutively) and OmegaTFT (also designed to handle noise).
 
 % Table of best strategies
 \begin{table}[!hbtp]
@@ -361,7 +375,8 @@ designed to handle noise).
         \input{./assets/noisy_top_15_scores_summary.tex}
         \caption{Noisy (5\%) Tournament: Mean score per turn of top 15 strategies
         (ranked by median over
-        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)
+        ~$^{*}$ indicates that the strategy was trained.}
         \label{tbl:noisy_score}
 \end{table}
 
@@ -410,7 +425,7 @@ Aggravate appearing as the top three again.
 
 As shown in Table~\ref{tbl:noisy_wins}, the top ranking strategies win a larger
 number of matches in the presence of noise. For example Spiteful Tit For Tat in
-one tournament won almost all it's matches (167).
+one tournament won almost all its matches (167).
 
 \begin{table}[!hbtp]
     \centering
@@ -424,7 +439,7 @@ one tournament won almost all it's matches (167).
 
 Finally, Table~\ref{tbl:noisy_ranks} and
 Figure~\ref{fig:noisy_ranks_boxplot} show the ranks (based on median score)
-of each strategy over the repeated tournaments. We see, that the stochasticity
+of each strategy over the repeated tournaments. We see that the stochasticity
 of the ranks understandably increases the DBS strategy never ranks lower than
 second and wins 75\% of the time. The two strategies trained for noisy
 tournaments rank in the top three 95\% of the time.
@@ -450,10 +465,9 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
-\cite{ashlock2009fingerprint}, we can compare
-strategies. For the top performing noisy strategies there is a striking similarity
-in the fingerprints.
+Again we compare the fingerprints. For the top performing noisy strategies there
+is a striking similarity in the fingerprints which indicates that the strategies
+may behave similarly in principle.
 
 \begin{figure}[!hbtp]
     \centering
@@ -480,37 +494,39 @@ in the fingerprints.
 \end{figure}
 
 
-
 \section{Methods}
 
 We trained a variety of strategies using evolutionary algorithms, and in the
-case of PSO Gambler particle swarm algorithms. The evolutionary algorithms
+case of PSO Gambler using a particle swarm algorithm. The evolutionary algorithms
 used standard techniques, varying strategies by mutation and crossover, and
 evaluating the performance against each opponent for many repetitions. The
 best performing strategies in each generation are persisted, variants created,
 and objective functions computed again. This process continues for approximately
 200 generations or until strategies no longer improve significantly.
 
-% Todo: Diagram with ANN training performance?
+% TODO: Diagram with ANN training performance?
 
 All training code is available on github. There are objective functions for
-* total payoff
-* total payoff difference
-* total Moran process wins (fixation probability)
+\begin{itemize}
+ \item total or mean payoff
+ \item total or mean payoff difference (unused in this work)
+ \item total Moran process wins (fixation probability)
+\end{itemize}
 
-New strategies can be easily trained with variations including noise, spatial
-structure, and probabilistically ending matches.
+These objectives can be easily modified to suit other purposes. New strategies
+can be easily trained with variations including noise, spatial structure, and
+probabilistically ending matches.
 
 \section{Discussion}
 
 The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
 opponents. A simple evolutionary algorithm produces strategies based on multiple
-standard machine learning techniques that are able to achieve a higher median
+standard machine learning techniques that are able to achieve a higher average
 score than any other known opponent in a standard tournament. Most of the trained
 strategies use multiple rounds of the history of play (some using all of it) and
 outperform memory-one strategies (though the trained memory one strategy performs
-well). The generic structure of the trained strategy did not appear to be
+well). The generic structure of the trained strategies did not appear to be
 critical -- strategies based on lookup tables, finite state machines, and stochastic
 variants all performed well. Single layer neural networks also performed well
 though these had some aspect of human involvement in the selection of features.
@@ -531,11 +547,20 @@ strategies.
 Of the strategies trained to maximize their median score all are generally
 cooperative, not defecting until the opponent defects. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
-the fact that mutual cooperation is an unstable equilibrium for the prisoner's
+the fact that mutual cooperation is an unstable evolutionary equilibrium for the prisoner's
 dilemma. Specifically we note that the reinforcement learning process for maximizing
-payout does not
-lead to exploitative zero determinant strategies, which may be a result of the
-collection of training strategies, many of which retaliate harshly.
+payout does not lead to exploitative zero determinant strategies, which may also
+be a result of the collection of training strategies, of which several retaliate harshly.
+
+We take the liberty of generalizing from the results of this study. For the trained
+strategies utilizing look up tables we generally found those that incorporate
+one of more of the initial rounds of play outperformed those that did not. The
+strategies based on neural networks and finite state machines also are able to
+condition throughout a match on the first rounds of play. Accordingly, we conclude
+that first impressions matter in the IPD\@. The best strategies are nice (never
+defecting first) and this property could be further investigated with the library
+in future work by e.g. forcing all strategies to defect on the first round.
+
 
 Finally, we note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained regularly. Most of the strategies were
@@ -544,7 +569,9 @@ and several other opponents. The precise parameters that are optimal will depend
 on the pool of opponents. Moreover we have not extensively trained strategies to
 determine the minimum parameters that are sufficient -- neural networks with
 fewer nodes and features and finite state machines with fewer states may suffice.
-See \cite{ashlock2013impact} for discussion of resource availability for IPD strategies.
+See \cite{ashlock2013impact} for discussion of resource availability for IPD
+strategies. It may be possible to train strategies more effective in noisy tournaments
+than DBS.
 
 
 Future work:
@@ -552,8 +579,6 @@ Future work:
 * Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
 decision players
 * further refine features and training parameters
-
-% TODO: Full strategy list
 
 % TODO: author contributions
 
