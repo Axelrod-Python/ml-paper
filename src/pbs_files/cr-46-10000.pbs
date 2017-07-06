@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -q workq
+#PBS -N cr-46-10000
+#PBS -P PR350
+#PBS -o 46-o.txt
+#PBS -e 46-e.txt
+#PBS -l select=1:ncpus=16:mpiprocs=16
+#PBS -l place=scatter:excl
+#PBS -l walltime=70:00:00
+
+export MPLBACKEND="agg"
+# Run std
+cd /scratch/smavak/ml-paper/src
+/home/smavak/anaconda3/envs/ml-paper/bin/python generate_cooperation_data.py 10000 0 0 46
