@@ -57,20 +57,24 @@ ZDGTFT2 \cite{stewart2012extortion}.
 % TODO: discuss earlier tournaments
 
 There are several previous publications that use evolutionary algorithms to
-evolve IPD strategies in various circumstances \cite{marks1989niche} \cite{fogel1993evolving} \cite{ashlock2006training}
-\cite{ashlock2006changes} \cite{vassiliades2010multiagent} \cite{ashlock2014shaped}
-\cite{ashlock2014evolution} \cite{ashlock2015multiple} \cite{barlow2015varying}
-\cite{sudo2015effects}. See also \cite{gaudesi2016exploiting} for a strategy
-trained to win against a collection of well-known IPD opponents and see
+evolve IPD strategies in various circumstances
+\cite{ashlock2006training, ashlock2015multiple, ashlock2006changes,
+      ashlock2014shaped, ashlock2014evolution, barlow2015varying,
+      fogel1993evolving, marks1989niche, sudo2015effects,
+      vassiliades2010multiagent}. See also \cite{gaudesi2016exploiting} for a
+strategy trained to win against a collection of well-known IPD opponents and see
 \cite{franken2005particle} for a prior use of particle swarm algorithms. Our
 results are unique in that we are able to train against a large collection of
 well-known strategies available in the scientific literature.
 
 \section{The Strategy Archetypes}
 
-The Axelrod library now contains many strategies based on machine learning
+The Axelrod library now contains many parametrised strategies trained using
+machine learning
 methods. Most are deterministic, use many rounds of memory, and perform
 extremely well in tournaments.
+
+The various archetypes will be described in the following sections.
 
 \subsection{LookerUp}
 
@@ -81,7 +85,7 @@ the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
 depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
-First impressions matter in the IPD. The library includes a strategy
+First impressions matter in the IPD\@. The library includes a strategy
 called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
@@ -105,9 +109,14 @@ EvolvedLookerUp2\_2\_2.
 
 This strategy type can be used to train arbitrary memory-$n$ strategies and a
 memory one strategy was trained and is called PSO Gambler Mem 1, with
-probabilities $(\text{Pr(C|CC)}, \text{Pr(C|CD)}, \text{Pr(C|DC)}, \text{Pr(C|DD)}) = (1, 0.5217, 0, 0.121)$. Though it performs well in deterministic tournaments
+probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
+                \text{Pr}(\text{C}\;|\;\text{CD}),
+                \text{Pr}(\text{C}\;|\;\text{DC}),
+                \text{Pr}(\text{C}\;|\;\text{DD})) = (1, 0.5217, 0, 0.121)$.
+Though it performs well in standard tournaments (see
+Table~\ref{tbl:standard_score})
 it is not as good as the longer memory strategies, and is bested by a similar
-strategy that also uses the first round of play.
+strategy that also uses the first round of play: PSO Gamble 1 1 1.
 
 These strategies are trained with a particle swarm algorithm rather than an
 evolutionary algorithm (though the former would suffice). Particle swarm
@@ -170,6 +179,7 @@ rounds of play, these strategies were omitted from the tournament results.
 \subsection{Standard Tournament}
 
 We conducted a tournament with all strategies in the Axelrod library, including
+% TODO Not all strategies
 some parametrized strategies. These are listed in
 Appendix~\ref{app:list_of_players}.
 % TODO Add list of players
@@ -198,7 +208,7 @@ rules in accordance with earlier tournaments:
 
 % Table of best strategies
 \begin{table}[!hbtp]
-    \centering
+        \centering
         \input{./assets/standard_top_15_scores_summary.tex}
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
@@ -211,6 +221,7 @@ ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
 
 \begin{landscape}
     \begin{figure}[!hbtp]
+        \centering
         \includegraphics[width=\paperwidth]{./assets/standard_scores_boxplots.pdf}
         \caption{Standard Tournament: Mean score per turn (ranked by median
         over
@@ -225,9 +236,10 @@ that the top performing strategies never defect first but are able to exploit
 weaker strategies that attempt to defect.
 
 \begin{figure}[!hbtp]
+    \centering
     \includegraphics[width=\textwidth]{./assets/standard_scores_heatmap.pdf}
     \caption{Standard Tournament: Mean score per turn of row players against
-    column players (ordered by median over
+    column players (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
     \label{fig:standard_heatmap}
 \end{figure}
@@ -244,8 +256,8 @@ the number of wins of each strategy is shown.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\textwidth]{./assets/standard_wins_boxplots.pdf}
-        \caption{Standard Tournament: number of wins per tournament (ordered by
+        \includegraphics[width=\paperwidth]{./assets/standard_wins_boxplots.pdf}
+        \caption{Standard Tournament: number of wins per tournament (ranked by
         median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{fig:standard_winplot}
@@ -288,8 +300,8 @@ is 7th.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\textwidth]{./assets/standard_ranks_boxplots.pdf}
-        \caption{Standard Tournament: rank in each tournament (ordered by
+        \includegraphics[width=\paperwidth]{./assets/standard_ranks_boxplots.pdf}
+        \caption{Standard Tournament: rank in each tournament (ranked by
         median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{fig:standard_ranks_boxplot}
@@ -356,6 +368,7 @@ designed to handle noise).
 
 \begin{landscape}
     \begin{figure}[!hbtp]
+        \centering
         \includegraphics[width=\paperwidth]{./assets/noisy_scores_boxplots.pdf}
         \caption{Noisy (5\%) Tournament: Mean score per turn (ranked by median
         over
@@ -372,9 +385,10 @@ similar collection of players excels at winning matches but again they have a
 poor total payoff.
 
 \begin{figure}[!hbtp]
+    \centering
     \includegraphics[width=\textwidth]{./assets/noisy_scores_heatmap.pdf}
     \caption{Noisy (5\%) Tournament: Mean score per turn of row players against
-    column players (ordered by median over
+    column players (ranked by median over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
     \label{fig:noisy_heatmap}
 \end{figure}
@@ -386,8 +400,8 @@ Aggravate appearing as the top three again.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\textwidth]{./assets/noisy_wins_boxplots.pdf}
-        \caption{Noisy (5\%) Tournament: number of wins per tournament (ordered by
+        \includegraphics[width=\paperwidth]{./assets/noisy_wins_boxplots.pdf}
+        \caption{Noisy (5\%) Tournament: number of wins per tournament (ranked by
         median over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{fig:noisy_winplot}
@@ -428,8 +442,8 @@ tournaments rank in the top three 95\% of the time.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\textwidth]{./assets/noisy_ranks_boxplots.pdf}
-        \caption{Noisy (5\%) Tournament: rank in each tournament (ordered by
+        \includegraphics[width=\paperwidth]{./assets/noisy_ranks_boxplots.pdf}
+        \caption{Noisy (5\%) Tournament: rank in each tournament (ranked by
         median over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{fig:noisy_ranks_boxplot}
@@ -549,5 +563,15 @@ This work was performed using the computational facilities of the Advanced
 Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 
 \printbibliography
+
+\appendix
+
+\section{List of players}\label{app:list_of_players}
+
+\begin{multicols}{2}
+	\begin{enumerate}
+		\input{./assets/list_of_players.tex}
+	\end{enumerate}
+\end{multicols}
 
 \end{document}
