@@ -157,7 +157,7 @@ strategies. These strategies are deterministic and are efficient computationally
 In each round of play the strategy selects an action based on the current state
 and the opponent's last action, transitioning to a new state for the next round.
 These strategies can encode a variety
-of other strategies, including classic strategies like TitForTat, 
+of other strategies, including classic strategies like TitForTat,
 handshake strategies, and grudging strategies that always defect after
 an opponent defection.
 
@@ -293,6 +293,20 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
         of top 15 strategies (ranked by median score over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
         \label{tbl:standard_wins}
+\end{table}
+
+Table~\ref{tbl:standard_wins_top_winners} shows the same information as
+Table~\ref{tbl:standard_wins} but for the top 15 strategies who win the most
+head to head matches.
+% TODO Add more?
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_winners_wins_summary.tex}
+        \caption{Standard Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:standard_wins_top_winners}
 \end{table}
 
 Finally, Table~\ref{tbl:standard_ranks} and
@@ -434,6 +448,20 @@ one tournament won almost all its matches (167).
         of top 15 strategies (ranked by median score over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_wins}
+\end{table}
+
+Table~\ref{tbl:noisy_wins_top_winners} shows the same information as
+Table~\ref{tbl:noisy_wins} but for the top 15 strategies who win the most
+head to head matches.
+% TODO Add more?
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_winners_wins_summary.tex}
+        \caption{Noisy (5\%) Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:noisy_wins_top_winners}
 \end{table}
 
 
