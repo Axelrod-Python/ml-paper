@@ -234,7 +234,8 @@ Training this strategy corresponds to finding mappings of states and histories
 to an action and a state. Figures~\ref{} show two of the trained finite state
 machines...
 % TODO Update sentence above.
-% TODO Add diagrams of FSMs.
+% TODO Add diagrams of FSMs. Note how the strategies are called FSM 16 but as is
+% evident in the diagram, it is in fact a 14 state fsm.
 
 \subsection{Hidden Markov Models}
 
@@ -286,12 +287,11 @@ Appendix~\ref{app:list_of_players}.
 The top 11 performing strategies by median payoff are all strategies trained to maximize
 % TODO Potentially modify this as more repetitions are analysed.
 total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
-The next strategy is Desired Belief Strategy (DBS)
-% TODO Add reference for DBS
+The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
 which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table,
 Fool Me Once, a grudging strategy that defects indefinitely on
-the second defection, and Omega Tit For Tat \cite{Slany2007}.
+the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 All strategies in the tournament follow a simple set of
 rules in accordance with earlier tournaments:
 
@@ -314,7 +314,8 @@ not from the training pool).
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
-        The leaderboard is dominated by the machine learning strategies. ~$^{*}$
+        The leaderboard is dominated by the trained strategies. Starred
+        strategies $^{*}$
         indicates that the strategy was trained.}
         \label{tbl:standard_score}
 \end{table}
@@ -385,7 +386,7 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
 Table~\ref{tbl:standard_wins_top_winners} shows the same information as
 Table~\ref{tbl:standard_wins} but for the top 15 strategies who win the most
 head to head matches.
-% TODO Add more?
+% TODO Add more discussion?
 
 \begin{table}[!hbtp]
     \centering
@@ -425,14 +426,11 @@ is 8th.
 \end{landscape}
 
 
-Using the method of fingerprinting described in \cite{ashlock2008fingerprinting,
-ashlock2009fingerprint}
-% TODO This is actually a numerical approximation of the fingerprinting
-% described in ashlock's paper. There they consider a fingerprint to be an
-% analytic function.
-we can compare
-strategies. For the top performing noisy strategies there is a striking similarity
-in the fingerprints.
+Using the a numerical method of fingerprinting based on
+\cite{ashlock2008fingerprinting, ashlock2009fingerprint} we can compare
+strategies. The fingerprints of the top performing standard strategies are shown
+in Figures~\ref{fig:comparison_fingerprint_standard}. There is a striking
+similarity in the fingerprints.
 
 \begin{figure}[!hbtp]
     \centering
@@ -457,10 +455,10 @@ in the fingerprints.
     \caption{Comparison of Fingerprints for Standard Tournament Top 3}
     \label{fig:comparison_fingerprint_standard}
 \end{figure}
-% TODO Add text ref to this
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
 cooperation in each round for the top three strategies.
+% TODO Discuss more? (If we want to keep this)
 
 \begin{figure}[!hbtp]
     \centering
@@ -573,7 +571,7 @@ one tournament won almost all its matches (167).
 Table~\ref{tbl:noisy_wins_top_winners} shows the same information as
 Table~\ref{tbl:noisy_wins} but for the top 15 strategies who win the most
 head to head matches.
-% TODO Add more?
+% TODO Add more discussion?
 
 \begin{table}[!hbtp]
     \centering
@@ -613,7 +611,8 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Again we compare the fingerprints. For the top performing noisy strategies there
+Again we compare the fingerprints. For the top performing noisy strategies
+(Figure~\ref{fig:comparison_fingerprint_noisy}) there
 is a striking similarity in the fingerprints which indicates that the strategies
 may behave similarly in principle.
 
@@ -640,10 +639,10 @@ may behave similarly in principle.
     \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
     \label{fig:comparison_fingerprint_noisy}
 \end{figure}
-% TODO Add text ref to this
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
 cooperation in each round for the top three strategies.
+% TODO Add more discussion
 
 \begin{figure}[!hbtp]
     \centering
@@ -689,7 +688,7 @@ and objective functions computed again. This process continues for approximately
 % TODO: Diagram with ANN training performance?
 
 All training code is available on github. There are objective functions for
-% TODO We should archive the code.
+% TODO Include pointer when code is archived.
 
 \begin{itemize}
  \item total or mean payoff
@@ -705,7 +704,7 @@ probabilistically ending matches.
 
 The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
-opponents. A simple evolutionary algorithm produces strategies based on multiple
+opponents. An evolutionary algorithm produces strategies based on multiple
 standard machine learning techniques that are able to achieve a higher average
 score than any other known opponent in a standard tournament. Most of the trained
 strategies use multiple rounds of the history of play (some using all of it) and
@@ -719,36 +718,37 @@ incorporates feature engineering would likely also perform well.
 
 In opposition to historical tournament results and community folklore,
 our results show that complex strategies can be very effective for the
-IPD. It is not the complexity of strategies that is disadvantageous; rather that directly
+IPD\@. It is not the complexity of strategies that is disadvantageous; rather that directly
 designing a broadly effective strategy is no easy task. Of all the human-designed
 strategies in the library, only DBS consistently performs well, and it is
 substantially more complex than traditional tournament winners like TFT, OmegaTFT,
 and zero determinant strategies. Furthermore, dealing with noise is difficult
 for most strategies. Two strategies designed specifically to account for noise,
-DBS and OmegaTFT, perform well and only DBS performs better than our trained
-strategies.
+DBS and OmegaTFT, perform well and only DBS performs better than the trained
+strategies and \textbf{only} in the noisy context.
 
-Of the strategies trained to maximize their median score all are generally
+Of the strategies trained to maximize their average score all are generally
 cooperative, not defecting until the opponent defects. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
 the fact that mutual cooperation is an unstable evolutionary equilibrium for the prisoner's
-dilemma. Specifically we note that the reinforcement learning process for maximizing
-payout does not lead to exploitative zero determinant strategies, which may also
+dilemma. Specifically it is noted that the reinforcement learning process for maximizing
+payoff does not lead to exploitative zero determinant strategies, which may also
 be a result of the collection of training strategies, of which several retaliate harshly.
 
 We take the liberty of generalizing from the results of this study. For the trained
 strategies utilizing look up tables we generally found those that incorporate
-one of more of the initial rounds of play outperformed those that did not. The
+one or more of the initial rounds of play outperformed those that did not. The
 strategies based on neural networks and finite state machines also are able to
 condition throughout a match on the first rounds of play. Accordingly, we conclude
 that first impressions matter in the IPD\@. The best strategies are nice (never
-defecting first) and this property could be further investigated with the library
-in future work by e.g. forcing all strategies to defect on the first round.
-
+defecting first) and this property could be further investigated with the
+Axelrod library
+in future work by e.g.\ forcing all strategies to defect on the first round.
 
 Finally, we note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained regularly. Most of the strategies were
 trained on an earlier version of the library (v2.2.0) that did not include DBS
+% Cite v2.2.0
 and several other opponents. The precise parameters that are optimal will depend
 on the pool of opponents. Moreover we have not extensively trained strategies to
 determine the minimum parameters that are sufficient -- neural networks with
@@ -757,12 +757,12 @@ See \cite{ashlock2013impact} for discussion of resource availability for IPD
 strategies. It may be possible to train strategies more effective in noisy tournaments
 than DBS.
 
-
 Future work:
-* spatial tournaments and other variants
-* Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
-decision players
-* further refine features and training parameters
+% TODO Write the future work section
+%* spatial tournaments and other variants
+%* Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
+%decision players
+%* further refine features and training parameters
 
 % TODO: author contributions
 
@@ -776,6 +776,10 @@ Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 \appendix
 
 \section{List of players}\label{app:list_of_players}
+
+The players used for this study are from Axelrod version 2.13.0. The starred $*$
+strategies indicate those that have been trained using reinforcement learning
+algorithms.
 
 \begin{multicols}{2}
 	\begin{enumerate}
