@@ -1,0 +1,77 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{standalone}
+\usetikzlibrary{calc}
+
+\begin{document}
+    \begin{tikzpicture}
+
+    \tikzstyle{state}=[minimum width=0.8cm, font=\boldmath];
+
+
+    \node[circle, draw=black, thick] (0) at (0.0: 6cm) [state]    {$1$};
+    \node[circle, draw=black, thick] (1) at (24.0: 6cm) [state]   {$2$};
+    \node[circle, draw=black, thick] (2) at (48.0: 6cm) [state]   {$3$};
+    \node[circle, draw=black, thick] (3) at (72.0: 6cm) [state]   {$4$};
+    \node[circle, draw=black, thick] (4) at (96.0: 6cm) [state]   {$5$};
+    \node[circle, draw=black, thick] (6) at (120.0: 6cm) [state]  {$7$};
+    \node[circle, draw=black, thick] (7) at (144.0: 6cm) [state]  {$8$};
+    \node[circle, draw=black, thick] (8) at (168.0: 6cm) [state]  {$9$};
+    \node[circle, draw=black, thick] (9) at (192.0: 6cm) [state]  {$10$};
+    \node[circle, draw=black, thick] (10) at (216.0: 6cm) [state] {$11$};
+    \node[circle, draw=black, thick] (11) at (240.0: 6cm) [state] {$12$};
+    \node[circle, draw=black, thick] (12) at (264.0: 6cm) [state] {$13$};
+    \node[circle, draw=black, thick] (13) at (288.0: 6cm) [state] {$14$};
+    \node[circle, draw=black, thick] (14) at (312.0: 6cm) [state] {$15$};
+    \node[circle, draw=black, thick] (15) at (336.0: 6cm) [state] {$16$};
+
+    \node[circle, draw=black, thick] (5) at (0, 1) [state]   {$6$};
+
+    \coordinate[right of=0] (s);
+
+    \draw (s) edge[out=180, in=0, ->, thick] node [above] {$C$} (0);
+    \draw (0) edge[out=45, in=90, ->, thick, loop] node [above] {$C/C$} (0);
+    \draw (0) edge[out=180, in=45, ->, thick] node [above right, yshift=2cm, xshift=2.5cm] {$D/D$} (12);
+
+    \draw (1) edge[out=135, in=-90, ->, thick] node [above, yshift=1cm, xshift=-0.5cm] {$C/D$} (3);
+    \draw (1) edge[out=180, in=0, ->, thick] node [above left, yshift=1.5cm, xshift=-2.5cm] {$D/C$} (6);
+
+    \draw (2) edge[out=45, in=90, ->, thick, loop] node [above] {$C/D$} (2);
+    \draw (2) edge[out=-110, in=110, ->, thick] node [right, yshift=-3.7cm, xshift=0.8cm] {$D/D$} (14);
+
+    \draw (3) edge[out=45, in=80, ->, thick, loop] node [above] {$C/D$} (3);
+    \draw (3) edge[out=135, in=100, ->, thick, loop] node [above] {$D/D$} (3);
+    
+    \draw (5) edge[out=-90, in=90, ->, thick] node [above, rotate=90] {$C/D$} (12);
+    \draw (5) edge[out=180, in=90, ->, thick] node [above left, yshift=-3cm] {$D/D$} (10);
+
+    \draw (6) edge[out=-45, in=90, ->, thick] node [above right] {$C/C$} (5);
+    \draw (6) edge[out=-90, in=135, ->, thick] node [right, yshift=4.4cm, xshift=-0.2cm, rotate=90] {$D/D$} (12);
+
+    \draw (7) edge[out=45, in=-135, ->, thick] node [above right, xshift=1.5cm, yshift=0.5cm] {$C/D$} (3);
+    \draw (7) edge[out=0, in=-135, ->, thick] node [above right, yshift=-0.5cm, xshift=4cm] {$D/C$} (1);
+
+    \draw (8) edge[out=45, in=135, ->, thick] node [above left, xshift=-2cm, yshift=-0.2cm, rotate=45] {$C/C$} (5);
+    \draw (8) edge[out=-45, in=-135, ->, thick] node [above left, xshift=-2.2cm, rotate=-45] {$D/C$} (5);
+
+    \draw (10) edge[out=-90, in=180, ->, thick] node [below, yshift=-0.3cm] {$C/D$} (11);
+    \draw (10) edge[out=180, in=180, ->, thick] node [above left, rotate=90] {$D/C$} (8);
+
+    \draw (11) edge[out=0, in=180, ->, thick] node [above right, yshift=1.5cm, xshift=2.5cm] {$C/D$} (15);
+    \draw (11) edge[out=90, in=-110, ->, thick] node [below left, yshift=-2cm, xshift=-1.2cm] {$D/D$} (5);
+
+    \draw (12) edge[out=110, in=0, ->, thick] node [above, yshift=2.2cm, xshift=-2.2cm] {$C/C$} (8);
+    \draw (12) edge[out=-135, in=-90, ->, thick] node [below, yshift=-0.1cm] {$D/D$} (11);
+
+    \draw (13) edge[out=-45, in=-90, ->, thick, loop] node [below] {$C/D$} (13);
+    \draw (13) edge[out=90, in=-45, ->, thick] node [left, xshift=-4cm, yshift=3.3cm] {$D/D$} (7);
+
+    \draw (14) edge[out=-115, in=0, ->, thick] node [below, xshift=0.3cm] {$C/D$} (13);
+    \draw (14) edge[out=-165, in=55, ->, thick] node [above] {$D/D$} (13);
+
+    \draw (15) edge[out=45, in=90, ->, thick, loop] node [above] {$C/D$} (15);
+    \draw (15) edge[out=110, in=-90, ->, thick] node [above right, yshift=2.5cm, xshift=-0.2cm] {$D/C$} (2);
+
+    \end{tikzpicture}
+\end{document}

@@ -1,3 +1,10 @@
 src/data/
 *__pycache__*
 *.ipynb_checkpoints*
+
+# pycharm files
+.idea/
+
+# tex files
+*.aux
+*.log
