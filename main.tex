@@ -454,11 +454,42 @@ in the fingerprints.
         \caption{Fingerprint for Evolved\_FSM\_16}
     \end{subfigure}%
 
-    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
-    \label{fig:comparison_fingerprint_noisy}
+    \caption{Comparison of Fingerprints for Standard Tournament Top 3}
+    \label{fig:comparison_fingerprint_standard}
+\end{figure}
+% TODO Add text ref to this
+
+Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
+cooperation in each round for the top three strategies.
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_EvolvedLookerUp2_2_2_array.pdf}
+        \caption{Cooperation rate per round for EvolvedLookerUp\_2\_2\_2 (over
+        20 repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_HMM_5_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 20
+        repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 20
+        repetitions)}
+    \end{subfigure}%
+
+    \caption{Comparison of collaboration rates for Standard Tournament Top 3}
+    \label{fig:comparison_cooperation_heatmaps_standard}
 \end{figure}
 
-% TODO Include collaboration rating heatmaps
+% TODO Update these with 10k repetition version
 
 \subsection{Noisy Tournament}
 
@@ -606,11 +637,41 @@ may behave similarly in principle.
         \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
+    \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
     \label{fig:comparison_fingerprint_noisy}
 \end{figure}
+% TODO Add text ref to this
 
-% TODO Include collaboration rating heatmaps
+Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
+cooperation in each round for the top three strategies.
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_DBS_0-75_3_4_3_5_array.pdf}
+        \caption{Cooperation rate per round for DBS (over 20 repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_ANN_5_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 20
+        repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 20
+        repetitions)}
+    \end{subfigure}%
+
+    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3}
+    \label{fig:comparison_cooperation_heatmaps_noisy}
+\end{figure}
+
+% TODO Update these with 10k repetition version
 
 \section{Methods}\label{sec:methods}
 
