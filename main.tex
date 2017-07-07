@@ -36,8 +36,8 @@ Iterated Prisoner's Dilemma}
     We present tournament results and several powerful strategies for the Iterated
     Prisoner's Dilemma created using reinforcement learning techniques
     (evolutionary and particle swarm algorithms). These strategies are
-    trained to perform well against a corpus of over 100 distinct
-    opponents, including many well-known strategies from the literature, and all
+    trained to perform well against a corpus of over 170 distinct
+    opponents, including many well-known strategies from the literature. All
     the trained strategies win standard tournaments against the total collection
     of other opponents. We also trained variants to win noisy tournaments.
 \end{abstract}
@@ -87,18 +87,23 @@ prisoner's dilemma.
 The Axelrod library now contains many parametrised strategies trained using
 machine learning
 methods. Most are deterministic, use many rounds of memory, and perform
-extremely well in tournaments.
+extremely well in tournaments as will be discussed in Section~\ref{sec:results}.
+Training of these strategies will be discussed in Section~\ref{sec:methods}.
+
+These strategies can encode a variety
+of other strategies, including classic strategies like Tit For Tat,
+handshake strategies, and grudging strategies that always defect after
+an opponent defection.
 
 The various archetypes will be described in the following sections.
 
 \subsection{LookerUp}
 
-The first strategy trained with reinforcement learning in the library is based
-on lookup tables. The strategy encodes a set of deterministic responses
-based on the opponent's first $n_1$ moves, the opponent's last $m_1$ moves, and
-the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
-depth, otherwise it has depth $\max{m_1, m_2}$.
-This is shown diagrammatically in Figure~\ref{fig:lookerup}.
+The LookerUp strategy is based on a lookup tables and  encodes a set of
+deterministic responses based on the opponent's first $n_1$ moves, the
+opponent's last $m_1$ moves, and the players last $m_2$ moves. If $n_1 > 0$ then
+the player has infinite memory depth, otherwise it has depth $\max{m_1, m_2}$.
+This is illustrated diagrammatically in Figure~\ref{fig:lookerup}.
 
 \begin{figure}[!hbtp]
     \centering
@@ -107,11 +112,15 @@ This is shown diagrammatically in Figure~\ref{fig:lookerup}.
     \label{fig:lookerup}
 \end{figure}
 
-Although we tried various
-combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
+Training of this strategy corresponds to finding maps from histories to either a
+cooperation or a defection.
+
+Although various
+combinations of $n_1, m_1,$ and $m_2$ have been tried, the best performance at
+the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
-The library includes a strategy
-called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
+A strategy
+called EvolvedLookerUp2\_2\_2 is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
 parameters $n_1=0$ and $m_1=m_2=n$. For $n=1$, the resulting strategy cooperates
@@ -128,7 +137,7 @@ from training with a Moran process objective.
 Gambler is a stochastic variant of LookerUp. Instead of deterministically
 encoded moves the lookup table emits probabilities which are
 used to choose cooperation or defection.
-This is shown diagrammatically in Figure~\ref{fig:gambler}.
+This is illustrated diagrammatically in Figure~\ref{fig:gambler}.
 
 \begin{figure}[!hbtp]
     \centering
@@ -137,7 +146,10 @@ This is shown diagrammatically in Figure~\ref{fig:gambler}.
     \label{fig:gambler}
 \end{figure}
 
-The library includes a player trained
+Training of this strategy corresponds to finding maps from histories to
+a probability of cooperation.
+
+The library includes a strategy trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
@@ -151,7 +163,7 @@ probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
 Though it performs well in standard tournaments (see
 Table~\ref{tbl:standard_score})
 it is not as good as the longer memory strategies, and is bested by a similar
-strategy that also uses the first round of play: PSO Gambler 1 1 1.
+strategy that also uses the first round of play: PSOGambler\_1\_1\_1.
 
 These strategies are trained with a particle swarm algorithm rather than an
 evolutionary algorithm (though the former would suffice). Particle swarm
@@ -160,12 +172,34 @@ algorithms have been used to trained IPD strategies previously
 
 \subsection{ANN: Single Layer Artificial Neural Network}
 
-Strategies based on artificial neural networks can also be trained with an
-evolutionary algorithm. A variety of features are computed from the history
-of play such as the opponents trailing moves, the total number of cooperations
-of the player and the opponent, and several others, which are then input
-into a feed forward neural network with one layer and user-supplied width.
-This is shown diagrammatically in Figure~\ref{fig:ann}.
+Strategies based on artificial neural networks use a variety of features
+computed from the history of play:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item Opponent's first move is C
+        \item Opponent's first move is D
+        \item Opponent's second move is C
+        \item Opponent's second move is D
+        \item Player's previous move is C
+        \item Player's previous move is D
+        \item Player's second previous move is C
+        \item Player's second previous move is D
+        \item Opponent's previous move is C
+        \item Opponent's previous move is D
+        \item Opponent's second previous move is C
+        \item Opponent's second previous move is D
+        \item Total opponent cooperations
+        \item Total opponent defections
+        \item Total player cooperations
+        \item Total player defections
+        \item Round number
+    \end{itemize}
+\end{multicols}
+
+These are then input into a feed forward neural network with one layer and
+user-supplied width.  This is illustrated diagrammatically in
+Figure~\ref{fig:ann}.
 
 \begin{figure}[!hbtp]
     \centering
@@ -174,6 +208,8 @@ This is shown diagrammatically in Figure~\ref{fig:ann}.
     \label{fig:ann}
 \end{figure}
 
+Training of this strategy corresponds to finding parameters of the neural
+network.
 
 An inner layer with just five nodes performs quite well in both deterministic and
 noisy tournaments. The output of the ANN used in this work is deterministic;
@@ -182,15 +218,10 @@ be easily created.
 
 \subsection{Finite State Machines}
 
-We used strategies based on finite state machines to create a number of
-strategies. These strategies are deterministic and are efficient computationally.
+Strategies based on finite state machines are deterministic and computationally efficient.
 In each round of play the strategy selects an action based on the current state
 and the opponent's last action, transitioning to a new state for the next round.
-These strategies can encode a variety
-of other strategies, including classic strategies like TitForTat,
-handshake strategies, and grudging strategies that always defect after
-an opponent defection.
-This is shown diagrammatically in Figure~\ref{fig:fsm}.
+This is illustrated diagrammatically in Figure~\ref{fig:fsm}.
 
 \begin{figure}[!hbtp]
     \centering
@@ -199,18 +230,20 @@ This is shown diagrammatically in Figure~\ref{fig:fsm}.
     \label{fig:fsm}
 \end{figure}
 
-% TODO: One or more FSM diagrams
+Training this strategy corresponds to finding mappings of states and histories
+to an action and a state. Figures~\ref{} show two of the trained finite state
+machines...
+% TODO Update sentence above.
+% TODO Add diagrams of FSMs.
 
 \subsection{Hidden Markov Models}
 
-We also trained stochastic versions of finite state machine players called
-hidden Markov model players or HMMs. Like the finite state machines, these
-strategies also encode an internal
-state with probabilistic transitions based on the prior round of play to other
-states and cooperate or defect with various probabilities at each state. These
-are the best performing stochastic strategies in the library but take longer
-to train due to their stochasticity.
-This is shown diagrammatically in Figure~\ref{fig:hmm}.
+A variant of finite state machine strategies are called hidden Markov models
+(HMMs). Like the strategies based on finite state machines, these strategies
+also encode an internal state however use probabilistic transitions based on the
+prior round of play to other states and cooperate or defect with various
+probabilities at each state. This is
+shown diagrammatically in Figure~\ref{fig:hmm}.
 
 \begin{figure}[!hbtp]
     \centering
@@ -219,6 +252,12 @@ This is shown diagrammatically in Figure~\ref{fig:hmm}.
     \label{fig:hmm}
 \end{figure}
 
+Training this strategy corresponds to finding mappings of states and histories
+to probabilities of cooperating as well as probabilities of the next internal
+state.
+
+These are the best performing stochastic strategies
+in the library but take longer to train due to their stochasticity.
 
 \subsection{Meta Strategies}
 
@@ -233,9 +272,10 @@ before the inclusion of those trained by reinforcement learning.
 
 Because these strategies inherit many of the properties of the strategies
 on which they are based, including using the match length to defect on the last
-rounds of play, these strategies were omitted from the tournament results.
+rounds of play, not all of these strategies were included in results of this
+paper.
 
-\section{Results}
+\section{Results}\label{sec:results}
 
 \subsection{Standard Tournament}
 
@@ -385,11 +425,12 @@ is 8th.
 \end{landscape}
 
 
-Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
+Using the method of fingerprinting described in \cite{ashlock2008fingerprinting,
+ashlock2009fingerprint}
 % TODO This is actually a numerical approximation of the fingerprinting
 % described in ashlock's paper. There they consider a fingerprint to be an
 % analytic function.
-\cite{ashlock2009fingerprint}, we can compare
+we can compare
 strategies. For the top performing noisy strategies there is a striking similarity
 in the fingerprints.
 
@@ -417,6 +458,7 @@ in the fingerprints.
     \label{fig:comparison_fingerprint_noisy}
 \end{figure}
 
+% TODO Include collaboration rating heatmaps
 
 \subsection{Noisy Tournament}
 
@@ -568,8 +610,9 @@ may behave similarly in principle.
     \label{fig:comparison_fingerprint_noisy}
 \end{figure}
 
+% TODO Include collaboration rating heatmaps
 
-\section{Methods}
+\section{Methods}\label{sec:methods}
 
 We trained a variety of strategies using evolutionary algorithms, and in the
 case of PSO Gambler using a particle swarm algorithm. The evolutionary algorithms
@@ -578,10 +621,15 @@ evaluating the performance against each opponent for many repetitions. The
 best performing strategies in each generation are persisted, variants created,
 and objective functions computed again. This process continues for approximately
 200 generations or until strategies no longer improve significantly.
+% TODO Improve the explanation here with more details. As described this is not
+% reproducible.
+% TODO Include references
 
 % TODO: Diagram with ANN training performance?
 
 All training code is available on github. There are objective functions for
+% TODO We should archive the code.
+
 \begin{itemize}
  \item total or mean payoff
  \item total or mean payoff difference (unused in this work)
