@@ -36,8 +36,8 @@ Iterated Prisoner's Dilemma}
     We present tournament results and several powerful strategies for the Iterated
     Prisoner's Dilemma created using reinforcement learning techniques
     (evolutionary and particle swarm algorithms). These strategies are
-    trained to perform well against a corpus of over 100 distinct
-    opponents, including many well-known strategies from the literature, and all
+    trained to perform well against a corpus of over 170 distinct
+    opponents, including many well-known strategies from the literature. All
     the trained strategies win standard tournaments against the total collection
     of other opponents. We also trained variants to win noisy tournaments.
 \end{abstract}
@@ -87,21 +87,40 @@ prisoner's dilemma.
 The Axelrod library now contains many parametrised strategies trained using
 machine learning
 methods. Most are deterministic, use many rounds of memory, and perform
-extremely well in tournaments.
+extremely well in tournaments as will be discussed in Section~\ref{sec:results}.
+Training of these strategies will be discussed in Section~\ref{sec:methods}.
+
+These strategies can encode a variety
+of other strategies, including classic strategies like Tit For Tat,
+handshake strategies, and grudging strategies that always defect after
+an opponent defection.
 
 The various archetypes will be described in the following sections.
 
 \subsection{LookerUp}
 
-The first strategy trained with reinforcement learning in the library is based
-on lookup tables. The strategy encodes a set of deterministic responses
-based on the opponent's first $n_1$ moves, the opponent's last $m_1$ moves, and
-the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
-depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
-combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
+The LookerUp strategy is based on a lookup tables and  encodes a set of
+deterministic responses based on the opponent's first $n_1$ moves, the
+opponent's last $m_1$ moves, and the players last $m_2$ moves. If $n_1 > 0$ then
+the player has infinite memory depth, otherwise it has depth $\max{m_1, m_2}$.
+This is illustrated diagrammatically in Figure~\ref{fig:lookerup}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/lookerup}
+    \caption{Diagrammatic representation of the Looker up Archetype}
+    \label{fig:lookerup}
+\end{figure}
+
+Training of this strategy corresponds to finding maps from histories to either a
+cooperation or a defection.
+
+Although various
+combinations of $n_1, m_1,$ and $m_2$ have been tried, the best performance at
+the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
-The library includes a strategy
-called EvolvedLookerUp2\_2\_2 which is among the top strategies in the library.
+A strategy
+called EvolvedLookerUp2\_2\_2 is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
 parameters $n_1=0$ and $m_1=m_2=n$. For $n=1$, the resulting strategy cooperates
@@ -113,11 +132,24 @@ Winner12 emerged in less than 10 generations of training in our framework using
 a score maximizing objective. Strategies nearly identical to Winner21 arise
 from training with a Moran process objective.
 
-\subsection{PSO Gambler}
+\subsection{Gambler}
 
-PSO Gambler is a stochastic variant of LookerUp. Instead of deterministically
+Gambler is a stochastic variant of LookerUp. Instead of deterministically
 encoded moves the lookup table emits probabilities which are
-used to choose cooperation or defection. The library includes a player trained
+used to choose cooperation or defection.
+This is illustrated diagrammatically in Figure~\ref{fig:gambler}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/gambler}
+    \caption{Diagrammatic representation of the Gambler Archetype}
+    \label{fig:gambler}
+\end{figure}
+
+Training of this strategy corresponds to finding maps from histories to
+a probability of cooperation.
+
+The library includes a strategy trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
@@ -131,7 +163,7 @@ probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
 Though it performs well in standard tournaments (see
 Table~\ref{tbl:standard_score})
 it is not as good as the longer memory strategies, and is bested by a similar
-strategy that also uses the first round of play: PSO Gambler 1 1 1.
+strategy that also uses the first round of play: PSOGambler\_1\_1\_1.
 
 These strategies are trained with a particle swarm algorithm rather than an
 evolutionary algorithm (though the former would suffice). Particle swarm
@@ -140,11 +172,45 @@ algorithms have been used to trained IPD strategies previously
 
 \subsection{ANN: Single Layer Artificial Neural Network}
 
-Strategies based on artificial neural networks can also be trained with an
-evolutionary algorithm. A variety of features are computed from the history
-of play such as the opponents trailing moves, the total number of cooperations
-of the player and the opponent, and several others, which are then input
-into a feed forward neural network with one layer and user-supplied width.
+Strategies based on artificial neural networks use a variety of features
+computed from the history of play:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item Opponent's first move is C
+        \item Opponent's first move is D
+        \item Opponent's second move is C
+        \item Opponent's second move is D
+        \item Player's previous move is C
+        \item Player's previous move is D
+        \item Player's second previous move is C
+        \item Player's second previous move is D
+        \item Opponent's previous move is C
+        \item Opponent's previous move is D
+        \item Opponent's second previous move is C
+        \item Opponent's second previous move is D
+        \item Total opponent cooperations
+        \item Total opponent defections
+        \item Total player cooperations
+        \item Total player defections
+        \item Round number
+    \end{itemize}
+\end{multicols}
+
+These are then input into a feed forward neural network with one layer and
+user-supplied width.  This is illustrated diagrammatically in
+Figure~\ref{fig:ann}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/ann}
+    \caption{Diagrammatic representation of the ANN Archetype}
+    \label{fig:ann}
+\end{figure}
+
+Training of this strategy corresponds to finding parameters of the neural
+network.
+
 An inner layer with just five nodes performs quite well in both deterministic and
 noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
@@ -152,26 +218,47 @@ be easily created.
 
 \subsection{Finite State Machines}
 
-We used strategies based on finite state machines to create a number of
-strategies. These strategies are deterministic and are efficient computationally.
+Strategies based on finite state machines are deterministic and computationally efficient.
 In each round of play the strategy selects an action based on the current state
 and the opponent's last action, transitioning to a new state for the next round.
-These strategies can encode a variety
-of other strategies, including classic strategies like TitForTat, 
-handshake strategies, and grudging strategies that always defect after
-an opponent defection.
+This is illustrated diagrammatically in Figure~\ref{fig:fsm}.
 
-% TODO: One or more FSM diagrams
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/fsm}
+    \caption{Diagrammatic representation of the Finite state machine Archetype}
+    \label{fig:fsm}
+\end{figure}
+
+Training this strategy corresponds to finding mappings of states and histories
+to an action and a state. Figures~\ref{} show two of the trained finite state
+machines...
+% TODO Update sentence above.
+% TODO Add diagrams of FSMs. Note how the strategies are called FSM 16 but as is
+% evident in the diagram, it is in fact a 14 state fsm.
 
 \subsection{Hidden Markov Models}
 
-We also trained stochastic versions of finite state machine players called
-hidden Markov model players or HMMs. Like the finite state machines, these
-strategies also encode an internal
-state with probabilistic transitions based on the prior round of play to other
-states and cooperate or defect with various probabilities at each state. These
-are the best performing stochastic strategies in the library but take longer
-to train due to their stochasticity.
+A variant of finite state machine strategies are called hidden Markov models
+(HMMs). Like the strategies based on finite state machines, these strategies
+also encode an internal state however use probabilistic transitions based on the
+prior round of play to other states and cooperate or defect with various
+probabilities at each state. This is
+shown diagrammatically in Figure~\ref{fig:hmm}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/hmm}
+    \caption{Diagrammatic representation of the Hidden Markov Model Archetype}
+    \label{fig:hmm}
+\end{figure}
+
+Training this strategy corresponds to finding mappings of states and histories
+to probabilities of cooperating as well as probabilities of the next internal
+state.
+
+These are the best performing stochastic strategies
+in the library but take longer to train due to their stochasticity.
 
 \subsection{Meta Strategies}
 
@@ -186,9 +273,10 @@ before the inclusion of those trained by reinforcement learning.
 
 Because these strategies inherit many of the properties of the strategies
 on which they are based, including using the match length to defect on the last
-rounds of play, these strategies were omitted from the tournament results.
+rounds of play, not all of these strategies were included in results of this
+paper.
 
-\section{Results}
+\section{Results}\label{sec:results}
 
 \subsection{Standard Tournament}
 
@@ -199,12 +287,11 @@ Appendix~\ref{app:list_of_players}.
 The top 11 performing strategies by median payoff are all strategies trained to maximize
 % TODO Potentially modify this as more repetitions are analysed.
 total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
-The next strategy is Desired Belief Strategy (DBS)
-% TODO Add reference for DBS
+The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
 which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table,
 Fool Me Once, a grudging strategy that defects indefinitely on
-the second defection, and Omega Tit For Tat \cite{Slany2007}.
+the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 All strategies in the tournament follow a simple set of
 rules in accordance with earlier tournaments:
 
@@ -227,7 +314,8 @@ not from the training pool).
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
-        The leaderboard is dominated by the machine learning strategies. ~$^{*}$
+        The leaderboard is dominated by the trained strategies. Starred
+        strategies $^{*}$
         indicates that the strategy was trained.}
         \label{tbl:standard_score}
 \end{table}
@@ -295,6 +383,20 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
         \label{tbl:standard_wins}
 \end{table}
 
+Table~\ref{tbl:standard_wins_top_winners} shows the same information as
+Table~\ref{tbl:standard_wins} but for the top 15 strategies who win the most
+head to head matches.
+% TODO Add more discussion?
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_winners_wins_summary.tex}
+        \caption{Standard Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:standard_wins_top_winners}
+\end{table}
+
 Finally, Table~\ref{tbl:standard_ranks} and
 Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. Whilst there is some
@@ -324,13 +426,11 @@ is 8th.
 \end{landscape}
 
 
-Using the method of fingerprinting described in \cite{ashlock2008fingerprinting}
-% TODO This is actually a numerical approximation of the fingerprinting
-% described in ashlock's paper. There they consider a fingerprint to be an
-% analytic function.
-\cite{ashlock2009fingerprint}, we can compare
-strategies. For the top performing noisy strategies there is a striking similarity
-in the fingerprints.
+Using the a numerical method of fingerprinting based on
+\cite{ashlock2008fingerprinting, ashlock2009fingerprint} we can compare
+strategies. The fingerprints of the top performing standard strategies are shown
+in Figures~\ref{fig:comparison_fingerprint_standard}. There is a striking
+similarity in the fingerprints.
 
 \begin{figure}[!hbtp]
     \centering
@@ -352,10 +452,42 @@ in the fingerprints.
         \caption{Fingerprint for Evolved\_FSM\_16}
     \end{subfigure}%
 
-    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
-    \label{fig:comparison_fingerprint_noisy}
+    \caption{Comparison of Fingerprints for Standard Tournament Top 3}
+    \label{fig:comparison_fingerprint_standard}
 \end{figure}
 
+Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
+cooperation in each round for the top three strategies.
+% TODO Discuss more? (If we want to keep this)
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_EvolvedLookerUp2_2_2_array.pdf}
+        \caption{Cooperation rate per round for EvolvedLookerUp\_2\_2\_2 (over
+        20 repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_HMM_5_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 20
+        repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 20
+        repetitions)}
+    \end{subfigure}%
+
+    \caption{Comparison of collaboration rates for Standard Tournament Top 3}
+    \label{fig:comparison_cooperation_heatmaps_standard}
+\end{figure}
+
+% TODO Update these with 10k repetition version
 
 \subsection{Noisy Tournament}
 
@@ -436,6 +568,20 @@ one tournament won almost all its matches (167).
         \label{tbl:noisy_wins}
 \end{table}
 
+Table~\ref{tbl:noisy_wins_top_winners} shows the same information as
+Table~\ref{tbl:noisy_wins} but for the top 15 strategies who win the most
+head to head matches.
+% TODO Add more discussion?
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_winners_wins_summary.tex}
+        \caption{Noisy (5\%) Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:noisy_wins_top_winners}
+\end{table}
+
 
 Finally, Table~\ref{tbl:noisy_ranks} and
 Figure~\ref{fig:noisy_ranks_boxplot} show the ranks (based on median score)
@@ -465,7 +611,8 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Again we compare the fingerprints. For the top performing noisy strategies there
+Again we compare the fingerprints. For the top performing noisy strategies
+(Figure~\ref{fig:comparison_fingerprint_noisy}) there
 is a striking similarity in the fingerprints which indicates that the strategies
 may behave similarly in principle.
 
@@ -489,12 +636,43 @@ may behave similarly in principle.
         \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of Fingerprints for Noisy Tournament Top 3}
+    \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
     \label{fig:comparison_fingerprint_noisy}
 \end{figure}
 
+Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
+cooperation in each round for the top three strategies.
+% TODO Add more discussion
 
-\section{Methods}
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_DBS_0-75_3_4_3_5_array.pdf}
+        \caption{Cooperation rate per round for DBS (over 20 repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_ANN_5_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 20
+        repetitions)}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 20
+        repetitions)}
+    \end{subfigure}%
+
+    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3}
+    \label{fig:comparison_cooperation_heatmaps_noisy}
+\end{figure}
+
+% TODO Update these with 10k repetition version
+
+\section{Methods}\label{sec:methods}
 
 We trained a variety of strategies using evolutionary algorithms, and in the
 case of PSO Gambler using a particle swarm algorithm. The evolutionary algorithms
@@ -503,10 +681,17 @@ evaluating the performance against each opponent for many repetitions. The
 best performing strategies in each generation are persisted, variants created,
 and objective functions computed again. This process continues for approximately
 200 generations or until strategies no longer improve significantly.
+% TODO Improve the explanation here with more details. As described this is not
+% reproducible.
+% TODO Include references
 
 % TODO: Diagram with ANN training performance?
 
-All training code is available on github. There are objective functions for
+All training code used for this work is archived at
+\cite{marc_harper_2017_824264}. It is (similarly to the Axelrod library)
+available on github \url{https://github.com/Axelrod-Python/axelrod-dojo}.
+There are objective functions for:
+
 \begin{itemize}
  \item total or mean payoff
  \item total or mean payoff difference (unused in this work)
@@ -521,7 +706,7 @@ probabilistically ending matches.
 
 The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
-opponents. A simple evolutionary algorithm produces strategies based on multiple
+opponents. An evolutionary algorithm produces strategies based on multiple
 standard machine learning techniques that are able to achieve a higher average
 score than any other known opponent in a standard tournament. Most of the trained
 strategies use multiple rounds of the history of play (some using all of it) and
@@ -535,36 +720,37 @@ incorporates feature engineering would likely also perform well.
 
 In opposition to historical tournament results and community folklore,
 our results show that complex strategies can be very effective for the
-IPD. It is not the complexity of strategies that is disadvantageous; rather that directly
+IPD\@. It is not the complexity of strategies that is disadvantageous; rather that directly
 designing a broadly effective strategy is no easy task. Of all the human-designed
 strategies in the library, only DBS consistently performs well, and it is
 substantially more complex than traditional tournament winners like TFT, OmegaTFT,
 and zero determinant strategies. Furthermore, dealing with noise is difficult
 for most strategies. Two strategies designed specifically to account for noise,
-DBS and OmegaTFT, perform well and only DBS performs better than our trained
-strategies.
+DBS and OmegaTFT, perform well and only DBS performs better than the trained
+strategies and \textbf{only} in the noisy context.
 
-Of the strategies trained to maximize their median score all are generally
+Of the strategies trained to maximize their average score all are generally
 cooperative, not defecting until the opponent defects. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
 the fact that mutual cooperation is an unstable evolutionary equilibrium for the prisoner's
-dilemma. Specifically we note that the reinforcement learning process for maximizing
-payout does not lead to exploitative zero determinant strategies, which may also
+dilemma. Specifically it is noted that the reinforcement learning process for maximizing
+payoff does not lead to exploitative zero determinant strategies, which may also
 be a result of the collection of training strategies, of which several retaliate harshly.
 
 We take the liberty of generalizing from the results of this study. For the trained
 strategies utilizing look up tables we generally found those that incorporate
-one of more of the initial rounds of play outperformed those that did not. The
+one or more of the initial rounds of play outperformed those that did not. The
 strategies based on neural networks and finite state machines also are able to
 condition throughout a match on the first rounds of play. Accordingly, we conclude
 that first impressions matter in the IPD\@. The best strategies are nice (never
-defecting first) and this property could be further investigated with the library
-in future work by e.g. forcing all strategies to defect on the first round.
-
+defecting first) and this property could be further investigated with the
+Axelrod library
+in future work by e.g.\ forcing all strategies to defect on the first round.
 
 Finally, we note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained regularly. Most of the strategies were
 trained on an earlier version of the library (v2.2.0) that did not include DBS
+% Cite v2.2.0
 and several other opponents. The precise parameters that are optimal will depend
 on the pool of opponents. Moreover we have not extensively trained strategies to
 determine the minimum parameters that are sufficient -- neural networks with
@@ -573,12 +759,12 @@ See \cite{ashlock2013impact} for discussion of resource availability for IPD
 strategies. It may be possible to train strategies more effective in noisy tournaments
 than DBS.
 
-
 Future work:
-* spatial tournaments and other variants
-* Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
-decision players
-* further refine features and training parameters
+% TODO Write the future work section
+%* spatial tournaments and other variants
+%* Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
+%decision players
+%* further refine features and training parameters
 
 % TODO: author contributions
 
@@ -592,6 +778,10 @@ Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 \appendix
 
 \section{List of players}\label{app:list_of_players}
+
+The players used for this study are from Axelrod version 2.13.0. The starred $*$
+strategies indicate those that have been trained using reinforcement learning
+algorithms.
 
 \begin{multicols}{2}
 	\begin{enumerate}
