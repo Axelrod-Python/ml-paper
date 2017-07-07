@@ -39,16 +39,16 @@
 
     % States
     \node (S) at ($(B) + (2, 0)$) {States};
-    \node (S1) at ($(S) + (0, -.55)$)  {1};
-    \node (S2) at ($(S1) + (0, -.55)$)  {2};
-    \node (S3) at ($(S2) + (0, -.55)$)  {1};
-    \node (S4) at ($(S3) + (0, -.55)$)  {3};
+    \node (S1) at ($(S) + (0, -.55)$)  {2};
+    \node (S2) at ($(S1) + (0, -.55)$)  {3};
+    \node (S3) at ($(S2) + (0, -.55)$)  {2};
+    \node (S4) at ($(S3) + (0, -.55)$)  {4};
     \node (S5) at ($(S4) + (0, -.55)$) {$\vdots$};
-    \node (S6) at ($(S5) + (0, -.75)$)  {2};
-    \node (S7) at ($(S6) + (0, -.55)$)  {0};
-    \node (S8) at ($(S7) + (0, -.55)$)  {1};
-    \node (S9) at ($(S8) + (0, -.55)$)  {1};
-    \node (S10) at ($(S9) + (0, -.55)$)  {0};
+    \node (S6) at ($(S5) + (0, -.75)$)  {3};
+    \node (S7) at ($(S6) + (0, -.55)$)  {1};
+    \node (S8) at ($(S7) + (0, -.55)$)  {2};
+    \node (S9) at ($(S8) + (0, -.55)$)  {2};
+    \node (S10) at ($(S9) + (0, -.55)$)  {1};
     % ---------------------------------------------------
 
 
@@ -56,7 +56,7 @@
     \draw[very thick, black, dashed] ($(A10) + (-.3, .3)$)  rectangle ($(S10) + (.3, -.3)$);
 
     %% Strategy inputs
-    \node (inputs) at ($(S5) + (2, 0)$) [right] {(C, C, 0)};
+    \node (inputs) at ($(S5) + (2, 0)$) [right] {(C, C, 1)};
 
     \draw [very thick, black, dashed, ->] ($(S10) + (.3, 0)$) -- (inputs);
 
@@ -65,14 +65,14 @@
     \node (pc) at ($(c_output) + (0, -.55)$) {\(p_c\)};
     \node (d_output) at ($(c_output) + (.55, 0)$) [defector] {D};
     \node (pd) at ($(pc) + (.55, 0)$) {\(p_d\)};
-    \node (state_output_1) at ($(d_output) + (.55, 0)$) {0};
-    \node (p0) at ($(pd) + (.55, 0)$) {\(p_0\)};
-    \node (state_output_2) at ($(state_output_1) + (.55, 0)$) {1};
-    \node (p1) at ($(p0) + (.55, 0)$) {\(p_1\)};
-    \node (state_output_3) at ($(state_output_2) + (.55, 0)$) {2};
-    \node (p2) at ($(p1) + (.55, 0)$) {\(p_2\)};
-    \node (state_output_4) at ($(state_output_3) + (.55, 0)$) {3};
-    \node (p3) at ($(p2) + (.55, 0)$) {\(p_3\)};
+    \node (state_output_1) at ($(d_output) + (.55, 0)$) {1};
+    \node (p0) at ($(pd) + (.55, 0)$) {\(p_1\)};
+    \node (state_output_2) at ($(state_output_1) + (.55, 0)$) {2};
+    \node (p1) at ($(p0) + (.55, 0)$) {\(p_2\)};
+    \node (state_output_3) at ($(state_output_2) + (.55, 0)$) {3};
+    \node (p2) at ($(p1) + (.55, 0)$) {\(p_3\)};
+    \node (state_output_4) at ($(state_output_3) + (.55, 0)$) {4};
+    \node (p3) at ($(p2) + (.55, 0)$) {\(p_4\)};
 
     \draw [->, very thick] (inputs) -- (c_output);
 \end{tikzpicture}

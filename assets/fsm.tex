@@ -39,16 +39,16 @@
 
     % States
     \node (S) at ($(B) + (2, 0)$) {States};
-    \node (S1) at ($(S) + (0, -.55)$)  {1};
-    \node (S2) at ($(S1) + (0, -.55)$)  {0};
-    \node (S3) at ($(S2) + (0, -.55)$)  {1};
-    \node (S4) at ($(S3) + (0, -.55)$)  {3};
+    \node (S1) at ($(S) + (0, -.55)$)  {2};
+    \node (S2) at ($(S1) + (0, -.55)$)  {1};
+    \node (S3) at ($(S2) + (0, -.55)$)  {2};
+    \node (S4) at ($(S3) + (0, -.55)$)  {4};
     \node (S5) at ($(S4) + (0, -.55)$) {$\vdots$};
-    \node (S6) at ($(S5) + (0, -.75)$)  {2};
-    \node (S7) at ($(S6) + (0, -.55)$)  {0};
-    \node (S8) at ($(S7) + (0, -.55)$)  {1};
-    \node (S9) at ($(S8) + (0, -.55)$)  {1};
-    \node (S10) at ($(S9) + (0, -.55)$)  {0};
+    \node (S6) at ($(S5) + (0, -.75)$)  {3};
+    \node (S7) at ($(S6) + (0, -.55)$)  {1};
+    \node (S8) at ($(S7) + (0, -.55)$)  {2};
+    \node (S9) at ($(S8) + (0, -.55)$)  {2};
+    \node (S10) at ($(S9) + (0, -.55)$)  {1};
     % ---------------------------------------------------
 
 
@@ -56,13 +56,13 @@
     \draw[very thick, black, dashed] ($(A10) + (-.3, .3)$)  rectangle ($(S10) + (.3, -.3)$);
 
     %% Strategy inputs
-    \node (inputs) at ($(S5) + (2, 0)$) [right] {(C, C, 0)};
+    \node (inputs) at ($(S5) + (2, 0)$) [right] {(C, C, 1)};
 
     \draw [very thick, black, dashed, ->] ($(S10) + (.3, 0)$) -- (inputs);
 
     % output
     \node (action_output) at ($(inputs) + (1.5, 0)$) [cooperator] {C};
-    \node (state_output) at ($(action_output) + (.55, 0)$) {3};
+    \node (state_output) at ($(action_output) + (.55, 0)$) {4};
 
     \draw [->, very thick] (inputs) -- (action_output);
 \end{tikzpicture}
