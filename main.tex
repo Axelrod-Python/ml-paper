@@ -44,26 +44,27 @@ Iterated Prisoner's Dilemma}
 
 \section{Introduction}\label{sec:introduction}
 
-The Axelrod library \cite{knight2016open} is an open source software for
-conducting iterated prisoner's dilemma (IPD) research with reproducibilty as a
-principal goal. Written in the Python programming language, to date over the
-library contains source code contibuted by over 50 individuals from a variety
-of geographic locations and technical backgrounds. The library is supported by
-a comprehensive test suite that covers all the intended behaviors of the
-strategies in the library, as well as the features that conduct matches,
-tournaments, and population dynamics.
+The Axelrod library \cite{axelrodproject, knight2016open} is an open source
+software for conducting iterated prisoner's dilemma (IPD) research with
+reproducibility as a principal goal. Written in the Python programming language,
+to date over the library contains source code contributed by over 50 individuals
+from a variety of geographic locations and technical backgrounds. The library
+is supported by a comprehensive test suite that covers all the intended
+behaviors of the strategies in the library, as well as the features that
+conduct matches, tournaments, and population dynamics.
 
-As of version 3.0.0, the library contains over 200 strategies,
-many from the scientific literature, including classic strategies like Win Stay
-Lose Shift \cite{nowak1993strategy} and previous tournament winners such as
-OmegaTFT \cite{slany2007some}, Adaptive Pavlov \cite{li2007design}, and
-ZDGTFT2 \cite{stewart2012extortion}.
+The library is continuously developed and as of version 3.0.0, the library
+contains over 200 strategies, many from the scientific literature, including
+classic strategies like Win Stay Lose Shift \cite{nowak1993strategy} and
+previous tournament winners such as OmegaTFT \cite{slany2007some}, Adaptive
+Pavlov \cite{li2007design}, and ZDGTFT2 \cite{stewart2012extortion}.
 
 % TODO: discuss earlier tournaments
 
-In this work we utilize the collection of strategies in the Axelrod library
-to train new strategies specifically to win IPD tournaments. We train these
-strategies using generic strategy archetypes based on e.g. finite state
+In this work we describe how collections of strategies in the Axelrod library
+have been used to train new strategies specifically to win IPD tournaments.
+These strategies are trained using generic strategy archetypes based on e.g.
+finite state
 machines, arriving at particularly effective parameter choices through
 evolutionary or particle swarm algorithms. There are several
 previous publications that use evolutionary algorithms to
@@ -78,7 +79,8 @@ results are unique in that we are able to train against a large collection of
 well-known strategies available in the scientific literature. Crucially, the
 software used in this work is openly available and can be used to train strategies
 in the future in a reliable manner, with confidence that the opponent strategies
-are correctly implemented and documented. Moreover, as of the time of writing,
+are correctly implemented, tested and documented.
+Moreover, as of the time of writing,
 we claim that this work contains the best known strategies for the iterated
 prisoner's dilemma.
 
@@ -281,7 +283,7 @@ paper.
 \subsection{Standard Tournament}
 
 We conducted a tournament with a large collection of strategies from the Axelrod
-library, including some additional parametrized strategies (e.g. various parameter
+library, including some additional parametrized strategies (e.g.\ various parameter
 choices for Generous Tit For Tat). These are listed in
 Appendix~\ref{app:list_of_players}.
 The top 11 performing strategies by median payoff are all strategies trained to maximize
@@ -426,7 +428,7 @@ is 8th.
 \end{landscape}
 
 
-Using the a numerical method of fingerprinting based on
+Using a numerical method of fingerprinting based on
 \cite{ashlock2008fingerprinting, ashlock2009fingerprint} we can compare
 strategies. The fingerprints of the top performing standard strategies are shown
 in Figures~\ref{fig:comparison_fingerprint_standard}. There is a striking
@@ -674,33 +676,57 @@ cooperation in each round for the top three strategies.
 
 \section{Methods}\label{sec:methods}
 
-We trained a variety of strategies using evolutionary algorithms, and in the
-case of PSO Gambler using a particle swarm algorithm. The evolutionary algorithms
-used standard techniques, varying strategies by mutation and crossover, and
-evaluating the performance against each opponent for many repetitions. The
-best performing strategies in each generation are persisted, variants created,
-and objective functions computed again. This process continues for approximately
-200 generations or until strategies no longer improve significantly.
-% TODO Improve the explanation here with more details. As described this is not
-% reproducible.
-% TODO Include references
+The trained strategies (denoted by a \(^{*}\) in
+Appendix~\ref{app:list_of_players} were trained using reinforcement
+learning algorithms. The ideas of reinforcement learning can be attributed to
+the original work of \cite{turing1950computing} in which the notion that
+computers would learn by taking random actions but according to a distribution
+that picked actions with high rewards more often. The two particular algorithms
+used here:
 
-% TODO: Diagram with ANN training performance?
+\begin{itemize}
+    \item Evolutionary algorithm: \cite{moriarty1999evolutionary}.
+    \item Particle Swarm Algorithm: \cite{imran2013overview}.
+\end{itemize}
 
-All training code used for this work is archived at
-\cite{marc_harper_2017_824264}. It is (similarly to the Axelrod library)
-available on github \url{https://github.com/Axelrod-Python/axelrod-dojo}.
-There are objective functions for:
+The Particle Swarm Algorithm is implemented using the Python library:
+\url{https://pypi.python.org/pypi/pyswarm}. This algorithm was used only to
+train the Gambler archetype.
+
+All other strategies were trained using evolutionary algorithms. The
+evolutionary algorithms used standard techniques, varying strategies by
+mutation and crossover, and evaluating the performance against each opponent
+for many repetitions. The best performing strategies in each generation are
+persisted, variants created, and objective functions computed again.
+
+The default parameters for this procedure:
+
+\begin{itemize}
+	\item A population size of 40 individuals (kept constant across the
+        generations);
+	\item A mutation rate of 10\%;
+	\item 10 individuals kept from one generation to the next;
+    \item A total of 500 generations.
+\end{itemize}
+
+All implementations of these algorithms are archived at
+\cite{marc_harper_2017_824264}. This software is (similarly to the Axelrod
+library) available on github
+\url{https://github.com/Axelrod-Python/axelrod-dojo}.  There are objective
+functions for:
 
 \begin{itemize}
  \item total or mean payoff
  \item total or mean payoff difference (unused in this work)
- \item total Moran process wins (fixation probability)
+ \item total Moran process wins (fixation probability). This lead to the
+     strategies named TF1, TF2, TF3 listed in
+     Appendix~\ref{app:list_of_players}.
 \end{itemize}
 
-These objectives can be easily modified to suit other purposes. New strategies
-can be easily trained with variations including noise, spatial structure, and
-probabilistically ending matches.
+These can be used in Noisy or Standard environments (as evidenced by
+Sections~\ref{sec:standard} and~\ref{sec:noisy}). These objectives can be
+further modified to suit other purposes. New strategies could be trained with
+variations including spatial structure, and probabilistically ending matches.
 
 \section{Discussion}
 
@@ -715,6 +741,9 @@ well). The generic structure of the trained strategies did not appear to be
 critical -- strategies based on lookup tables, finite state machines, and stochastic
 variants all performed well. Single layer neural networks also performed well
 though these had some aspect of human involvement in the selection of features.
+% TODO Question: is this arguably just as much human involvement in the design
+% of the lookup tables etc? We could use a lookup table that also picks out the
+% action from the middle round, however we have chosen not too.
 The success of the other strategy types suggests that a deeper network that
 incorporates feature engineering would likely also perform well.
 
@@ -749,15 +778,14 @@ in future work by e.g.\ forcing all strategies to defect on the first round.
 
 Finally, we note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained regularly. Most of the strategies were
-trained on an earlier version of the library (v2.2.0) that did not include DBS
-% Cite v2.2.0
-and several other opponents. The precise parameters that are optimal will depend
-on the pool of opponents. Moreover we have not extensively trained strategies to
-determine the minimum parameters that are sufficient -- neural networks with
-fewer nodes and features and finite state machines with fewer states may suffice.
-See \cite{ashlock2013impact} for discussion of resource availability for IPD
-strategies. It may be possible to train strategies more effective in noisy tournaments
-than DBS.
+trained on an earlier version of the library (v2.2.0: \cite{axelrodproject2.2})
+that did not include DBS and several other opponents. The precise parameters
+that are optimal will depend on the pool of opponents. Moreover we have not
+extensively trained strategies to determine the minimum parameters that are
+sufficient -- neural networks with fewer nodes and features and finite state
+machines with fewer states may suffice. See \cite{ashlock2013impact} for
+discussion of resource availability for IPD strategies. It may be possible to
+train strategies more effective in noisy tournaments than DBS.
 
 Future work:
 % TODO Write the future work section
@@ -779,7 +807,8 @@ Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 
 \section{List of players}\label{app:list_of_players}
 
-The players used for this study are from Axelrod version 2.13.0. The starred $*$
+The players used for this study are from Axelrod version 2.13.0
+\cite{axelrodproject}. The starred $*$
 strategies indicate those that have been trained using reinforcement learning
 algorithms.
 
