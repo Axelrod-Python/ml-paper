@@ -97,7 +97,17 @@ The first strategy trained with reinforcement learning in the library is based
 on lookup tables. The strategy encodes a set of deterministic responses
 based on the opponent's first $n_1$ moves, the opponent's last $m_1$ moves, and
 the players last $m_2$ moves. If $n_1 > 0$ then the player has infinite memory
-depth, otherwise it has depth $\max{m_1, m_2}$. Although we tried various
+depth, otherwise it has depth $\max{m_1, m_2}$.
+This is shown diagrammatically in Figure~\ref{fig:lookerup}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/lookerup}
+    \caption{Diagrammatic representation of the Looker up Archetype}
+    \label{fig:lookerup}
+\end{figure}
+
+Although we tried various
 combinations of $n_1, m_1,$ and $m_2$, the best performance at the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
 The library includes a strategy
@@ -113,11 +123,21 @@ Winner12 emerged in less than 10 generations of training in our framework using
 a score maximizing objective. Strategies nearly identical to Winner21 arise
 from training with a Moran process objective.
 
-\subsection{PSO Gambler}
+\subsection{Gambler}
 
-PSO Gambler is a stochastic variant of LookerUp. Instead of deterministically
+Gambler is a stochastic variant of LookerUp. Instead of deterministically
 encoded moves the lookup table emits probabilities which are
-used to choose cooperation or defection. The library includes a player trained
+used to choose cooperation or defection.
+This is shown diagrammatically in Figure~\ref{fig:gambler}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/gambler}
+    \caption{Diagrammatic representation of the Gambler Archetype}
+    \label{fig:gambler}
+\end{figure}
+
+The library includes a player trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
@@ -145,6 +165,16 @@ evolutionary algorithm. A variety of features are computed from the history
 of play such as the opponents trailing moves, the total number of cooperations
 of the player and the opponent, and several others, which are then input
 into a feed forward neural network with one layer and user-supplied width.
+This is shown diagrammatically in Figure~\ref{fig:ann}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/ann}
+    \caption{Diagrammatic representation of the ANN Archetype}
+    \label{fig:ann}
+\end{figure}
+
+
 An inner layer with just five nodes performs quite well in both deterministic and
 noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
@@ -160,6 +190,14 @@ These strategies can encode a variety
 of other strategies, including classic strategies like TitForTat,
 handshake strategies, and grudging strategies that always defect after
 an opponent defection.
+This is shown diagrammatically in Figure~\ref{fig:fsm}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/fsm}
+    \caption{Diagrammatic representation of the Finite state machine Archetype}
+    \label{fig:fsm}
+\end{figure}
 
 % TODO: One or more FSM diagrams
 
@@ -172,6 +210,15 @@ state with probabilistic transitions based on the prior round of play to other
 states and cooperate or defect with various probabilities at each state. These
 are the best performing stochastic strategies in the library but take longer
 to train due to their stochasticity.
+This is shown diagrammatically in Figure~\ref{fig:hmm}.
+
+\begin{figure}[!hbtp]
+    \centering
+    \includestandalone[height=.3\textheight]{./assets/hmm}
+    \caption{Diagrammatic representation of the Hidden Markov Model Archetype}
+    \label{fig:hmm}
+\end{figure}
+
 
 \subsection{Meta Strategies}
 
