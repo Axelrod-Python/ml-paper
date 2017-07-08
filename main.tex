@@ -233,11 +233,33 @@ This is illustrated diagrammatically in Figure~\ref{fig:fsm}.
 \end{figure}
 
 Training this strategy corresponds to finding mappings of states and histories
-to an action and a state. Figures~\ref{} show two of the trained finite state
-machines...
-% TODO Update sentence above.
-% TODO Add diagrams of FSMs. Note how the strategies are called FSM 16 but as is
-% evident in the diagram, it is in fact a 14 state fsm.
+to an action and a state. Figure~\ref{fig:fsm_images} show two of the trained
+finite state machines. The layout of state nodes is kept the same between
+Figure~\ref{fig:fsm16} and~\ref{fig:fsm16noise} to highlight the effect of
+different training environments. Note also that two of the 16 states are not
+used, this is also an outcome of the training process.
+
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.5\textwidth}
+        \includestandalone[height=.3\textheight]{./assets/FSM16}
+        \caption{Evolved\_FSM\_16: trained to maximise score in a standard
+        tournament}
+        \label{fig:fsm16}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \includestandalone[height=.3\textheight]{./assets/FSM16noise}
+        \caption{Evolved\_FSM\_16\_Noise\_05: trained to maximise score in a
+        noisy tournament}
+        \label{fig:fsm16noise}
+    \end{subfigure}%
+    \caption{Trained sixteen state finite state machine players}
+    \label{fig:fsm_images}
+\end{figure}
+
 
 \subsection{Hidden Markov Models}
 
