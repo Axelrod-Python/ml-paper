@@ -44,8 +44,12 @@ Iterated Prisoner's Dilemma}
 
 \section{Introduction}\label{sec:introduction}
 
+The iterated prisoner's dilemma (IPD) is an area of game theoretic research
+aiming to understand the evolution of cooperative behaviour from complex
+dynamics \cite{Axelrod1984}.
+
 The Axelrod library \cite{axelrodproject, knight2016open} is an open source
-software for conducting iterated prisoner's dilemma (IPD) research with
+software for conducting IPD research with
 reproducibility as a principal goal. Written in the Python programming language,
 to date over the library contains source code contributed by over 50 individuals
 from a variety of geographic locations and technical backgrounds. The library
@@ -354,7 +358,7 @@ not necessarily from the training pool).
 A total of \input{./assets/number_of_players.tex}are included, of which
 \input{./assets/number_of_stochastic_players.tex}are stochastic.  In
 Section~\ref{sec:standard} is concerned with the standard tournament with 200
-turns whereas in Section~\ref{sec:noisy} a tournament with 5\% noise is
+turns whereas in Section~\ref{sec:noise} a tournament with 5\% noise is
 discussed. Due to the inherent stochasticity of these IPD tournaments, these
 tournament were repeated \input{./assets/standard_number_of_repetitions.tex}
 times. This allows for a detailed and confident analysis of the performance of
@@ -394,6 +398,15 @@ will either draw with mutual cooperation or defect second).
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments.}
 \end{figure}
 
+The utilities used are \((R, P, T, S)=(3, 1, 5, 0)\) thus the specific
+Prisoner's Dilemma being played is:
+
+\begin{equation}\label{equ:pd}
+    \begin{pmatrix}
+        (3, 3) & (0, 5)\\
+        (5, 0) & (1, 1)
+    \end{pmatrix}
+\end{equation}
 
 \subsection{Standard Tournament}\label{sec:standard}
 
@@ -413,14 +426,14 @@ the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
-        The leaderboard is dominated by the trained strategies. Starred
-        strategies $^{*}$
-        indicates that the strategy was trained.}
+        The leaderboard is dominated by the trained strategies (indicated by a
+        $^{*}$}
         \label{tbl:standard_score}
 \end{table}
 
-Violin plots showing the distribution of the scores of each strategy (again
-ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
+For completeness, violin plots showing the distribution of the scores of each
+strategy (again ranked by median score) are shown in
+Figure~\ref{fig:standard_boxplot}.
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -434,7 +447,7 @@ ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
 \end{landscape}
 
 Pairwise payoff results are given as a heatmap (Figure~\ref{fig:standard_heatmap})
-which shows that many strategies achieve mutual cooperation. The top performing
+which shows that many strategies achieve mutual cooperation (obtaining a score of 3). The top performing
 strategies never defect first yet are able to exploit weaker strategies that
 attempt to defect.
 
@@ -447,13 +460,23 @@ attempt to defect.
     \label{fig:standard_heatmap}
 \end{figure}
 
-The strategies that win the most matches are Defector, Aggravater, followed by
-handshaking and zero determinant strategies. This includes two handshaking
-strategies that were the result of training to maximize Moran process fixation.
-No strategies were trained specifically to win matches. None of the top scoring
-strategies appear in the top 20 list of strategies ranked by match wins.
-This can be seen in Figure~\ref{fig:standard_winplot} where the distribution of
-the number of wins of each strategy is shown.
+The strategies that win the most matches
+(Table~\ref{tbl:standard_wins_top_winners} are Defector and Aggravater, followed
+by handshaking and zero determinant strategies. This includes two handshaking
+strategies that were the result of training to maximize Moran process fixation
+(TF1 and TF2). No strategies were trained specifically to win matches. None of
+the top scoring strategies appear in the top 15 list of strategies ranked by
+match wins. This can be seen in Figure~\ref{fig:standard_winplot} where the
+distribution of the number of wins of each strategy is shown.
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_winners_wins_summary.tex}
+        \caption{Standard Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:standard_wins_top_winners}
+\end{table}
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -482,19 +505,6 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
         \label{tbl:standard_wins}
 \end{table}
 
-Table~\ref{tbl:standard_wins_top_winners} shows the same information as
-Table~\ref{tbl:standard_wins} but for the top 15 strategies who win the most
-head to head matches.
-% TODO Add more discussion?
-
-\begin{table}[!hbtp]
-    \centering
-        \input{./assets/standard_top_15_winners_wins_summary.tex}
-        \caption{Standard Tournament: Number of wins per tournament
-        of top 15 strategies (ranked by median wins over
-        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
-        \label{tbl:standard_wins_top_winners}
-\end{table}
 
 Finally, Table~\ref{tbl:standard_ranks} and
 Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
@@ -556,8 +566,12 @@ similarity in the fingerprints.
 \end{figure}
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
-cooperation in each round for the top three strategies.
-% TODO Discuss more? (If we want to keep this)
+cooperation in each round for the top three strategies. The opponents in these
+figures are ordered according to performance by median score. It is evident that
+the high performing strategies share a common thread against the top strategies:
+they do not defect first and achieve mutual cooperation. Against the lower
+strategies they also do not defect first (a mean cooperation rate of 1 in the
+first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
     \centering
@@ -586,12 +600,12 @@ cooperation in each round for the top three strategies.
     \label{fig:comparison_cooperation_heatmaps_standard}
 \end{figure}
 
-% TODO Update these with 10k repetition version
+% TODO Update these with 10k repetition version? (I have these for all but DBS)
 
 \subsection{Noisy Tournament}\label{sec:noise}
 
-We also ran noisy tournaments in which there is a 5\% chance that an action is
-flipped. As shown in Table~\ref{tbl:noisy_score} and
+Noisy tournaments in which there is a 5\% chance that an action is
+flipped are now described. As shown in Table~\ref{tbl:noisy_score} and
 Figure~\ref{fig:noisy_score}, the best performing strategies in median payoff
 are DBS, designed to correct for noise, followed by two strategies trained in
 the presence of noise and three trained strategies trained without noise. One of
@@ -624,11 +638,11 @@ consecutively) and OmegaTFT (also designed to handle noise).
 \end{landscape}
 
 
-The strategies trained in the presence of noise are also among the best
-performers in the absence of noise. As shown in Figure~\ref{fig:noisy_heatmap}
-the cluster of mutually cooperative strategies is broken by the noise at 5\%. A
-similar collection of players excels at winning matches but again they have a
-poor total payoff.
+Recalling Table~\ref{tbl:standard_score}, the strategies trained in the presence
+of noise are also among the best performers in the absence of noise. As shown in
+Figure~\ref{fig:noisy_heatmap} the cluster of mutually cooperative strategies is
+broken by the noise at 5\%. A similar collection of players excels at winning
+matches but again they have a poor total payoff.
 
 \begin{figure}[!hbtp]
     \centering
@@ -639,9 +653,20 @@ poor total payoff.
     \label{fig:noisy_heatmap}
 \end{figure}
 
-As shown in Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins
-are somewhat similar, with Defector, the handshaking CollectiveStrategy, and
+As shown in Table~\ref{tbl_noisy_wins_top_winners} and
+Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins are
+somewhat similar, with Defector, the handshaking CollectiveStrategy, and
 Aggravate appearing as the top three again.
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_winners_wins_summary.tex}
+        \caption{Noisy (5\%) Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
+        \label{tbl:noisy_wins_top_winners}
+\end{table}
+
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -665,20 +690,6 @@ one tournament won almost all its matches (167).
         of top 15 strategies (ranked by median score over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_wins}
-\end{table}
-
-Table~\ref{tbl:noisy_wins_top_winners} shows the same information as
-Table~\ref{tbl:noisy_wins} but for the top 15 strategies who win the most
-head to head matches.
-% TODO Add more discussion?
-
-\begin{table}[!hbtp]
-    \centering
-        \input{./assets/noisy_top_15_winners_wins_summary.tex}
-        \caption{Noisy (5\%) Tournament: Number of wins per tournament
-        of top 15 strategies (ranked by median wins over
-        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
-        \label{tbl:noisy_wins_top_winners}
 \end{table}
 
 
@@ -710,9 +721,9 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Again we compare the fingerprints. For the top performing noisy strategies
-(Figure~\ref{fig:comparison_fingerprint_noisy}) there
-is a striking similarity in the fingerprints which indicates that the strategies
+Similarly to Section~\ref{sec:standard} the top performing noisy strategies
+(Figure~\ref{fig:comparison_fingerprint_noisy}) have
+a striking similarity in the fingerprints which indicates that the strategies
 may behave similarly in principle.
 
 \begin{figure}[!hbtp]
@@ -740,8 +751,10 @@ may behave similarly in principle.
 \end{figure}
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
-cooperation in each round for the top three strategies.
-% TODO Add more discussion
+cooperation in each round for the top three strategies and just as for the top
+performing strategies in the standard tournament
+(Figure~\ref{fig:comparison_cooperation_heatmaps_standard}) it is evident that
+the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
     \centering
