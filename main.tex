@@ -132,7 +132,7 @@ an opponent defection.
 
 The various archetypes will be described in the following sections.
 
-\subsection{LookerUp}
+\subsection{LookerUp}\label{sec:lookerup}
 
 The LookerUp strategy is based on a lookup tables and  encodes a set of
 deterministic responses based on the opponent's first $n_1$ moves, the
@@ -167,7 +167,7 @@ Winner12 emerged in less than 10 generations of training in our framework using
 a score maximizing objective. Strategies nearly identical to Winner21 arise
 from training with a Moran process objective.
 
-\subsection{Gambler}
+\subsection{Gambler}\label{sec:gambler}
 
 Gambler is a stochastic variant of LookerUp. Instead of deterministically
 encoded moves the lookup table emits probabilities which are
@@ -251,7 +251,7 @@ noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
 
-\subsection{Finite State Machines}
+\subsection{Finite State Machines}\label{sec:fsm}
 
 Strategies based on finite state machines are deterministic and computationally efficient.
 In each round of play the strategy selects an action based on the current state
@@ -849,13 +849,31 @@ strategies use multiple rounds of the history of play (some using all of it) and
 outperform memory-one strategies (though the trained memory one strategy performs
 well). The generic structure of the trained strategies did not appear to be
 critical -- strategies based on lookup tables, finite state machines, and stochastic
-variants all performed well. Single layer neural networks also performed well
+variants all performed well for standard tournaments.
+Single layer neural networks (Section~\ref{sec:ann}) performed well in both
+noisy and standard
+tournaments
 though these had some aspect of human involvement in the selection of features.
-% TODO Question: is this arguably just as much human involvement in the design
-% of the lookup tables etc? We could use a lookup table that also picks out the
-% action from the middle round, however we have chosen not too.
-The success of the other strategy types suggests that a deeper network that
-incorporates feature engineering would likely also perform well.
+This is in line with the other strategies also where human decisions are made
+regarding the structure. For the LookerUp and Gambler archetypes
+(Sections~\ref{sec:lookerup} and~\ref{sec:gambler})
+a decision has to be made
+regarding the number of turns of history and initial play that are to be used.
+Whilst, the Finite state machines and Hidden Markov models
+(Sections\ref{sec:fsm} and~\ref{sec:hmm}) also need input from a
+human as to the number of states to use they are much more of a black box and
+thus offer wider adaptability.
+
+A lot of strategies could be represented by many archetypes, however some
+archetypes will be far more efficient in doing so than
+others. The fact that the Lookerup strategy does the best for the standard
+tournament indicates that it represents an efficient reduction of
+dimension which in turn makes its training more efficient. For the noisy
+tournament however the dimension reduction represented by some archetypes
+indicates that sufficient features are not captured by the Lookup tables whilst
+they are by the
+neural network and the finite state machine allowing them to adapt to the noisy
+environment.
 
 In opposition to historical tournament results and community folklore,
 our results show that complex strategies can be very effective for the
