@@ -59,11 +59,40 @@ classic strategies like Win Stay Lose Shift \cite{nowak1993strategy} and
 previous tournament winners such as OmegaTFT \cite{slany2007some}, Adaptive
 Pavlov \cite{li2007design}, and ZDGTFT2 \cite{stewart2012extortion}.
 
-% TODO: discuss earlier tournaments
+Since Robert Axelrod's seminal tournament \cite{Axelrod1980a}, a number of
+IPD\@ tournaments have been undertaken and are summarised in
+Table~\ref{tbl:tournaments}. Further to the work described in
+\cite{knight2016open} a regular set of standard, noisy and probabilistic ending
+tournaments are carried out as more strategies are added to the Axelrod library.
+Details and results are available here:
+\url{http://axelrod-tournament.readthedocs.io}. This work presents a detailed
+analysis of a tournament with 176 strategies, more details about this are given
+in Section~\ref{sec:results}.
+
+\begin{table}[!hbtp]
+    \begin{center}
+        \begin{tabular}{ccccc}
+            \toprule
+            Year     & Reference                  & Number of Strategies & Type     & Source Code\\
+            \midrule
+            1979     & \cite{Axelrod1980a}        & 13                   & Standard & Not immediately available\\
+            1979     & \cite{Axelrod1980b}        & 64                   & Standard & Available in FORTRAN\\
+            1991     & \cite{Bendor1991}          & 13                   & Noisy    & Not immediately available\\
+            2002     & \cite{Stephens2002}        & 16                   & Wildlife & Not applicable\\
+            2005     & \cite{kendall2007iterated} & 223                  & Varied   & Not available \\
+            2012     & \cite{Stewart2012}         & 13                   & Standard & Not fully available \\
+            2016     & \cite{knight2016open}       & 129                  & Standard & Fully available \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{An overview of a selection of published tournaments. Not all
+             tournaments were `standard' round robins; for more details
+             see the indicated references.}\label{tbl:tournaments}
+\end{table}
 
 In this work we describe how collections of strategies in the Axelrod library
 have been used to train new strategies specifically to win IPD tournaments.
-These strategies are trained using generic strategy archetypes based on e.g.
+These strategies are trained using generic strategy archetypes based on e.g.\
 finite state
 machines, arriving at particularly effective parameter choices through
 evolutionary or particle swarm algorithms. There are several
@@ -534,22 +563,22 @@ cooperation in each round for the top three strategies.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_EvolvedLookerUp2_2_2_array.pdf}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_EvolvedLookerUp2_2_2_array.pdf}
         \caption{Cooperation rate per round for EvolvedLookerUp\_2\_2\_2 (over
-        20 repetitions)}
+        1000 repetitions)}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_HMM_5_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 20
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_HMM_5_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 1000
         repetitions)}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 20
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_FSM_16_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 1000
         repetitions)}
     \end{subfigure}%
 
@@ -718,21 +747,21 @@ cooperation in each round for the top three strategies.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_DBS_0-75_3_4_3_5_array.pdf}
-        \caption{Cooperation rate per round for DBS (over 20 repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_DBS_0-75_3_4_3_5_array.pdf}
+        \caption{Cooperation rate per round for DBS (over 1000 repetitions)}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_ANN_5_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 20
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_ANN_5_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 1000
         repetitions)}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 20
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_FSM_16_Noise_05_array.pdf}
+        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 1000
         repetitions)}
     \end{subfigure}%
 
