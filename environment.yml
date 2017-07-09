@@ -43,6 +43,7 @@ dependencies:
 - notebook=5.0.0=py36_0
 - numpy=1.12.1=py36_0
 - openssl=1.0.2k=2
+- pandas=0.20.2=np112py36_0
 - pandocfilters=1.4.1=py36_0
 - path.py=10.3.1=py36_0
 - pcre=8.39=1

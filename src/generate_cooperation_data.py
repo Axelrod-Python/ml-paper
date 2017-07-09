@@ -27,6 +27,8 @@ def main(index, players=players, processes=None, seed=1, turns=200, repetitions=
     index of the player in question
     """
     edges = [(index, j) for j, _ in enumerate(players)]
+    assert (index, index) in edges
+    assert len(edges) == len(players)
 
     if processes is None:
         processes = multiprocessing.cpu_count()

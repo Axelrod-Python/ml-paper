@@ -39,13 +39,17 @@ Iterated Prisoner's Dilemma}
     trained to perform well against a corpus of over 170 distinct
     opponents, including many well-known strategies from the literature. All
     the trained strategies win standard tournaments against the total collection
-    of other opponents. We also trained variants to win noisy tournaments.
+    of other opponents. Variants were also trained to win noisy tournaments.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
+The iterated prisoner's dilemma (IPD) is an area of game theoretic research
+aiming to understand the evolution of cooperative behaviour from complex
+dynamics \cite{Axelrod1984}.
+
 The Axelrod library \cite{axelrodproject, knight2016open} is an open source
-software for conducting iterated prisoner's dilemma (IPD) research with
+software for conducting IPD research with
 reproducibility as a principal goal. Written in the Python programming language,
 to date over the library contains source code contributed by over 50 individuals
 from a variety of geographic locations and technical backgrounds. The library
@@ -57,22 +61,51 @@ The library is continuously developed and as of version 3.0.0, the library
 contains over 200 strategies, many from the scientific literature, including
 classic strategies like Win Stay Lose Shift \cite{nowak1993strategy} and
 previous tournament winners such as OmegaTFT \cite{slany2007some}, Adaptive
-Pavlov \cite{li2007design}, and ZDGTFT2 \cite{stewart2012extortion}.
+Pavlov \cite{li2007design}, and ZDGTFT2 \cite{Stewart2012}.
 
-% TODO: discuss earlier tournaments
+Since Robert Axelrod's seminal tournament \cite{Axelrod1980a}, a number of
+IPD\@ tournaments have been undertaken and are summarised in
+Table~\ref{tbl:tournaments}. Further to the work described in
+\cite{knight2016open} a regular set of standard, noisy and probabilistic ending
+tournaments are carried out as more strategies are added to the Axelrod library.
+Details and results are available here:
+\url{http://axelrod-tournament.readthedocs.io}. This work presents a detailed
+analysis of a tournament with 176 strategies, more details about this are given
+in Section~\ref{sec:results}.
+
+\begin{table}[!hbtp]
+    \begin{center}
+        \begin{tabular}{ccccc}
+            \toprule
+            Year     & Reference                  & Number of Strategies & Type     & Source Code\\
+            \midrule
+            1979     & \cite{Axelrod1980a}        & 13                   & Standard & Not immediately available\\
+            1979     & \cite{Axelrod1980b}        & 64                   & Standard & Available in FORTRAN\\
+            1991     & \cite{Bendor1991}          & 13                   & Noisy    & Not immediately available\\
+            2002     & \cite{Stephens2002}        & 16                   & Wildlife & Not applicable\\
+            2005     & \cite{kendall2007iterated} & 223                  & Varied   & Not available \\
+            2012     & \cite{Stewart2012}         & 13                   & Standard & Not fully available \\
+            2016     & \cite{knight2016open}       & 129                  & Standard & Fully available \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{An overview of a selection of published tournaments. Not all
+             tournaments were `standard' round robins; for more details
+             see the indicated references.}\label{tbl:tournaments}
+\end{table}
 
 In this work we describe how collections of strategies in the Axelrod library
 have been used to train new strategies specifically to win IPD tournaments.
-These strategies are trained using generic strategy archetypes based on e.g.
+These strategies are trained using generic strategy archetypes based on e.g.\
 finite state
 machines, arriving at particularly effective parameter choices through
 evolutionary or particle swarm algorithms. There are several
 previous publications that use evolutionary algorithms to
 evolve IPD strategies in various circumstances
-\cite{ashlock2006training, ashlock2015multiple, ashlock2006changes,
-      ashlock2014shaped, ashlock2014evolution, barlow2015varying,
+\cite{ashlock2006training, Ashlock2015, Ashlock2006,
+      ashlock2014shaped, Ashlock2014, barlow2015varying,
       fogel1993evolving, marks1989niche, sudo2015effects,
-      vassiliades2010multiagent}. See also \cite{gaudesi2016exploiting} for a
+      vassiliades2010multiagent}. See also \cite{Gaudesi2016} for a
 strategy trained to win against a collection of well-known IPD opponents and see
 \cite{franken2005particle} for a prior use of particle swarm algorithms. Our
 results are unique in that we are able to train against a large collection of
@@ -99,7 +132,7 @@ an opponent defection.
 
 The various archetypes will be described in the following sections.
 
-\subsection{LookerUp}
+\subsection{LookerUp}\label{sec:lookerup}
 
 The LookerUp strategy is based on a lookup tables and  encodes a set of
 deterministic responses based on the opponent's first $n_1$ moves, the
@@ -134,7 +167,7 @@ Winner12 emerged in less than 10 generations of training in our framework using
 a score maximizing objective. Strategies nearly identical to Winner21 arise
 from training with a Moran process objective.
 
-\subsection{Gambler}
+\subsection{Gambler}\label{sec:gambler}
 
 Gambler is a stochastic variant of LookerUp. Instead of deterministically
 encoded moves the lookup table emits probabilities which are
@@ -218,7 +251,7 @@ noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
 
-\subsection{Finite State Machines}
+\subsection{Finite State Machines}\label{sec:fsm}
 
 Strategies based on finite state machines are deterministic and computationally efficient.
 In each round of play the strategy selects an action based on the current state
@@ -233,11 +266,33 @@ This is illustrated diagrammatically in Figure~\ref{fig:fsm}.
 \end{figure}
 
 Training this strategy corresponds to finding mappings of states and histories
-to an action and a state. Figures~\ref{} show two of the trained finite state
-machines...
-% TODO Update sentence above.
-% TODO Add diagrams of FSMs. Note how the strategies are called FSM 16 but as is
-% evident in the diagram, it is in fact a 14 state fsm.
+to an action and a state. Figure~\ref{fig:fsm_images} show two of the trained
+finite state machines. The layout of state nodes is kept the same between
+Figure~\ref{fig:fsm16} and~\ref{fig:fsm16noise} to highlight the effect of
+different training environments. Note also that two of the 16 states are not
+used, this is also an outcome of the training process.
+
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.5\textwidth}
+        \includestandalone[height=.3\textheight]{./assets/FSM16}
+        \caption{Evolved\_FSM\_16: trained to maximise score in a standard
+        tournament}
+        \label{fig:fsm16}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \includestandalone[height=.35\textheight]{./assets/FSM16noise}
+        \caption{Evolved\_FSM\_16\_Noise\_05: trained to maximise score in a
+        noisy tournament}
+        \label{fig:fsm16noise}
+    \end{subfigure}%
+    \caption{Trained sixteen state finite state machine players}
+    \label{fig:fsm_images}
+\end{figure}
+
 
 \subsection{Hidden Markov Models}
 
@@ -280,20 +335,11 @@ paper.
 
 \section{Results}\label{sec:results}
 
-\subsection{Standard Tournament}
+This section presents the results of a large IPD tournament with
+strategies from the Axelrod library, including some additional parametrized
+strategies (e.g.\ various parameter choices for Generous Tit For Tat). These are
+listed in Appendix~\ref{app:list_of_players}.
 
-We conducted a tournament with a large collection of strategies from the Axelrod
-library, including some additional parametrized strategies (e.g.\ various parameter
-choices for Generous Tit For Tat). These are listed in
-Appendix~\ref{app:list_of_players}.
-The top 11 performing strategies by median payoff are all strategies trained to maximize
-% TODO Potentially modify this as more repetitions are analysed.
-total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
-The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
-which actively analyzes the opponent and responds
-accordingly. The next two strategies are Winner12, based on a lookup table,
-Fool Me Once, a grudging strategy that defects indefinitely on
-the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 All strategies in the tournament follow a simple set of
 rules in accordance with earlier tournaments:
 
@@ -307,23 +353,89 @@ rules in accordance with earlier tournaments:
 
 Any strategy that does not follow these rules, such as a strategy that defects
 on the last round of play, was omitted from the tournament presented here (but
-not from the training pool).
+not necessarily from the training pool).
 
-% Table of best strategies
+A total of \input{./assets/number_of_players.tex}are included, of which
+\input{./assets/number_of_stochastic_players.tex}are stochastic.  In
+Section~\ref{sec:standard} is concerned with the standard tournament with 200
+turns whereas in Section~\ref{sec:noise} a tournament with 5\% noise is
+discussed. Due to the inherent stochasticity of these IPD tournaments, these
+tournament were repeated \input{./assets/standard_number_of_repetitions.tex}
+times. This allows for a detailed and confident analysis of the performance of
+strategies. To illustrate the results considered,
+Figure~\ref{fig:tit_for_tat_scores} shows the distribution of the mean score per
+turn of Tit For Tat over all the repetitions. Similarly,
+Figure~\ref{fig:tit_for_tat_ranks} shows the ranks of of Tit For Tat for each
+repetition (we note that it never wins a tournament). Finally
+Figure~\ref{fig:tit_for_tat_wins} shows the number of opponents beaten in any given
+tournament: Tit For Tat does not win any match (this is due to the fact that it
+will either draw with mutual cooperation or defect second).
+
+\begin{figure}[!hbtp]
+    \centering
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/standard_tft_scores.pdf}
+        \caption{Scores}
+        \label{fig:tit_for_tat_scores}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/standard_tft_ranks.pdf}
+        \caption{Ranks}
+        \label{fig:tit_for_tat_ranks}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./assets/standard_tft_wins.pdf}
+        \caption{Wins}
+        \label{fig:tit_for_tat_wins}
+    \end{subfigure}%
+
+    \caption{Results for Tit For Tat over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments.}
+\end{figure}
+
+The utilities used are \((R, P, T, S)=(3, 1, 5, 0)\) thus the specific
+Prisoner's Dilemma being played is:
+
+\begin{equation}\label{equ:pd}
+    \begin{pmatrix}
+        (3, 3) & (0, 5)\\
+        (5, 0) & (1, 1)
+    \end{pmatrix}
+\end{equation}
+
+All data generated for this work is archived and available...
+% TODO Add details once data is archived.
+% TODO Include url to repo etc.
+
+\subsection{Standard Tournament}\label{sec:standard}
+
+The top 11 performing strategies by median payoff are all strategies trained to maximize
+total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
+The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
+which actively analyzes the opponent and responds
+accordingly. The next two strategies are Winner12, based on a lookup table,
+Fool Me Once, a grudging strategy that defects indefinitely on
+the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
+
 \begin{table}[!hbtp]
         \centering
         \input{./assets/standard_top_15_scores_summary.tex}
         \caption{Standard Tournament: Mean score per turn of top 15 strategies
             (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
-        The leaderboard is dominated by the trained strategies. Starred
-        strategies $^{*}$
-        indicates that the strategy was trained.}
+        The leaderboard is dominated by the trained strategies (indicated by a
+        $^{*}$}
         \label{tbl:standard_score}
 \end{table}
 
-Violin plots showing the distribution of the scores of each strategy (again
-ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
+For completeness, violin plots showing the distribution of the scores of each
+strategy (again ranked by median score) are shown in
+Figure~\ref{fig:standard_boxplot}.
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -337,7 +449,7 @@ ranked by median score) are shown in Figure~\ref{fig:standard_boxplot}.
 \end{landscape}
 
 Pairwise payoff results are given as a heatmap (Figure~\ref{fig:standard_heatmap})
-which shows that many strategies achieve mutual cooperation. The top performing
+which shows that many strategies achieve mutual cooperation (obtaining a score of 3). The top performing
 strategies never defect first yet are able to exploit weaker strategies that
 attempt to defect.
 
@@ -350,13 +462,23 @@ attempt to defect.
     \label{fig:standard_heatmap}
 \end{figure}
 
-The strategies that win the most matches are Defector, Aggravater, followed by
-handshaking and zero determinant strategies. This includes two handshaking
-strategies that were the result of training to maximize Moran process fixation.
-No strategies were trained specifically to win matches. None of the top scoring
-strategies appear in the top 20 list of strategies ranked by match wins.
-This can be seen in Figure~\ref{fig:standard_winplot} where the distribution of
-the number of wins of each strategy is shown.
+The strategies that win the most matches
+(Table~\ref{tbl:standard_wins_top_winners} are Defector and Aggravater, followed
+by handshaking and zero determinant strategies. This includes two handshaking
+strategies that were the result of training to maximize Moran process fixation
+(TF1 and TF2). No strategies were trained specifically to win matches. None of
+the top scoring strategies appear in the top 15 list of strategies ranked by
+match wins. This can be seen in Figure~\ref{fig:standard_winplot} where the
+distribution of the number of wins of each strategy is shown.
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/standard_top_15_winners_wins_summary.tex}
+        \caption{Standard Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
+        \label{tbl:standard_wins_top_winners}
+\end{table}
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -374,7 +496,6 @@ shown in Table~\ref{tbl:standard_wins}. It is evident that although these
 strategies score highly they do not win many matches: the strategy with the most
 number of wins is the Evolved FSM 16 strategy that at most won 60
 (\(60/175\approx34\%\)) matches in a given tournament.
-% TODO Update this when more data comes in.
 
 \begin{table}[!hbtp]
     \centering
@@ -385,19 +506,6 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
         \label{tbl:standard_wins}
 \end{table}
 
-Table~\ref{tbl:standard_wins_top_winners} shows the same information as
-Table~\ref{tbl:standard_wins} but for the top 15 strategies who win the most
-head to head matches.
-% TODO Add more discussion?
-
-\begin{table}[!hbtp]
-    \centering
-        \input{./assets/standard_top_15_winners_wins_summary.tex}
-        \caption{Standard Tournament: Number of wins per tournament
-        of top 15 strategies (ranked by median wins over
-        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
-        \label{tbl:standard_wins_top_winners}
-\end{table}
 
 Finally, Table~\ref{tbl:standard_ranks} and
 Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
@@ -429,7 +537,7 @@ is 8th.
 
 
 Using a numerical method of fingerprinting based on
-\cite{ashlock2008fingerprinting, ashlock2009fingerprint} we can compare
+\cite{Ashlock2008, ashlock2009fingerprint} we can compare
 strategies. The fingerprints of the top performing standard strategies are shown
 in Figures~\ref{fig:comparison_fingerprint_standard}. There is a striking
 similarity in the fingerprints.
@@ -439,19 +547,19 @@ similarity in the fingerprints.
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/EvolvedLookerUp2_2_2.png}
-        \caption{Fingerprint for EvolvedLookerUp\_2\_2\_2}
+        \caption{EvolvedLookerUp\_2\_2\_2}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_HMM_5.png}
-        \caption{Fingerprint for Evolved\_HMM\_5}
+        \caption{Evolved\_HMM\_5}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16.png}
-        \caption{Fingerprint for Evolved\_FSM\_16}
+        \caption{Evolved\_FSM\_16}
     \end{subfigure}%
 
     \caption{Comparison of Fingerprints for Standard Tournament Top 3}
@@ -459,42 +567,42 @@ similarity in the fingerprints.
 \end{figure}
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
-cooperation in each round for the top three strategies.
-% TODO Discuss more? (If we want to keep this)
+cooperation in each round for the top three strategies. The opponents in these
+figures are ordered according to performance by median score. It is evident that
+the high performing strategies share a common thread against the top strategies:
+they do not defect first and achieve mutual cooperation. Against the lower
+strategies they also do not defect first (a mean cooperation rate of 1 in the
+first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_EvolvedLookerUp2_2_2_array.pdf}
-        \caption{Cooperation rate per round for EvolvedLookerUp\_2\_2\_2 (over
-        20 repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.pdf}
+        \caption{EvolvedLookerUp\_2\_2\_2}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_HMM_5_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 20
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_HMM_5_array.pdf}
+        \caption{Evolved\_HMM\_5}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 20
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_FSM_16_array.pdf}
+        \caption{Evolved\_FSM\_16}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Standard Tournament Top 3}
+    \caption{Comparison of collaboration rates for Standard Tournament Top 3
+    (over 10000 repetitions)}
     \label{fig:comparison_cooperation_heatmaps_standard}
 \end{figure}
 
-% TODO Update these with 10k repetition version
+\subsection{Noisy Tournament}\label{sec:noise}
 
-\subsection{Noisy Tournament}
-
-We also ran noisy tournaments in which there is a 5\% chance that an action is
-flipped. As shown in Table~\ref{tbl:noisy_score} and
+Noisy tournaments in which there is a 5\% chance that an action is
+flipped are now described. As shown in Table~\ref{tbl:noisy_score} and
 Figure~\ref{fig:noisy_score}, the best performing strategies in median payoff
 are DBS, designed to correct for noise, followed by two strategies trained in
 the presence of noise and three trained strategies trained without noise. One of
@@ -527,11 +635,11 @@ consecutively) and OmegaTFT (also designed to handle noise).
 \end{landscape}
 
 
-The strategies trained in the presence of noise are also among the best
-performers in the absence of noise. As shown in Figure~\ref{fig:noisy_heatmap}
-the cluster of mutually cooperative strategies is broken by the noise at 5\%. A
-similar collection of players excels at winning matches but again they have a
-poor total payoff.
+Recalling Table~\ref{tbl:standard_score}, the strategies trained in the presence
+of noise are also among the best performers in the absence of noise. As shown in
+Figure~\ref{fig:noisy_heatmap} the cluster of mutually cooperative strategies is
+broken by the noise at 5\%. A similar collection of players excels at winning
+matches but again they have a poor total payoff.
 
 \begin{figure}[!hbtp]
     \centering
@@ -542,9 +650,20 @@ poor total payoff.
     \label{fig:noisy_heatmap}
 \end{figure}
 
-As shown in Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins
-are somewhat similar, with Defector, the handshaking CollectiveStrategy, and
-Aggravate appearing as the top three again.
+As shown in Table~\ref{tbl:noisy_wins_top_winners} and
+Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins are
+somewhat similar to the Standard tournaments, with Defector, the handshaking
+CollectiveStrategy, and Aggravate appearing as the top three again.
+
+\begin{table}[!hbtp]
+    \centering
+        \input{./assets/noisy_top_15_winners_wins_summary.tex}
+        \caption{Noisy (5\%) Tournament: Number of wins per tournament
+        of top 15 strategies (ranked by median wins over
+        \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
+        \label{tbl:noisy_wins_top_winners}
+\end{table}
+
 
 \begin{landscape}
     \begin{figure}[!hbtp]
@@ -568,20 +687,6 @@ one tournament won almost all its matches (167).
         of top 15 strategies (ranked by median score over
         \protect\input{./assets/noisy_number_of_repetitions.tex}tournaments)}
         \label{tbl:noisy_wins}
-\end{table}
-
-Table~\ref{tbl:noisy_wins_top_winners} shows the same information as
-Table~\ref{tbl:noisy_wins} but for the top 15 strategies who win the most
-head to head matches.
-% TODO Add more discussion?
-
-\begin{table}[!hbtp]
-    \centering
-        \input{./assets/noisy_top_15_winners_wins_summary.tex}
-        \caption{Noisy (5\%) Tournament: Number of wins per tournament
-        of top 15 strategies (ranked by median wins over
-        \protect\input{./assets/standard_number_of_repetitions.tex}tournaments)}
-        \label{tbl:noisy_wins_top_winners}
 \end{table}
 
 
@@ -613,9 +718,9 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Again we compare the fingerprints. For the top performing noisy strategies
-(Figure~\ref{fig:comparison_fingerprint_noisy}) there
-is a striking similarity in the fingerprints which indicates that the strategies
+Similarly to Section~\ref{sec:standard} the top performing noisy strategies
+(Figure~\ref{fig:comparison_fingerprint_noisy}) have
+a striking similarity in the fingerprints which indicates that the strategies
 may behave similarly in principle.
 
 \begin{figure}[!hbtp]
@@ -623,19 +728,19 @@ may behave similarly in principle.
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/DBS.png}
-        \caption{Fingerprint for DBS}
+        \caption{DBS}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_ANN_5_Noise_05.png}
-        \caption{Fingerprint for Evolved\_ANN\_5\_Noise\_05}
+        \caption{Evolved\_ANN\_5\_Noise\_05}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16_Noise_05.png}
-        \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
+        \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
     \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
@@ -643,36 +748,35 @@ may behave similarly in principle.
 \end{figure}
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
-cooperation in each round for the top three strategies.
-% TODO Add more discussion
+cooperation in each round for the top three strategies and just as for the top
+performing strategies in the standard tournament
+(Figure~\ref{fig:comparison_cooperation_heatmaps_standard}) it is evident that
+the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_DBS_0-75_3_4_3_5_array.pdf}
-        \caption{Cooperation rate per round for DBS (over 20 repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.pdf}
+        \caption{DBS}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_ANN_5_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 20
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.pdf}
+        \caption{Evolved\_ANN\_5\_Noise\_05}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_20_Evolved_FSM_16_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 20
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.pdf}
+        \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3}
+    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3
+    (over 10000 tournaments)}
     \label{fig:comparison_cooperation_heatmaps_noisy}
 \end{figure}
-
-% TODO Update these with 10k repetition version
 
 \section{Methods}\label{sec:methods}
 
@@ -739,13 +843,31 @@ strategies use multiple rounds of the history of play (some using all of it) and
 outperform memory-one strategies (though the trained memory one strategy performs
 well). The generic structure of the trained strategies did not appear to be
 critical -- strategies based on lookup tables, finite state machines, and stochastic
-variants all performed well. Single layer neural networks also performed well
+variants all performed well for standard tournaments.
+Single layer neural networks (Section~\ref{sec:ann}) performed well in both
+noisy and standard
+tournaments
 though these had some aspect of human involvement in the selection of features.
-% TODO Question: is this arguably just as much human involvement in the design
-% of the lookup tables etc? We could use a lookup table that also picks out the
-% action from the middle round, however we have chosen not too.
-The success of the other strategy types suggests that a deeper network that
-incorporates feature engineering would likely also perform well.
+This is in line with the other strategies also where human decisions are made
+regarding the structure. For the LookerUp and Gambler archetypes
+(Sections~\ref{sec:lookerup} and~\ref{sec:gambler})
+a decision has to be made
+regarding the number of turns of history and initial play that are to be used.
+Whilst, the Finite state machines and Hidden Markov models
+(Sections\ref{sec:fsm} and~\ref{sec:hmm}) also need input from a
+human as to the number of states to use they are much more of a black box and
+thus offer wider adaptability.
+
+A lot of strategies could be represented by many archetypes, however some
+archetypes will be far more efficient in doing so than
+others. The fact that the Lookerup strategy does the best for the standard
+tournament indicates that it represents an efficient reduction of
+dimension which in turn makes its training more efficient. For the noisy
+tournament however the dimension reduction represented by some archetypes
+indicates that sufficient features are not captured by the Lookup tables whilst
+they are by the
+neural network and the finite state machine allowing them to adapt to the noisy
+environment.
 
 In opposition to historical tournament results and community folklore,
 our results show that complex strategies can be very effective for the
@@ -808,9 +930,7 @@ Research Computing @ Cardiff (ARCCA) Division, Cardiff University.
 \section{List of players}\label{app:list_of_players}
 
 The players used for this study are from Axelrod version 2.13.0
-\cite{axelrodproject}. The starred $*$
-strategies indicate those that have been trained using reinforcement learning
-algorithms.
+\cite{axelrodproject}.
 
 \begin{multicols}{2}
 	\begin{enumerate}
