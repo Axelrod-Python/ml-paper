@@ -47,8 +47,13 @@ $ sudo apt-get install biber
 # Contributions
 
 - Conceived of the study: MH VK
-- Conducted experiments and trained strategies: VK MH
+- Conducted experiments and trained strategies: VK MH MJ GK
 - Analyzed the data and analytical methods: VK MH
 - Wrote the paper: VK MH NG
-- Created software: MH VK
+- Created software: MH VK MJ GK
 - Axelrod Library Core Team: VK OC MH
+
+## Some original training code sources
+- [EvolvedLookerUp](http://mojones.net/evolving-strategies-for-an-iterated-prisoners-dilemma-tournament.html) by mojones
+- [EvolvedANN](https://gist.github.com/mojones/550b32c46a8169bb3cd89d917b73111a) by mojones
+- [PSO Gambler](https://gist.github.com/GDKO/60c3d0fd423598f3c4e4) by GDKO
