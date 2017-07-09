@@ -51,7 +51,7 @@ dynamics \cite{Axelrod1984}.
 The Axelrod library \cite{axelrodproject, knight2016open} is an open source
 software for conducting IPD research with
 reproducibility as a principal goal. Written in the Python programming language,
-to date over the library contains source code contributed by over 50 individuals
+to date the library contains source code contributed by over 50 individuals
 from a variety of geographic locations and technical backgrounds. The library
 is supported by a comprehensive test suite that covers all the intended
 behaviors of the strategies in the library, as well as the features that
@@ -113,9 +113,8 @@ well-known strategies available in the scientific literature. Crucially, the
 software used in this work is openly available and can be used to train strategies
 in the future in a reliable manner, with confidence that the opponent strategies
 are correctly implemented, tested and documented.
-Moreover, as of the time of writing,
-we claim that this work contains the best known strategies for the iterated
-prisoner's dilemma.
+Moreover, as of the time of writing, we claim that this work contains the best
+performing strategies for the iterated prisoner's dilemma.
 
 \section{The Strategy Archetypes}
 
@@ -124,13 +123,10 @@ machine learning
 methods. Most are deterministic, use many rounds of memory, and perform
 extremely well in tournaments as will be discussed in Section~\ref{sec:results}.
 Training of these strategies will be discussed in Section~\ref{sec:methods}.
-
 These strategies can encode a variety
 of other strategies, including classic strategies like Tit For Tat,
 handshake strategies, and grudging strategies that always defect after
 an opponent defection.
-
-The various archetypes will be described in the following sections.
 
 \subsection{LookerUp}\label{sec:lookerup}
 
@@ -147,10 +143,9 @@ This is illustrated diagrammatically in Figure~\ref{fig:lookerup}.
     \label{fig:lookerup}
 \end{figure}
 
-Training of this strategy corresponds to finding maps from histories to either a
-cooperation or a defection.
 
-Although various
+Training of this strategy corresponds to finding maps from partial histories to
+either a cooperation or a defection. Although various
 combinations of $n_1, m_1,$ and $m_2$ have been tried, the best performance at
 the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
@@ -182,9 +177,7 @@ This is illustrated diagrammatically in Figure~\ref{fig:gambler}.
 \end{figure}
 
 Training of this strategy corresponds to finding maps from histories to
-a probability of cooperation.
-
-The library includes a strategy trained
+a probability of cooperation. The library includes a strategy trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
@@ -205,7 +198,7 @@ evolutionary algorithm (though the former would suffice). Particle swarm
 algorithms have been used to trained IPD strategies previously
 \cite{franken2005particle}.
 
-\subsection{ANN: Single Layer Artificial Neural Network}
+\subsection{ANN: Single Hidden Layer Artificial Neural Network}
 
 Strategies based on artificial neural networks use a variety of features
 computed from the history of play:
@@ -244,9 +237,7 @@ Figure~\ref{fig:ann}.
 \end{figure}
 
 Training of this strategy corresponds to finding parameters of the neural
-network.
-
-An inner layer with just five nodes performs quite well in both deterministic and
+network. An inner layer with just five nodes performs quite well in both deterministic and
 noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
 be easily created.
@@ -301,7 +292,9 @@ A variant of finite state machine strategies are called hidden Markov models
 also encode an internal state however use probabilistic transitions based on the
 prior round of play to other states and cooperate or defect with various
 probabilities at each state. This is
-shown diagrammatically in Figure~\ref{fig:hmm}.
+shown diagrammatically in Figure~\ref{fig:hmm}. Training this strategy
+corresponds to finding mappings of states and histories to probabilities of
+cooperating as well as probabilities of the next internal state.
 
 \begin{figure}[!hbtp]
     \centering
@@ -310,28 +303,25 @@ shown diagrammatically in Figure~\ref{fig:hmm}.
     \label{fig:hmm}
 \end{figure}
 
-Training this strategy corresponds to finding mappings of states and histories
-to probabilities of cooperating as well as probabilities of the next internal
-state.
-
-These are the best performing stochastic strategies
-in the library but take longer to train due to their stochasticity.
 
 \subsection{Meta Strategies}
 
-Last but not least there are several strategies based on ensemble methods that
+There are several strategies based on ensemble methods that
 are common in machine learning called Meta strategies. These strategies are
 composed of a team of other strategies. In each round, each member of the team
 is polled for its desired next
 move. The ensemble then selects the next move based on a rule, such as the
 consensus vote in the case of MetaMajority or the best individual performance
 in the case of MetaWinner. These strategies were among the best in the library
-before the inclusion of those trained by reinforcement learning.
+before the inclusion of those trained by reinforcement learning. The library
+contains strategies containing teams of all the deterministic players, all the
+memory-one players, and some others.
 
 Because these strategies inherit many of the properties of the strategies
 on which they are based, including using the match length to defect on the last
-rounds of play, not all of these strategies were included in results of this
-paper.
+round(s) of play, not all of these strategies were included in results of this
+paper. These strategies do not typically outperform the trained strategies
+described above.
 
 \section{Results}\label{sec:results}
 
@@ -429,7 +419,7 @@ the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
             (ranked by median over
         \protect\input{./assets/standard_number_of_repetitions.tex}tournaments).
         The leaderboard is dominated by the trained strategies (indicated by a
-        $^{*}$}
+        $^{*}$)}
         \label{tbl:standard_score}
 \end{table}
 
@@ -837,84 +827,91 @@ variations including spatial structure, and probabilistically ending matches.
 The tournament results indicate that pre-trained strategies are generally better
 than human designed strategies at maximizing payoff against a diverse set of
 opponents. An evolutionary algorithm produces strategies based on multiple
-standard machine learning techniques that are able to achieve a higher average
+generic archetypes that are able to achieve a higher average
 score than any other known opponent in a standard tournament. Most of the trained
 strategies use multiple rounds of the history of play (some using all of it) and
-outperform memory-one strategies (though the trained memory one strategy performs
-well). The generic structure of the trained strategies did not appear to be
-critical -- strategies based on lookup tables, finite state machines, and stochastic
-variants all performed well for standard tournaments.
+outperform memory-one strategies from the literature. Interestingly, a trained
+memory one strategy produced by a particle swarm algorithm performs well, better
+than human designed strategies such as Win Stay Lose Shift and zero determinant
+strategies (which enforce a payoff difference rather than maximize total payoff).
+The generic structure of the trained strategies did not appear to be
+critical for the standard tournament -- strategies based on lookup tables,
+finite state machines, neural networks, and stochastic variants all performed well.
 Single layer neural networks (Section~\ref{sec:ann}) performed well in both
-noisy and standard
-tournaments
+noisy and standard tournaments
 though these had some aspect of human involvement in the selection of features.
-This is in line with the other strategies also where human decisions are made
+This is in line with the other strategies also where some human decisions are made
 regarding the structure. For the LookerUp and Gambler archetypes
 (Sections~\ref{sec:lookerup} and~\ref{sec:gambler})
 a decision has to be made
 regarding the number of turns of history and initial play that are to be used.
-Whilst, the Finite state machines and Hidden Markov models
-(Sections\ref{sec:fsm} and~\ref{sec:hmm}) also need input from a
-human as to the number of states to use they are much more of a black box and
-thus offer wider adaptability.
+In contrast, the finite state machines and hidden Markov models
+(Sections\ref{sec:fsm} and~\ref{sec:hmm}) required only a choice of the number
+of states, and the training algorithm can eliminate unneeded states in the case
+of finite state machines (evidenced by the unconnected nodes in the diagrams
+for the included representations).
 
-A lot of strategies could be represented by many archetypes, however some
-archetypes will be far more efficient in doing so than
-others. The fact that the Lookerup strategy does the best for the standard
+Many strategies can be represented by multiple archetypes, however some
+archetypes will be more efficient in encoded the patterns present in the data.
+The fact that the Lookerup strategy does the best for the standard
 tournament indicates that it represents an efficient reduction of
-dimension which in turn makes its training more efficient. For the noisy
+dimension which in turn makes its training more efficient. In particular the
+first rounds of play were valuable bit of information. For the noisy
 tournament however the dimension reduction represented by some archetypes
-indicates that sufficient features are not captured by the Lookup tables whilst
-they are by the
-neural network and the finite state machine allowing them to adapt to the noisy
-environment.
+indicates that some features of the data are not captured by the lookup
+tables while they are by the neural network and the finite state machine,
+allowing them to adapt better to the noisy environment. Intuitively, a noisy
+environment can significantly affect a lookup table based on the last two rounds
+of play since these action pairs compete with probing defections, apologies, and
+retaliations. Accordingly, it is not surprising that additional parameter space
+is needed to adapt to a noisy environment.
 
 In opposition to historical tournament results and community folklore,
 our results show that complex strategies can be very effective for the
-IPD\@. It is not the complexity of strategies that is disadvantageous; rather that directly
-designing a broadly effective strategy is no easy task. Of all the human-designed
+IPD\@. Designing complex strategies for the prisoner's dilemma appears to be
+difficult for humans. Of all the human-designed
 strategies in the library, only DBS consistently performs well, and it is
 substantially more complex than traditional tournament winners like TFT, OmegaTFT,
 and zero determinant strategies. Furthermore, dealing with noise is difficult
 for most strategies. Two strategies designed specifically to account for noise,
 DBS and OmegaTFT, perform well and only DBS performs better than the trained
-strategies and \textbf{only} in the noisy context.
+strategies and \textbf{only} in some noisy contexts. Empirically we find that
+DBS (with its default parameters) does not win tournaments at 1% noise.
+However DBS has a parameter that accounts for the expected amount of noise and a
+followup study with various noise levels could make a more complete study of
+the performance of DBS and strategies trained at various noise levels.
 
-Of the strategies trained to maximize their average score all are generally
-cooperative, not defecting until the opponent defects. Maximizing for individual
+
+The strategies trained to maximize their average score are generally
+cooperative and do not defect first. Maximizing for individual
 performance across a collection of opponents leads to mutual cooperation despite
 the fact that mutual cooperation is an unstable evolutionary equilibrium for the prisoner's
 dilemma. Specifically it is noted that the reinforcement learning process for maximizing
 payoff does not lead to exploitative zero determinant strategies, which may also
-be a result of the collection of training strategies, of which several retaliate harshly.
+be a result of the collection of training strategies, of which several retaliate
+harshly. Training with the objective of maximizing payoff difference may
+produce strategies more like zero determinant strategies.
 
-We take the liberty of generalizing from the results of this study. For the trained
+For the trained
 strategies utilizing look up tables we generally found those that incorporate
 one or more of the initial rounds of play outperformed those that did not. The
 strategies based on neural networks and finite state machines also are able to
 condition throughout a match on the first rounds of play. Accordingly, we conclude
 that first impressions matter in the IPD\@. The best strategies are nice (never
-defecting first) and this property could be further investigated with the
-Axelrod library
+defecting first) and the impact of the first rounds of play could be further
+investigated with the Axelrod library
 in future work by e.g.\ forcing all strategies to defect on the first round.
 
+
 Finally, we note that as the library grows, the top performing strategies
-sometimes shuffle, and are not retrained regularly. Most of the strategies were
+sometimes shuffle, and are not retrained automatically. Most of the strategies were
 trained on an earlier version of the library (v2.2.0: \cite{axelrodproject2.2})
 that did not include DBS and several other opponents. The precise parameters
 that are optimal will depend on the pool of opponents. Moreover we have not
 extensively trained strategies to determine the minimum parameters that are
 sufficient -- neural networks with fewer nodes and features and finite state
 machines with fewer states may suffice. See \cite{ashlock2013impact} for
-discussion of resource availability for IPD strategies. It may be possible to
-train strategies more effective in noisy tournaments than DBS.
-
-Future work:
-% TODO Write the future work section
-%* spatial tournaments and other variants
-%* Additional strategy archetypes by the Ashlocks, e.g. function stacks, binary
-%decision players
-%* further refine features and training parameters
+discussion of resource availability for IPD strategies.
 
 % TODO: author contributions
 
