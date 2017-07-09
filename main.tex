@@ -39,7 +39,7 @@ Iterated Prisoner's Dilemma}
     trained to perform well against a corpus of over 170 distinct
     opponents, including many well-known strategies from the literature. All
     the trained strategies win standard tournaments against the total collection
-    of other opponents. We also trained variants to win noisy tournaments.
+    of other opponents. Variants were also trained to win noisy tournaments.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -414,7 +414,6 @@ All data generated for this work is archived and available...
 \subsection{Standard Tournament}\label{sec:standard}
 
 The top 11 performing strategies by median payoff are all strategies trained to maximize
-% TODO Potentially modify this as more repetitions are analysed.
 total payoff against a subset of the strategies (Table~\ref{tbl:standard_score}).
 The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
 which actively analyzes the opponent and responds
@@ -422,7 +421,6 @@ accordingly. The next two strategies are Winner12, based on a lookup table,
 Fool Me Once, a grudging strategy that defects indefinitely on
 the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 
-% Table of best strategies
 \begin{table}[!hbtp]
         \centering
         \input{./assets/standard_top_15_scores_summary.tex}
@@ -497,7 +495,6 @@ shown in Table~\ref{tbl:standard_wins}. It is evident that although these
 strategies score highly they do not win many matches: the strategy with the most
 number of wins is the Evolved FSM 16 strategy that at most won 60
 (\(60/175\approx34\%\)) matches in a given tournament.
-% TODO Update this when more data comes in.
 
 \begin{table}[!hbtp]
     \centering
@@ -549,19 +546,19 @@ similarity in the fingerprints.
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/EvolvedLookerUp2_2_2.png}
-        \caption{Fingerprint for EvolvedLookerUp\_2\_2\_2}
+        \caption{EvolvedLookerUp\_2\_2\_2}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_HMM_5.png}
-        \caption{Fingerprint for Evolved\_HMM\_5}
+        \caption{Evolved\_HMM\_5}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16.png}
-        \caption{Fingerprint for Evolved\_FSM\_16}
+        \caption{Evolved\_FSM\_16}
     \end{subfigure}%
 
     \caption{Comparison of Fingerprints for Standard Tournament Top 3}
@@ -580,30 +577,26 @@ first round) but do learn to quickly retaliate.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_EvolvedLookerUp2_2_2_array.pdf}
-        \caption{Cooperation rate per round for EvolvedLookerUp\_2\_2\_2 (over
-        1000 repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.pdf}
+        \caption{EvolvedLookerUp\_2\_2\_2}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_HMM_5_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_HMM\_5 (over 1000
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_HMM_5_array.pdf}
+        \caption{Evolved\_HMM\_5}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_FSM_16_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16 (over 1000
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_FSM_16_array.pdf}
+        \caption{Evolved\_FSM\_16}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Standard Tournament Top 3}
+    \caption{Comparison of collaboration rates for Standard Tournament Top 3
+    (over 10000 repetitions)}
     \label{fig:comparison_cooperation_heatmaps_standard}
 \end{figure}
-
-% TODO Update these with 10k repetition version? (I have these for all but DBS)
 
 \subsection{Noisy Tournament}\label{sec:noise}
 
@@ -656,10 +649,10 @@ matches but again they have a poor total payoff.
     \label{fig:noisy_heatmap}
 \end{figure}
 
-As shown in Table~\ref{tbl_noisy_wins_top_winners} and
+As shown in Table~\ref{tbl:noisy_wins_top_winners} and
 Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins are
-somewhat similar, with Defector, the handshaking CollectiveStrategy, and
-Aggravate appearing as the top three again.
+somewhat similar to the Standard tournaments, with Defector, the handshaking
+CollectiveStrategy, and Aggravate appearing as the top three again.
 
 \begin{table}[!hbtp]
     \centering
@@ -734,19 +727,19 @@ may behave similarly in principle.
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/DBS.png}
-        \caption{Fingerprint for DBS}
+        \caption{DBS}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_ANN_5_Noise_05.png}
-        \caption{Fingerprint for Evolved\_ANN\_5\_Noise\_05}
+        \caption{Evolved\_ANN\_5\_Noise\_05}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16_Noise_05.png}
-        \caption{Fingerprint for Evolved\_FSM\_16\_Noise\_05}
+        \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
     \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
@@ -763,29 +756,26 @@ the strategies never defect first and learn to quickly punish poorer strategies.
     \centering
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_DBS_0-75_3_4_3_5_array.pdf}
-        \caption{Cooperation rate per round for DBS (over 1000 repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.pdf}
+        \caption{DBS}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_ANN_5_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_ANN\_5\_Noise\_05 (over 1000
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.pdf}
+        \caption{Evolved\_ANN\_5\_Noise\_05}
     \end{subfigure}%
     ~
     \begin{subfigure}[t]{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_1000_Evolved_FSM_16_Noise_05_array.pdf}
-        \caption{Cooperation rate per round for Evolved\_FSM\_16\_Noise\_05 (over 1000
-        repetitions)}
+        \includegraphics[width=\textwidth]{./assets/cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.pdf}
+        \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3}
+    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3
+    (over 10000 tournaments)}
     \label{fig:comparison_cooperation_heatmaps_noisy}
 \end{figure}
-
-% TODO Update these with 10k repetition version
 
 \section{Methods}\label{sec:methods}
 
