@@ -134,10 +134,10 @@ an opponent defection.
 
 \subsection{LookerUp}\label{sec:lookerup}
 
-The LookerUp strategy is based on a lookup tables and  encodes a set of
+The LookerUp strategy is based on a lookup table and  encodes a set of
 deterministic responses based on the opponent's first $n_1$ moves, the
 opponent's last $m_1$ moves, and the players last $m_2$ moves. If $n_1 > 0$ then
-the player has infinite memory depth, otherwise it has depth $\max{m_1, m_2}$.
+the player has infinite memory depth, otherwise it has depth $\max(m_1, m_2)$.
 This is illustrated diagrammatically in Figure~\ref{fig:lookerup}.
 
 \begin{figure}[!hbtp]
@@ -187,7 +187,7 @@ probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
 
 This strategy type can be used to train arbitrary memory-$n$ strategies. A
-memory one strategy called PSO Gambler Mem 1 was trained, with
+memory one strategy called PSOGamblerMem1 was trained, with
 probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
                 \text{Pr}(\text{C}\;|\;\text{CD}),
                 \text{Pr}(\text{C}\;|\;\text{DC}),
@@ -261,7 +261,7 @@ This is illustrated diagrammatically in Figure~\ref{fig:fsm}.
 \end{figure}
 
 Training this strategy corresponds to finding mappings of states and histories
-to an action and a state. Figure~\ref{fig:fsm_images} show two of the trained
+to an action and a state. Figure~\ref{fig:fsm_images} shows two of the trained
 finite state machines. The layout of state nodes is kept the same between
 Figure~\ref{fig:fsm16} and~\ref{fig:fsm16noise} to highlight the effect of
 different training environments. Note also that two of the 16 states are not
@@ -293,7 +293,7 @@ used, this is also an outcome of the training process.
 
 A variant of finite state machine strategies are called hidden Markov models
 (HMMs). Like the strategies based on finite state machines, these strategies
-also encode an internal state however use probabilistic transitions based on the
+also encode an internal state. However, they use probabilistic transitions based on the
 prior round of play to other states and cooperate or defect with various
 probabilities at each state. This is
 shown diagrammatically in Figure~\ref{fig:hmm}. Training this strategy
@@ -557,7 +557,7 @@ first round) but do learn to quickly retaliate.
         \caption{Evolved\_FSM\_16}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Standard Tournament Top 3
+    \caption{Comparison of cooperation rates for Standard Tournament Top 3
     (over 10000 repetitions)}
     \label{fig:comparison_cooperation_heatmaps_standard}
 \end{figure}
@@ -656,7 +656,9 @@ one tournament won almost all its matches (167).
 Finally, Table~\ref{tbl:noisy_ranks} and
 Figure~\ref{fig:noisy_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. We see that the stochasticity
-of the ranks understandably increases the DBS strategy never ranks lower than
+of the ranks understandably increases relative to the Standard tournament. An
+exception is the top three strategies, for example, the DBS strategy never ranks
+lower than
 second and wins 75\% of the time. The two strategies trained for noisy
 tournaments rank in the top three 95\% of the time.
 % TODO Possibly update this with more data.
@@ -707,7 +709,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
         \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for the Noisy (5\%) Tournament Top 3
+    \caption{Comparison of cooperation rates for the Noisy (5\%) Tournament Top 3
     (over 10000 standard tournaments)}
     \label{fig:comparison_cooperation_heatmaps_noisy}
 \end{figure}
@@ -715,7 +717,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 \section{Methods}\label{sec:methods}
 
 The trained strategies (denoted by a \(^{*}\) in
-Appendix~\ref{app:list_of_players} were trained using reinforcement
+Appendix~\ref{app:list_of_players}) were trained using reinforcement
 learning algorithms. The ideas of reinforcement learning can be attributed to
 the original work of \cite{turing1950computing} in which the notion that
 computers would learn by taking random actions but according to a distribution
