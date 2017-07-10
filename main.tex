@@ -529,37 +529,6 @@ is 8th.
     \end{figure}
 \end{landscape}
 
-
-Using a numerical method of fingerprinting based on
-\cite{Ashlock2008, ashlock2009fingerprint} we can compare
-strategies. The fingerprints of the top performing standard strategies are shown
-in Figures~\ref{fig:comparison_fingerprint_standard}. There is a striking
-similarity in the fingerprints.
-
-\begin{figure}[!hbtp]
-    \centering
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/EvolvedLookerUp2_2_2.png}
-        \caption{EvolvedLookerUp\_2\_2\_2}
-    \end{subfigure}%
-    ~
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/Evolved_HMM_5.png}
-        \caption{Evolved\_HMM\_5}
-    \end{subfigure}%
-    ~
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16.png}
-        \caption{Evolved\_FSM\_16}
-    \end{subfigure}%
-
-    \caption{Comparison of Fingerprints for Standard Tournament Top 3}
-    \label{fig:comparison_fingerprint_standard}
-\end{figure}
-
 Figure~\ref{fig:comparison_cooperation_heatmaps_standard} shows the rate of
 cooperation in each round for the top three strategies. The opponents in these
 figures are ordered according to performance by median score. It is evident that
@@ -712,35 +681,6 @@ tournaments rank in the top three 95\% of the time.
     \end{figure}
 \end{landscape}
 
-Similarly to Section~\ref{sec:standard} the top performing noisy strategies
-(Figure~\ref{fig:comparison_fingerprint_noisy}) have
-a striking similarity in the fingerprints which indicates that the strategies
-may behave similarly in principle.
-
-\begin{figure}[!hbtp]
-    \centering
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/DBS.png}
-        \caption{DBS}
-    \end{subfigure}%
-    ~
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/Evolved_ANN_5_Noise_05.png}
-        \caption{Evolved\_ANN\_5\_Noise\_05}
-    \end{subfigure}%
-    ~
-    \begin{subfigure}[t]{.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./assets/Evolved_FSM_16_Noise_05.png}
-        \caption{Evolved\_FSM\_16\_Noise\_05}
-    \end{subfigure}%
-
-    \caption{Comparison of Fingerprints for Noisy (5\%) Tournament Top 3}
-    \label{fig:comparison_fingerprint_noisy}
-\end{figure}
-
 Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
 cooperation in each round for the top three strategies and just as for the top
 performing strategies in the standard tournament
@@ -767,8 +707,8 @@ the strategies never defect first and learn to quickly punish poorer strategies.
         \caption{Evolved\_FSM\_16\_Noise\_05}
     \end{subfigure}%
 
-    \caption{Comparison of collaboration rates for Noisy (5\%) Tournament Top 3
-    (over 10000 tournaments)}
+    \caption{Comparison of collaboration rates for the Noisy (5\%) Tournament Top 3
+    (over 10000 standard tournaments)}
     \label{fig:comparison_cooperation_heatmaps_noisy}
 \end{figure}
 
