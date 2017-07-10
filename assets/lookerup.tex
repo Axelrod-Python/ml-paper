@@ -5,9 +5,9 @@
 \begin{document}
 \begin{tikzpicture}[scale=.9]
     \tikzstyle{cooperator} = [rectangle, pattern=north west lines, pattern
-        color=blue!70, draw=blue, text width=.25cm]
+        color=blue!70, draw=blue, text width=.25cm, outer sep = 2pt]
     \tikzstyle{defector} = [rectangle, pattern=north east lines, pattern
-        color=red!70, draw=red, text width=.25cm]
+        color=red!70, draw=red, text width=.25cm, outer sep = 2pt]
 
 
     % Histories ----------------------------------------
@@ -61,6 +61,8 @@
     ($(opp_history) + (.75, -.2)$);
 
     \node (output) at ($(player_history) + (2, 0)$) [defector] {D};
+    \node (or) at ($(output) + (.6, 0)$) {or};
+    \node at ($(or) + (.6, 0)$) [cooperator] {C};
 
     \draw [->, very thick] ($(player_history) + (.65, 0)$) -- (output);
 \end{tikzpicture}

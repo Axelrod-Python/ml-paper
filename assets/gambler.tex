@@ -61,10 +61,7 @@
     ($(opp_history) + (.75, -.2)$);
 
 
-    \node (output) at ($(player_history) + (2, 0)$) [cooperator] {C};
-    \node (pc) at ($(player_history) + (2, -.55)$) {\(p_c\)};
-    \node at ($(output) + (.55, 0)$) [defector] {D};
-    \node (pc) at ($(pc) + (.55, 0)$) {\(p_d\)};
+    \node (output) at ($(player_history) + (2, 0)$) [right] {\((p_c, p_d)\)};
 
     \draw [->, very thick] ($(player_history) + (.65, 0)$) -- (output);
 \end{tikzpicture}

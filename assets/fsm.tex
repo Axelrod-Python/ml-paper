@@ -5,9 +5,9 @@
 \begin{document}
 \begin{tikzpicture}[scale=.9]
     \tikzstyle{cooperator} = [rectangle, pattern=north west lines, pattern
-        color=blue!70, draw=blue, text width=.25cm]
+        color=blue!70, draw=blue, text width=.25cm, outer sep = 2pt]
     \tikzstyle{defector} = [rectangle, pattern=north east lines, pattern
-        color=red!70, draw=red, text width=.25cm]
+        color=red!70, draw=red, text width=.25cm, outer sep = 2pt]
 
 
     % Histories ----------------------------------------
@@ -61,9 +61,14 @@
     \draw [very thick, black, dashed, ->] ($(S10) + (.3, 0)$) -- (inputs);
 
     % output
-    \node (action_output) at ($(inputs) + (1.5, 0)$) [cooperator] {C};
-    \node (state_output) at ($(action_output) + (.55, 0)$) {4};
+    \node (output) at ($(inputs) + (2, 0)$) [defector] {D};
+    \node (or) at ($(output) + (.6, 0)$) {or};
+    \node (c) at ($(or) + (.6, 0)$) [cooperator] {C};
+    \node at ($(c) + (0.3, 0)$) [right] {and \(s\in\{1, 2, 3, 4\}\) (next state)};
 
-    \draw [->, very thick] (inputs) -- (action_output);
+    %\node (action_output) at ($(inputs) + (1.5, 0)$) [cooperator] {C};
+    %\node (state_output) at ($(action_output) + (.55, 0)$) {4};
+
+    \draw [->, very thick] (inputs) -- (output);
 \end{tikzpicture}
 \end{document}
