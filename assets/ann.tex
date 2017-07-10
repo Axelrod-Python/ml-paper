@@ -5,9 +5,9 @@
 \begin{document}
 \begin{tikzpicture}[scale=.9]
     \tikzstyle{cooperator} = [rectangle, pattern=north west lines, pattern
-        color=blue!70, draw=blue, text width=.25cm]
+        color=blue!70, draw=blue, text width=.25cm, outer sep = 2pt]
     \tikzstyle{defector} = [rectangle, pattern=north east lines, pattern
-        color=red!70, draw=red, text width=.25cm]
+        color=red!70, draw=red, text width=.25cm, outer sep = 2pt]
 
 
     % Histories ----------------------------------------
@@ -41,7 +41,7 @@
     \draw[very thick, black, dashed] ($(A1) + (-.3, .3)$)  rectangle ($(B10) + (.3, -.3)$);
 
     % Strategy inputs
-    \node (input_vector) at ($(B5) + (2, 0)$) [right] {(6, 5, 9, 1)};
+    \node (input_vector) at ($(B5) + (2, 0)$) [right] {(6, 5, 9, \dots, 1)};
 
     \draw [very thick, black, dashed, ->] ($(B5) + (.3, 0)$) -- (input_vector);
 
@@ -54,15 +54,18 @@
     \fill (in2) circle[radius=3pt];
     \node (in3) at ($(input_vector) + (2.5, -.5)$) [right] {};
     \fill (in3) circle[radius=3pt];
-    \node (in4) at ($(input_vector) + (2.5, -1.5)$) [right] {};
-    \fill (in4) circle[radius=3pt];
+
+    \node (in4) at ($(input_vector) + (2.625, -1.15)$) {$\vdots$};
+
+    \node (in5) at ($(input_vector) + (2.5, -2)$) [right] {};
+    \fill (in5) circle[radius=3pt];
 
     % Inputs
 
-    \draw [->] ($(input_vector) + (-.6, .25)$) to [in=180, out=90] (in1);
-    \draw [->] ($(input_vector) + (-.3, .25)$) to [in=180, out=90] (in2);
-    \draw [->] ($(input_vector) + (.6, -.25)$) to [in=180, out=-90] (in3);
-    \draw [->] ($(input_vector) + (.3, -.25)$) to [in=180, out=-90] (in4);
+    \draw [->] ($(input_vector) + (-.9, .25)$) to [in=180, out=90] (in1);
+    \draw [->] ($(input_vector) + (-.6, .25)$) to [in=180, out=90] (in2);
+    \draw [->] ($(input_vector) + (-.2, -.25)$) to [in=180, out=-90] (in3);
+    \draw [->] ($(input_vector) + (1, -.25)$) to [in=180, out=-90] (in5);
 
     \node (mid1) at ($(in1)!0.5!(in2) + (1.5, 0)$) {};
     \fill (mid1) circle[radius=3pt];
@@ -83,12 +86,14 @@
     \draw [thick] (in3) -- (mid2);
     \draw [thick] (in3) -- (mid3);
 
-    \draw [thick] (in4) -- (mid1);
-    \draw [thick] (in4) -- (mid2);
-    \draw [thick] (in4) -- (mid3);
+    \draw [thick] (in5) -- (mid1);
+    \draw [thick] (in5) -- (mid2);
+    \draw [thick] (in5) -- (mid3);
 
     % output
-    \node (output) at ($(mid2) + (1.5, 0)$) [cooperator] {C};
+    \node (output) at ($(mid2) + (2, 0)$) [defector] {D};
+    \node (or) at ($(output) + (.6, 0)$) {or};
+    \node at ($(or) + (.6, 0)$) [cooperator] {C};
 
     \draw [->, very thick] (mid1) -- (output);
     \draw [->, very thick] (mid2) -- (output);
