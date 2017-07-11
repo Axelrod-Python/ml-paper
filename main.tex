@@ -48,17 +48,17 @@ Iterated Prisoner's Dilemma}
 
 \section{Introduction}\label{sec:introduction}
 
-The iterated prisoner's dilemma (IPD) is an area of game theoretic research
-aiming to understand the evolution of cooperative behaviour from complex
+The iterated prisoner's dilemma (IPD) is a common model in game theory,
+frequently used  to understand the evolution of cooperative behaviour from complex
 dynamics \cite{Axelrod1984}.
 
-The Axelrod library \cite{axelrodproject, knight2016open} is an open source
-software for conducting IPD research with
+In this manuscript we use the Axelrod library \cite{axelrodproject, knight2016open},
+open source software for conducting IPD research with
 reproducibility as a principal goal. Written in the Python programming language,
 to date the library contains source code contributed by over 50 individuals
 from a variety of geographic locations and technical backgrounds. The library
 is supported by a comprehensive test suite that covers all the intended
-behaviors of the strategies in the library, as well as the features that
+behaviors of all of the strategies in the library, as well as the features that
 conduct matches, tournaments, and population dynamics.
 
 The library is continuously developed and as of version 3.0.0, the library
@@ -74,8 +74,8 @@ Table~\ref{tbl:tournaments}. Further to the work described in
 tournaments are carried out as more strategies are added to the Axelrod library.
 Details and results are available here:
 \url{http://axelrod-tournament.readthedocs.io}. This work presents a detailed
-analysis of a tournament with 176 strategies, more details about this are given
-in Section~\ref{sec:results}.
+analysis of a tournament with 176 strategies (details given
+in Section~\ref{sec:results}).
 
 \begin{table}[!hbtp]
     \begin{center}
@@ -112,8 +112,9 @@ evolve IPD strategies in various circumstances
       vassiliades2010multiagent}. See also \cite{Gaudesi2016} for a
 strategy trained to win against a collection of well-known IPD opponents and see
 \cite{franken2005particle} for a prior use of particle swarm algorithms. Our
-results are unique in that we are able to train against a large collection of
-well-known strategies available in the scientific literature. Crucially, the
+results are unique in that we are able to train against a large and diverse
+collection of strategies available from the scientific literature.
+Crucially, the
 software used in this work is openly available and can be used to train strategies
 in the future in a reliable manner, with confidence that the opponent strategies
 are correctly implemented, tested and documented.
@@ -134,7 +135,7 @@ an opponent defection.
 
 \subsection{LookerUp}\label{sec:lookerup}
 
-The LookerUp strategy is based on a lookup table and  encodes a set of
+The LookerUp strategy is based on a lookup table and encodes a set of
 deterministic responses based on the opponent's first $n_1$ moves, the
 opponent's last $m_1$ moves, and the players last $m_2$ moves. If $n_1 > 0$ then
 the player has infinite memory depth, otherwise it has depth $\max(m_1, m_2)$.
@@ -149,7 +150,7 @@ This is illustrated diagrammatically in Figure~\ref{fig:lookerup}.
 
 
 Training of this strategy corresponds to finding maps from partial histories to
-either a cooperation or a defection. Although various
+actions, either a cooperation or a defection. Although various
 combinations of $n_1, m_1,$ and $m_2$ have been tried, the best performance at
 the time of
 training was obtained for $n_1 = m_1 = m_2 = 2$ and generally for $n_1 > 0$.
@@ -158,7 +159,8 @@ called EvolvedLookerUp2\_2\_2 is among the top strategies in the library.
 
 This archetype can be used to train deterministic memory-$n$ strategies with the
 parameters $n_1=0$ and $m_1=m_2=n$. For $n=1$, the resulting strategy cooperates
-if the last round was mutual cooperation and defects otherwise.
+if the last round was mutual cooperation and defects otherwise, known as Grim or
+Grudger.
 
 Two strategies in the library, Winner12 and Winner21, from \cite{Mathieu2015},
 are based on lookup tables for $n_1 = 0$, $m_1 = 1$, and $m_2=2$. The strategy
@@ -182,7 +184,7 @@ This is illustrated diagrammatically in Figure~\ref{fig:gambler}.
 
 Training of this strategy corresponds to finding maps from histories to
 a probability of cooperation. The library includes a strategy trained
-with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with most of the
+with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with 12 of the 64
 probabilities being 0 or 1. At one time this strategy outperformed
 EvolvedLookerUp2\_2\_2.
 
@@ -194,7 +196,7 @@ probabilities $(\text{Pr}(\text{C}\;|\;\text{CC}),
                 \text{Pr}(\text{C}\;|\;\text{DD})) = (1, 0.5217, 0, 0.121)$.
 Though it performs well in standard tournaments (see
 Table~\ref{tbl:standard_score})
-it is not as good as the longer memory strategies, and is bested by a similar
+it does not outperform the longer memory strategies, and is bested by a similar
 strategy that also uses the first round of play: PSOGambler\_1\_1\_1.
 
 These strategies are trained with a particle swarm algorithm rather than an
@@ -322,8 +324,9 @@ contains strategies containing teams of all the deterministic players, all the
 memory-one players, and some others.
 
 Because these strategies inherit many of the properties of the strategies
-on which they are based, including using the match length to defect on the last
-round(s) of play, not all of these strategies were included in results of this
+on which they are based, including using knowledge of the match length to defect
+on the last round(s) of play, not all of these
+strategies were included in results of this
 paper. These strategies do not typically outperform the trained strategies
 described above.
 
@@ -443,7 +446,8 @@ Figure~\ref{fig:standard_boxplot}.
 \end{landscape}
 
 Pairwise payoff results are given as a heatmap (Figure~\ref{fig:standard_heatmap})
-which shows that many strategies achieve mutual cooperation (obtaining a score of 3). The top performing
+which shows that many strategies achieve mutual cooperation (obtaining a score
+of 3). The top performing
 strategies never defect first yet are able to exploit weaker strategies that
 attempt to defect.
 
@@ -505,7 +509,7 @@ Finally, Table~\ref{tbl:standard_ranks} and
 Figure~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. Whilst there is some
 stochasticity, the top three strategies almost always rank in the top three. For
-example, the worst that the Evolved Lookerup 2 2 2 ranks in a given tournament
+example, the worst that the Evolved Lookerup 2 2 2 ranks in any tournament
 is 8th.
 
 
@@ -567,7 +571,7 @@ first round) but do learn to quickly retaliate.
 Noisy tournaments in which there is a 5\% chance that an action is
 flipped are now described. As shown in Table~\ref{tbl:noisy_score} and
 Figure~\ref{fig:noisy_score}, the best performing strategies in median payoff
-are DBS, designed to correct for noise, followed by two strategies trained in
+are DBS, designed to account for noise, followed by two strategies trained in
 the presence of noise and three trained strategies trained without noise. One of
 the strategies trained with noise (PSO Gambler) actually performs less well than
 some of the other high ranking strategies including
@@ -615,7 +619,7 @@ matches but again they have a poor total payoff.
 
 As shown in Table~\ref{tbl:noisy_wins_top_winners} and
 Figure~\ref{fig:noisy_winplot} the strategies tallying the most wins are
-somewhat similar to the Standard tournaments, with Defector, the handshaking
+somewhat similar to the standard tournaments, with Defector, the handshaking
 CollectiveStrategy, and Aggravate appearing as the top three again.
 
 \begin{table}[!hbtp]
@@ -656,7 +660,7 @@ one tournament won almost all its matches (167).
 Finally, Table~\ref{tbl:noisy_ranks} and
 Figure~\ref{fig:noisy_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. We see that the stochasticity
-of the ranks understandably increases relative to the Standard tournament. An
+of the ranks understandably increases relative to the standard tournament. An
 exception is the top three strategies, for example, the DBS strategy never ranks
 lower than
 second and wins 75\% of the time. The two strategies trained for noisy
@@ -684,8 +688,8 @@ tournaments rank in the top three 95\% of the time.
 \end{landscape}
 
 Figure~\ref{fig:comparison_cooperation_heatmaps_noisy} shows the rate of
-cooperation in each round for the top three strategies and just as for the top
-performing strategies in the standard tournament
+cooperation in each round for the top three strategies (in the absense of noise)
+and just as for the top performing strategies in the standard tournament
 (Figure~\ref{fig:comparison_cooperation_heatmaps_standard}) it is evident that
 the strategies never defect first and learn to quickly punish poorer strategies.
 
@@ -729,7 +733,7 @@ used here:
     \item Particle Swarm Algorithm: \cite{imran2013overview}.
 \end{itemize}
 
-The Particle Swarm Algorithm is implemented using the Python library:
+The Particle Swarm Algorithm is implemented using the pyswarm library:
 \url{https://pypi.python.org/pypi/pyswarm}. This algorithm was used only to
 train the Gambler archetype.
 
@@ -752,7 +756,7 @@ The default parameters for this procedure:
 All implementations of these algorithms are archived at
 \cite{marc_harper_2017_824264}. This software is (similarly to the Axelrod
 library) available on github
-\url{https://github.com/Axelrod-Python/axelrod-dojo}.  There are objective
+\url{https://github.com/Axelrod-Python/axelrod-dojo}. There are objective
 functions for:
 
 \begin{itemize}
@@ -766,7 +770,7 @@ functions for:
 These can be used in Noisy or Standard environments (as evidenced by
 Sections~\ref{sec:standard} and~\ref{sec:noisy}). These objectives can be
 further modified to suit other purposes. New strategies could be trained with
-variations including spatial structure, and probabilistically ending matches.
+variations including spatial structure and probabilistically ending matches.
 
 \section{Discussion}
 
@@ -790,7 +794,7 @@ This is in line with the other strategies also where some human decisions are ma
 regarding the structure. For the LookerUp and Gambler archetypes
 (Sections~\ref{sec:lookerup} and~\ref{sec:gambler})
 a decision has to be made
-regarding the number of turns of history and initial play that are to be used.
+regarding the number of rounds of history and initial play that are to be used.
 In contrast, the finite state machines and hidden Markov models
 (Sections\ref{sec:fsm} and~\ref{sec:hmm}) required only a choice of the number
 of states, and the training algorithm can eliminate unneeded states in the case
@@ -802,11 +806,11 @@ archetypes will be more efficient in encoding the patterns present in the data.
 The fact that the Lookerup strategy does the best for the standard
 tournament indicates that it represents an efficient reduction of
 dimension which in turn makes its training more efficient. In particular the
-first rounds of play were valuable bit of information. For the noisy
+first rounds of play were valuable bits of information. For the noisy
 tournament however the dimension reduction represented by some archetypes
 indicates that some features of the data are not captured by the lookup
-tables while they are by the neural network and the finite state machine,
-allowing them to adapt better to the noisy environment. Intuitively, a noisy
+tables while they are by the neural networks and the finite state machines,
+allowing the latter to adapt better to the noisy environment. Intuitively, a noisy
 environment can significantly affect a lookup table based on the last two rounds
 of play since these action pairs compete with probing defections, apologies, and
 retaliations. Accordingly, it is not surprising that additional parameter space
@@ -826,7 +830,6 @@ DBS (with its default parameters) does not win tournaments at 1% noise.
 However DBS has a parameter that accounts for the expected amount of noise and a
 followup study with various noise levels could make a more complete study of
 the performance of DBS and strategies trained at various noise levels.
-
 
 The strategies trained to maximize their average score are generally
 cooperative and do not defect first. Maximizing for individual
@@ -848,13 +851,12 @@ defecting first) and the impact of the first rounds of play could be further
 investigated with the Axelrod library
 in future work by e.g.\ forcing all strategies to defect on the first round.
 
-
 Finally, we note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained automatically. Most of the strategies were
 trained on an earlier version of the library (v2.2.0: \cite{axelrodproject2.2})
 that did not include DBS and several other opponents. The precise parameters
 that are optimal will depend on the pool of opponents. Moreover we have not
-extensively trained strategies to determine the minimum parameters that are
+extensively trained strategies to determine the minimum parameter spaces that are
 sufficient -- neural networks with fewer nodes and features and finite state
 machines with fewer states may suffice. See \cite{ashlock2013impact} for
 discussion of resource availability for IPD strategies.
