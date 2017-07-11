@@ -1,5 +1,7 @@
 import axelrod as axl
 
+axl.Grudger.classifier["memory_depth"] = 1
+
 players = [s() for s in axl.strategies if "length"
            not in s.classifier["makes_use_of"]]
 parameterized_players = [axl.Random(0.1), axl.Random(0.3), axl.Random(0.7),
