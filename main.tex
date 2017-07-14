@@ -44,18 +44,19 @@ Iterated Prisoner's Dilemma}
     trained to perform well against a corpus of over 170 distinct
     opponents, including many well-known and classic strategies. All
     the trained strategies win standard tournaments against the total collection
-    of other opponents. Variants are also trained to win noisy tournaments.
+    of other opponents. The trained strategies and one particular human made
+    designed strategy are the top performers in noisy tournaments also.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
-The iterated prisoner's dilemma (IPD) is a common model in game theory,
+The Iterated Prisoner's Dilemma (IPD) is a common model in game theory,
 frequently used  to understand the evolution of cooperative behaviour from complex
 dynamics \cite{Axelrod1984}.
 
-In this manuscript we use the Axelrod library \cite{axelrodproject, knight2016open},
+In this manuscript the Axelrod library \cite{knight2016open, axelrodproject},
 open source software for conducting IPD research with
-reproducibility as a principal goal. Written in the Python programming language,
+reproducibility as a principal goal, is used. Written in the Python programming language,
 to date the library contains source code contributed by over 50 individuals
 from a variety of geographic locations and technical backgrounds. The library
 is supported by a comprehensive test suite that covers all the intended
@@ -120,7 +121,7 @@ software used in this work is openly available and can be used to train strategi
 in the future in a reliable manner, with confidence that the opponent strategies
 are correctly implemented, tested and documented.
 Moreover, as of the time of writing, we claim that this work contains the best
-performing strategies for the iterated prisoner's dilemma.
+performing strategies for the Iterated Prisoner's Dilemma.
 
 \section{The Strategy Archetypes}
 
@@ -130,7 +131,8 @@ methods. Most are deterministic, use many rounds of memory, and perform
 extremely well in tournaments as will be discussed in Section~\ref{sec:results}.
 Training of these strategies will be discussed in Section~\ref{sec:methods}.
 These strategies can encode a variety
-of other strategies, including classic strategies like Tit For Tat,
+of other strategies, including classic strategies like Tit For Tat
+\cite{Axelrod1980},
 handshake strategies, and grudging strategies that always defect after
 an opponent defection.
 
@@ -335,7 +337,8 @@ described above.
 
 This section presents the results of a large IPD tournament with
 strategies from the Axelrod library, including some additional parametrized
-strategies (e.g.\ various parameter choices for Generous Tit For Tat). These are
+strategies (e.g.\ various parameter choices for Generous Tit For Tat
+\cite{Gaudesi2016}). These are
 listed in Appendix~\ref{app:list_of_players}.
 
 All strategies in the tournament follow a simple set of
@@ -417,7 +420,7 @@ total payoff against a subset of the strategies (Table~\ref{tbl:standard_score})
 The next strategy is Desired Belief Strategy (DBS) \cite{Au2006}.
 which actively analyzes the opponent and responds
 accordingly. The next two strategies are Winner12, based on a lookup table,
-Fool Me Once, a grudging strategy that defects indefinitely on
+Fool Me Once \cite{axelrodproject}, a grudging strategy that defects indefinitely on
 the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 
 \begin{table}[!hbtp]
@@ -667,7 +670,6 @@ exception is the top three strategies, for example, the DBS strategy never ranks
 lower than
 second and wins 75\% of the time. The two strategies trained for noisy
 tournaments rank in the top three 95\% of the time.
-% TODO Possibly update this with more data.
 
 \begin{table}[!hbtp]
     \centering
@@ -828,7 +830,7 @@ and zero determinant strategies. Furthermore, dealing with noise is difficult
 for most strategies. Two strategies designed specifically to account for noise,
 DBS and OmegaTFT, perform well and only DBS performs better than the trained
 strategies and \textbf{only} in some noisy contexts. Empirically we find that
-DBS (with its default parameters) does not win tournaments at 1% noise.
+DBS (with its default parameters) does not win tournaments at 1\% noise.
 However DBS has a parameter that accounts for the expected amount of noise and a
 followup study with various noise levels could make a more complete study of
 the performance of DBS and strategies trained at various noise levels.
