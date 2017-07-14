@@ -208,7 +208,7 @@ evolutionary algorithm (though the former would suffice). Particle swarm
 algorithms have been used to trained IPD strategies previously
 \cite{franken2005particle}.
 
-\subsection{ANN: Single Hidden Layer Artificial Neural Network}
+\subsection{ANN: Single Hidden Layer Artificial Neural Network}\label{sec:ann}
 
 Strategies based on artificial neural networks use a variety of features
 computed from the history of play:
@@ -295,7 +295,7 @@ used, this is also an outcome of the training process.
 \end{figure}
 
 
-\subsection{Hidden Markov Models}
+\subsection{Hidden Markov Models}\label{sec:hmm}
 
 A variant of finite state machine strategies are called hidden Markov models
 (HMMs). Like the strategies based on finite state machines, these strategies
@@ -766,15 +766,15 @@ library) available on github
 functions for:
 
 \begin{itemize}
- \item total or mean payoff
- \item total or mean payoff difference (unused in this work)
+ \item total or mean payoff,
+ \item total or mean payoff difference (unused in this work),
  \item total Moran process wins (fixation probability). This lead to the
      strategies named TF1, TF2, TF3 listed in
      Appendix~\ref{app:list_of_players}.
 \end{itemize}
 
-These can be used in Noisy or Standard environments (as evidenced by
-Sections~\ref{sec:standard} and~\ref{sec:noisy}). These objectives can be
+These can be used in noisy or standard environments (as evidenced by
+Sections~\ref{sec:standard} and~\ref{sec:noise}). These objectives can be
 further modified to suit other purposes. New strategies could be trained with
 variations including spatial structure and probabilistically ending matches.
 
