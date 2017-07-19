@@ -18,10 +18,6 @@
 \usepackage{tikz}
 \usetikzlibrary{calc, shapes, patterns}
 
-\usepackage[backend=biber, firstinits=false, backref=false, url=true,
-            isbn=true, style=numeric]{biblatex}
-\addbibresource{bibliography.bib}
-
 % Title
 \title{Reinforcement Learning Produces Dominant Strategies for the
 Iterated Prisoner's Dilemma}
@@ -889,7 +885,8 @@ A variety of software libraries have been used in this work:
         \cite{mckinney2010data, walt2011numpy}.
 \end{itemize}
 
-\printbibliography
+\bibliographystyle{plain}
+\bibliography{bibliography.bib}
 
 \appendix
 
