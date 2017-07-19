@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{standalone}
 \usepackage{fancyvrb}
+\usepackage{authblk}
 
 \usepackage{pdflscape}
 
@@ -24,12 +25,18 @@
 % Title
 \title{Reinforcement Learning Produces Dominant Strategies for the
 Iterated Prisoner's Dilemma}
-\author{Marc Harper \and
-        Vincent Knight \and
-        Martin Jones \and
-        Georgios Koutsovoulos \and
-        Nikoleta E. Glynatsi \and
-        Owen Campbell}
+\author[1]{Marc Harper}
+\author[2]{Vincent Knight}
+\author[3]{Martin Jones}
+\author[4]{Georgios Koutsovoulos}
+\author[2]{Nikoleta E. Glynatsi}
+\author[3]{Owen Campbell}
+
+
+\affil[1]{Google Inc., Mountain View, CA, USA}
+\affil[2]{Cardiff University, School of Mathematics, UK}
+\affil[3]{Not affiliated}
+\affil[4]{INRA, Université Côte d‘Azur, CNRS, ISA, France}
 \date{}
 
 
@@ -410,9 +417,7 @@ Prisoner's Dilemma being played is:
     \end{pmatrix}
 \end{equation}
 
-All data generated for this work is archived and available...
-% TODO Add details once data is archived.
-% TODO Include url to repo etc.
+All data generated for this work is archived and available at~\cite{data}.
 
 \subsection{Standard Tournament}\label{sec:standard}
 
@@ -760,7 +765,7 @@ The default parameters for this procedure:
 \end{itemize}
 
 All implementations of these algorithms are archived at
-\cite{marc_harper_2017_824264}. This software is (similarly to the Axelrod
+\cite{dojo}. This software is (similarly to the Axelrod
 library) available on github
 \url{https://github.com/Axelrod-Python/axelrod-dojo}. There are objective
 functions for:
