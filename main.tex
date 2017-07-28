@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{ecj,palatino,epsfig,latexsym,natbib}
 
 % Packages
 \usepackage[margin=1.5cm, includefoot, footskip=30pt]{geometry}
@@ -11,7 +12,6 @@
 \usepackage{amsmath}
 \usepackage{standalone}
 \usepackage{fancyvrb}
-\usepackage{authblk}
 
 \usepackage{pdflscape}
 
@@ -20,19 +20,28 @@
 
 % Title
 \title{Reinforcement Learning Produces Dominant Strategies for the
-Iterated Prisoner's Dilemma}
-\author[1]{Marc Harper}
-\author[2]{Vincent Knight}
-\author[3]{Martin Jones}
-\author[4]{Georgios Koutsovoulos}
-\author[2]{Nikoleta E. Glynatsi}
-\author[3]{Owen Campbell}
+       Iterated Prisoner's Dilemma}
 
 
-\affil[1]{Google Inc., Mountain View, CA, USA}
-\affil[2]{Cardiff University, School of Mathematics, UK}
-\affil[3]{Not affiliated}
-\affil[4]{INRA, Université Côte d‘Azur, CNRS, ISA, France}
+\author{
+		\name{\bf Marc Harper} \hfill \addr{marcharper@gmail.com}\\
+        \addr{Google Inc., Mountain View, CA, USA}
+\AND
+		\name{\bf Vincent Knight} \hfill \addr{knightva@cardiff.ac.uk}\\
+        \addr{Cardiff University, School of Mathematics, UK}
+\AND
+		\name{\bf Martin Jones} \hfill \addr{martin@pythonforbiologists.com}\\
+        \addr{Not affiliated}
+\AND
+		\name{\bf Georgios Koutsovoulos} \hfill \addr{georgios.koutsovoulos@inra.fr}\\
+        \addr{INRA, Université Côte d‘Azur, CNRS, ISA, France}
+\AND
+		\name{\bf Nikoleta E. Glynatsi} \hfill \addr{glynatsiNE@cardiff.ac.uk}\\
+        \addr{Cardiff University, School of Mathematics, UK}
+\AND
+		\name{\bf Owen Campbell} \hfill \addr{owen.campbell@tanti.org.uk}\\
+        \addr{Not affiliated}
+}
 \date{}
 
 
@@ -50,6 +59,12 @@ Iterated Prisoner's Dilemma}
     of other opponents. The trained strategies and one particular human made
     designed strategy are the top performers in noisy tournaments also.
 \end{abstract}
+
+\begin{keywords}
+    Game Theory,
+    Genetic algorithms,
+    Prisoners dilemma,
+\end{keywords}
 
 \section{Introduction}\label{sec:introduction}
 
