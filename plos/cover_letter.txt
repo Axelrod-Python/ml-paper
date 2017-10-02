@@ -1,0 +1,27 @@
+# Cover letter
+## Reinforcement Learning Produces Dominant Strategies for the Iterated Prisoner's Dilemma
+
+To the editors,
+
+This paper presents a numerical study of novel strategies for the iterated
+Prisoner's dilemma.
+
+We feel that this paper presents a strong contribution to the literature as it
+not only presents one of the largest Prisoner's Dilemma tournament (made
+possible using an open source library with over 40 contributors) but also
+describes the use of a number of strategy archetypes. Whilst some of these
+archetypes are not in themselves novel (finite state machines for example),
+others are (neural networks for example). Furthermore, it is the effective
+training of these strategies using reinforcement learning that is a particularly
+strong contribution.
+
+A number of results and in depth analysis are presented, not only for standard
+tournaments but also for noisy tournaments.
+
+This paper not only offers a good piece of reference text (all strategies are
+fully referenced) but offers many insights as to the effectiveness of
+reinforcement learning.
+
+Thank you for taking the time to consider our work,
+
+The Authors.
