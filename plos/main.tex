@@ -235,9 +235,18 @@ Owen Campbell\textsuperscript{3\ddag},
 
 \section*{Introduction}
 
-The Iterated Prisoner's Dilemma (IPD) is a common model in game theory,
+The Prisoner's Dilemma (PD) is a two player game
+used to model a variety of strategic interactions. Each player chooses
+between cooperation (C) or defection (D). The payoffs of
+the game are defined by the matrix $\begin{pmatrix} R & S \\ T & P
+\end{pmatrix}$, where $T > R > P > S$ and $2R > T + S$. The PD is a one
+round game, but is commonly studied in a manner where the prior outcomes
+matter. This repeated form is called the Iterated Prisoner's
+Dilemma (IPD).
+The IPD is a common model in game theory,
 frequently used  to understand the evolution of cooperative behaviour from complex
 dynamics \cite{Axelrod1984}.
+
 
 This manuscript uses the Axelrod library \cite{knight2016open, axelrodproject},
 open source software for conducting IPD research with
@@ -293,7 +302,7 @@ machines, arriving at particularly effective parameter choices through
 evolutionary or particle swarm algorithms. There are several
 previous publications that use evolutionary algorithms to
 evolve IPD strategies in various circumstances
-\cite{ashlock2006training, Ashlock2015, Ashlock2006,
+\cite{ashlock2006training, Ashlock2015,  Ashlock2006,
       ashlock2014shaped, Ashlock2014, barlow2015varying,
       fogel1993evolving, marks1989niche, sudo2015effects,
       vassiliades2010multiagent}. See also \cite{Gaudesi2016} for a
@@ -305,8 +314,6 @@ Crucially, the
 software used in this work is openly available and can be used to train strategies
 in the future in a reliable manner, with confidence that the opponent strategies
 are correctly implemented, tested and documented.
-Moreover, as of the time of writing, we claim that this work contains the best
-performing strategies for the Iterated Prisoner's Dilemma.
 
 \section*{Materials and methods}
 \subsection*{The Strategy Archetypes}
@@ -514,7 +521,59 @@ strategies were included in results of this
 paper. These strategies do not typically outperform the trained strategies
 described above.
 
-% Results and Discussion can be combined.
+\subsection*{Training methods}\label{sec:methods}
+
+The trained strategies (denoted by a \(^{*}\) in
+Appendix~\ref{app:list_of_players}) were trained using reinforcement
+learning algorithms. The ideas of reinforcement learning can be attributed to
+the original work of \cite{turing1950computing} in which the notion that
+computers would learn by taking random actions but according to a distribution
+that picked actions with high rewards more often. The two particular algorithms
+used here:
+
+\begin{itemize}
+    \item Particle Swarm Algorithm: \cite{imran2013overview}.
+    \item Evolutionary algorithm: \cite{moriarty1999evolutionary}.
+\end{itemize}
+
+The Particle Swarm Algorithm is implemented using the pyswarm library:
+\url{https://pypi.python.org/pypi/pyswarm}. This algorithm was used only to
+train the Gambler archetype.
+
+All other strategies were trained using evolutionary algorithms. The
+evolutionary algorithms used standard techniques, varying strategies by
+mutation and crossover, and evaluating the performance against each opponent
+for many repetitions. The best performing strategies in each generation are
+persisted, variants created, and objective functions computed again.
+
+The default parameters for this procedure:
+
+\begin{itemize}
+	\item A population size of 40 individuals (kept constant across the
+        generations);
+	\item A mutation rate of 10\%;
+	\item 10 individuals kept from one generation to the next;
+    \item A total of 500 generations.
+\end{itemize}
+
+All implementations of these algorithms are archived at
+\cite{dojo}. This software is (similarly to the Axelrod
+library) available on github
+\url{https://github.com/Axelrod-Python/axelrod-dojo}. There are objective
+functions for:
+
+\begin{itemize}
+ \item total or mean payoff,
+ \item total or mean payoff difference (unused in this work),
+ \item total Moran process wins (fixation probability). This lead to the
+     strategies named TF1, TF2, TF3 listed in
+     Appendix~\ref{app:list_of_players}.
+\end{itemize}
+
+These can be used in noisy or standard environments. These objectives can be
+further modified to suit other purposes. New strategies could be trained with
+variations including spatial structure and probabilistically ending matches.
+
 \section*{Results}
 
 This section presents the results of a large IPD tournament with
@@ -584,8 +643,8 @@ Prisoner's Dilemma being played is:
 
 \begin{equation}\label{equ:pd}
     \begin{pmatrix}
-        (3, 3) & (0, 5)\\
-        (5, 0) & (1, 1)
+        3 & 0\\
+        5 & 1
     \end{pmatrix}
 \end{equation}
 
@@ -639,10 +698,9 @@ Fig~\ref{fig:standard_boxplot}.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{standard_scores_boxplots.pdf}
-        \caption{\bf Standard Tournament: Mean score per turn (ranked by median
-        over
-        50000 tournaments).}
+        \includegraphics[width=\paperwidth]{standard_scores_boxplots.pdf}
+        \caption{\bf Standard Tournament: Mean score per turn 
+            (strategies ordered by median score over 50000 tournaments).}
         \label{fig:standard_boxplot}
     \end{figure}
 \end{landscape}
@@ -703,7 +761,7 @@ SolutionB5          &  125.843 &  1.509 &  120 &  123.0 &  125.0 &  126.0 &  127
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{standard_wins_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{standard_wins_boxplots.pdf}
         \caption{\bf Standard Tournament: number of wins per tournament (ranked by
         median over
         50000 tournaments).}
@@ -789,7 +847,7 @@ Omega TFT: 3, 8               &  14.275 &  1.301 &    9 &  12.0 &  13.0 &  15.0 
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{standard_ranks_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{standard_ranks_boxplots.pdf}
         \caption{\bf Standard Tournament: rank in each tournament (ranked by
         median over
         50000 tournaments).}
@@ -809,24 +867,24 @@ first round) but do learn to quickly retaliate.
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.pdf}
-        \caption{\bf Cooperation rates for EvolvedLookerUp\_2\_2\_2 (over 10000
-        repetitions)}
+        \caption{\bf Cooperation rates for EvolvedLookerUp\_2\_2\_2
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_1}
 \end{figure}
 
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_HMM_5_array.pdf}
-        \caption{\bf Cooperation rates for Evolved\_HMM\_5 (over 10000)
-        repetitions)}
+        \caption{\bf Cooperation rates for Evolved\_HMM\_5
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_2}
 \end{figure}
 
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_array.pdf}
-        \caption{\bf Cooperation rates for Evolved\_FSM\_16 (over 10000)
-        repetitions)}
+        \caption{\bf Cooperation rates for Evolved\_FSM\_16 
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_3}
 \end{figure}
 
@@ -878,10 +936,10 @@ winner, it comes at a 6x increased run time over Evolved FSM 16 Noise 05.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{noisy_scores_boxplots.pdf}
-        \caption{\bf Noisy (5\%) Tournament: Mean score per turn (ranked by median
-        over
-        50000 tournaments).}
+        \includegraphics[width=\paperwidth]{noisy_scores_boxplots.pdf}
+        \caption{\bf Noisy (5\%) Tournament: Mean score per turn
+            (strategies ordered by median score over 50000 tournaments).}
+        \label{fig:standard_boxplot}
         \label{fig:noisy_score}
     \end{figure}
 \end{landscape}
@@ -895,7 +953,7 @@ matches but again they have a poor total payoff.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.8\textwidth]{noisy_scores_heatmap.pdf}
+    \includegraphics[width=\textwidth]{noisy_scores_heatmap.pdf}
     \caption{\bf Noisy (5\%) Tournament: Mean score per turn of row players against
     column players (ranked by median over
         50000 tournaments).}
@@ -941,10 +999,9 @@ Predator             &  151.406 &  3.403 &  138 &  146.0 &  149.0 &  151.0 &  15
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{noisy_wins_boxplots.pdf}
-        \caption{\bf Noisy (5\%) Tournament: number of wins per tournament (ranked by
-        median over
-        50000 tournaments).}
+        \includegraphics[width=\paperwidth]{noisy_wins_boxplots.pdf}
+        \caption{\bf Noisy (5\%) Tournament: number of wins per tournament
+            (strategies ordered by median score over 50000 tournaments).}
         \label{fig:noisy_winplot}
     \end{figure}
 \end{landscape}
@@ -1025,10 +1082,9 @@ Gradual                          &  15.163 &  3.672 &    4 &  10.000 &  13.0 &  
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.8\paperwidth]{noisy_ranks_boxplots.pdf}
-        \caption{\bf Noisy (5\%) Tournament: rank in each tournament (ranked by
-        median over
-        50000 tournaments).}
+        \includegraphics[width=\paperwidth]{noisy_ranks_boxplots.pdf}
+        \caption{\bf Noisy (5\%) Tournament: rank in each tournament 
+            (strategies ordered by median score over 50000 tournaments).}
         \label{fig:noisy_ranks_boxplot}
     \end{figure}
 \end{landscape}
@@ -1042,77 +1098,28 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.pdf}
-        \caption{\bf Cooperation rates for DBS (over 10000 standard tournaments).}
+        \caption{\bf Cooperation rates for DBS
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_1}
 \end{figure}
         `
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.pdf}
-        \caption{\bf Cooperation rates for Evolved\_ANN\_5\_Noise\_05 (over 10000 standard tournaments).}
+        \caption{\bf Cooperation rates for Evolved\_ANN\_5\_Noise\_05
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_2}
 \end{figure}
 
 \begin{figure}[!hbtp]
         \centering
         \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.pdf}
-        \caption{\bf Cooperation rates for Evolved\_FSM\_16\_Noise\_05 (over 10000 standard tournaments).}
+        \caption{\bf Cooperation rates for Evolved\_FSM\_16\_Noise\_05
+            (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_3}
 \end{figure}
 
 
-\subsection*{Training methods}\label{sec:methods}
-
-The trained strategies (denoted by a \(^{*}\) in
-Appendix~\ref{app:list_of_players}) were trained using reinforcement
-learning algorithms. The ideas of reinforcement learning can be attributed to
-the original work of \cite{turing1950computing} in which the notion that
-computers would learn by taking random actions but according to a distribution
-that picked actions with high rewards more often. The two particular algorithms
-used here:
-
-\begin{itemize}
-    \item Particle Swarm Algorithm: \cite{imran2013overview}.
-    \item Evolutionary algorithm: \cite{moriarty1999evolutionary}.
-\end{itemize}
-
-The Particle Swarm Algorithm is implemented using the pyswarm library:
-\url{https://pypi.python.org/pypi/pyswarm}. This algorithm was used only to
-train the Gambler archetype.
-
-All other strategies were trained using evolutionary algorithms. The
-evolutionary algorithms used standard techniques, varying strategies by
-mutation and crossover, and evaluating the performance against each opponent
-for many repetitions. The best performing strategies in each generation are
-persisted, variants created, and objective functions computed again.
-
-The default parameters for this procedure:
-
-\begin{itemize}
-	\item A population size of 40 individuals (kept constant across the
-        generations);
-	\item A mutation rate of 10\%;
-	\item 10 individuals kept from one generation to the next;
-    \item A total of 500 generations.
-\end{itemize}
-
-All implementations of these algorithms are archived at
-\cite{dojo}. This software is (similarly to the Axelrod
-library) available on github
-\url{https://github.com/Axelrod-Python/axelrod-dojo}. There are objective
-functions for:
-
-\begin{itemize}
- \item total or mean payoff,
- \item total or mean payoff difference (unused in this work),
- \item total Moran process wins (fixation probability). This lead to the
-     strategies named TF1, TF2, TF3 listed in
-     Appendix~\ref{app:list_of_players}.
-\end{itemize}
-
-These can be used in noisy or standard environments. These objectives can be
-further modified to suit other purposes. New strategies could be trained with
-variations including spatial structure and probabilistically ending matches.
 
 \section*{Discussion}
 
@@ -1192,16 +1199,22 @@ defecting first) and the impact of the first rounds of play could be further
 investigated with the Axelrod library
 in future work by e.g.\ forcing all strategies to defect on the first round.
 
-Finally, we note that as the library grows, the top performing strategies
+We note that as the library grows, the top performing strategies
 sometimes shuffle, and are not retrained automatically. Most of the strategies were
 trained on an earlier version of the library (v2.2.0: \cite{axelrodproject2.2})
 that did not include DBS and several other opponents. The precise parameters
 that are optimal will depend on the pool of opponents. Moreover we have not
 extensively trained strategies to determine the minimum parameter spaces that are
 sufficient -- neural networks with fewer nodes and features and finite state
-machines with fewer states may suffice. See \cite{ashlock2013impact} for
+machines with fewer states may suffice. See~\cite{ashlock2013impact} for
 discussion of resource availability for IPD strategies.
 
+Finally, whilst we have considered the robustness of our claims and results with
+respect to noise it would also be of interest to train strategies for different
+versions of the stage game (also referred to as \textit{dilemma
+strength})~\cite{wang2015universal, tanimoto2007}. Our findings seems to indicate that obtaining
+strong strategies for other games through reinforcement learning would be
+possible.
 
 \section*{Acknowledgements}
 
@@ -1309,17 +1322,19 @@ Ashlock D.
 \newblock In: Computational Intelligence and Games, 2006 IEEE Symposium on.
   IEEE; 2006. p. 111--118.
 
+\bibitem{Ashlock2006}
+Ashlock W, Ashlock D.
+\newblock Changes in prisoner’s dilemma strategies over evolutionary time
+  with different population sizes.
+\newblock In: Evolutionary Computation, 2006. CEC 2006. IEEE Congress on. IEEE;
+  2006. p. 297--304.
+
 \bibitem{Ashlock2015}
 Ashlock D, Brown JA, Hingston P.
 \newblock Multiple Opponent Optimization of Prisoner’s Dilemma Playing
   Agents.
 \newblock IEEE Transactions on Computational Intelligence and AI in Games.
   2015;7(1):53--65.
-
-\bibitem{Ashlock2006}
-Ashlock W, Ashlock D.
-\newblock {Changes in Prisoner ' s Dilemma Strategies Over Evolutionary Time
-  With Different Population Sizes}. 2006; p. 1001--1008.
 
 \bibitem{ashlock2014shaped}
 Ashlock W, Ashlock D.
@@ -1517,13 +1532,6 @@ Frean MR.
 \newblock Proceedings of the Royal Society of London B: Biological Sciences.
   1994;257(1348):75--79.
 
-\bibitem{Ashlock2006b}
-Ashlock W, Ashlock D.
-\newblock Changes in prisoner’s dilemma strategies over evolutionary time
-  with different population sizes.
-\newblock In: Evolutionary Computation, 2006. CEC 2006. IEEE Congress on. IEEE;
-  2006. p. 297--304.
-
 \bibitem{Nowak1993}
 Nowak M, Sigmund K.
 \newblock {A strategy of win-stay, lose-shift that outperforms tit-for-tat in
@@ -1585,6 +1593,16 @@ Kuhn S.
 \newblock Prisoner's Dilemma.
 \newblock In: Zalta EN, editor. The Stanford Encyclopedia of Philosophy. spring
   2017 ed. Metaphysics Research Lab, Stanford University; 2017.
+
+\bibitem{wang2015universal}
+Wang Z, Kokubo S, Jusup M, Tanimoto Jun.
+\newblock{Universal scaling for the dilemma strength in evolutionary games}
+\newblock{Physics of life reviews. 2015;(14):1--30.}
+
+\bibitem{tanimoto2007}
+Tanimoto J, Sagara H.
+\newblock {Relationship between dilemma occurrence and the existence of a weakly dominant strategy in a two-player symmetric game.}
+\newblock {BioSystems. 2007 Aug 31;90(1):105--14.}
 
 \end{thebibliography}
 

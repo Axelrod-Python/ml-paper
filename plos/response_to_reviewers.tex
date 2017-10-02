@@ -1,0 +1,159 @@
+\documentclass[a4]{article}
+
+\usepackage{hyperref}
+
+\begin{document}
+
+\section{Comments from editor}
+
+\begin{quote}
+	1. Please ensure that your manuscript meets PLOS ONE's style requirements,
+	including those for file naming. The PLOS ONE style templates can be found at
+	\url{http://www.journals.plos.org/plosone/s/file?id=wjVg/PLOSOne_formatting_sample_main_body.pdf}
+	and
+	\url{http://www.journals.plos.org/plosone/s/file?id=ba62/PLOSOne_formatting_sample_title_authors_affiliations.pdf}
+\end{quote}
+
+We would be happy to change the style but could we be given a bit more guidance
+please, the current submission (and revision) has been prepared using the LaTeX
+template provided here: \url{http://journals.plos.org/plosone/s/latex}.
+
+\begin{quote}
+	2. Thank you for stating the following in the Financial Disclosure section:
+
+	"The author(s) received no specific funding for this work".
+
+	We note that one or more of the authors are employed by a commercial company: "Google Inc"
+\end{quote}
+
+% TODO Address this
+
+\begin{quote}
+3. Please amend your list of authors on the manuscript to ensure that each
+author is linked to an affiliation. Authors’ affiliations should reflect the
+institution where the work was done (if authors moved subsequently, you can
+also list the new affiliation stating “current affiliation:….” as necessary).
+\end{quote}
+
+All authors affiliations have been included. Two of the authors, at the time of
+the work being carried out where not affiliated with \textit{any} institution.
+We have marked this as \textbf{Not Affiliated} however are open to any
+suggestions for a different way of wording this.
+
+\section{Comments from first referee}
+
+\begin{quote}
+    1. I did not see the cover letter attached.
+\end{quote}
+
+Apologies for this, we refer this comment to the editor, a cover letter was
+provided.
+
+\begin{quote}
+    2. According to the PLOS One Manuscript Guideline you should not include
+    figures in the main manuscript file (each figure must be prepared and
+    submitted as an individual file). Also I advice to double check the
+    references, for example, \#58, \#15, \#13, \#17 etc.
+\end{quote}
+
+We have followed the guidelines and example template provided here,
+\url{http://journals.plos.org/plosone/s/latex}. All images were uploaded as
+separate files and compiled by the PLOS One. If the editor/typesetter has any
+further requirements we would be happy to oblige.
+
+With regards to the references, we have checked them and updated \#15 which was
+missing the conference. Thank you for bringing this to our attention.
+
+\begin{quote}
+    3. I found this article available in the Internet
+    https://arxiv.org/pdf/1707.06307.pdf
+\end{quote}
+
+This is our preprint copy of the paper which is not against the copyright
+specifications of PLOS. From
+\url{http://journals.plos.org/plosone/s/criteria-for-publication}.
+
+\begin{quote}
+    PLOS does support authors who wish to share their
+    work early through deposition of manuscripts with preprint servers. This
+    does not impact consideration of the manuscript at any PLOS journal; we will
+    consider manuscripts that have been deposited in preprint servers such as
+    bioRxiv or arXiv, or published as a thesis. We will also consider work that
+    has been presented at conferences.
+\end{quote}
+
+\begin{quote}
+    4. In some figures (11, 12, etc) it is hard to see the names of the
+    strategies.
+\end{quote}
+
+\begin{quote}
+    5. The note for Fig 12 is seem not full and clear.
+\end{quote}
+
+All figures have been redrawn with bigger font where possible. To avoid poor
+readability of names, these have been removed from various figures as the
+ordering of the names can be assumed from the other figures.
+
+\begin{quote}
+    6. Lines 40-41: you write "we claim that this work contains the best
+    performing strategies for the Iterated Prisoner's Dilemma". However, then
+    you write "Finally, we note that as the library grows, the top performing
+    strategies sometimes shuffle, and are not retrained automatically." (line
+    328-329). So, the first statement is sound too strong...
+\end{quote}
+
+On reflection we agree and have removed the first sentence.
+
+\begin{quote}
+    7. Training methods should be shifted in the Materials and methods.
+\end{quote}
+
+This has been done.
+
+\begin{quote}
+    8. I did not see the explanation of the PD game and the iterated PD,
+    however, it is the general tool in the publication.
+\end{quote}
+
+Thank you for pointing this out, an explanation has now been added.
+
+\section{Comments from second referee}
+
+\begin{quote}
+Honestly this work less dedicates to the field of evolutionary game from
+scientific point of view. One point obviously pointing-out is that their
+conclusion of “reinforcement learning produces dominant strategies to win the
+Axelrod’s IPD tournament” is no surprising at all. It is because anyone can
+agree that the more elaborate learning system, e.g. Structural Neural Network
+System with brushing-up mechanism for weights like they did, can be
+implemented, there might be emerging some smart and robust strategies gaining
+high scores.  But, consequently I think the MS may be acceptable on Plos One
+because it devotedly follows the historically important work by Axelrod, in
+which quite few people still have been interested. However, the current MS
+seems suffering from several crucial problems that must be definitely revised.
+\end{quote}
+
+\begin{quote}
+1) The way of their description seems so verbose. But, simultaneously, some
+descriptions, e.g. explaining models, seem little vague. More clear structure
+and plain description should be expected. The MS structure should be rebuilt.
+\end{quote}
+
+\begin{quote}
+2) Most of visual materials to show their numerical results are obviously mal-functioned because of too small text descriptions, which do not work at all. More careful, friendly to the audience and intrigued expression should be considered.
+\end{quote}
+
+These have been addressed with larger font for the names.
+
+\begin{quote}
+3) This suggestion comes from science. The dilemma structure of PD they presumed is just one case; where P=0, R=3, S=0, T=5, although I can understand this may result from the previous tournament. A very likely question is what happens if they presume different dilemma strength even in the class of Prisoner’s Dilemma class. One good material to consider what-is-called dilemma strength is;
+Wang et al.; Universal scaling for the dilemma strength in evolutionary games, Physics of Life Reviews 14, 1-30, 2015.
+Tanimoto \& Sagara; Relationship between dilemma occurrence and the existence of a weakly dominant strategy in a two-player symmetric game, BioSystems 90(1), 105-114, 2007.
+Those works suggest that PD games can be featured with combined two different dilemmas; Chicken-type dilemma, theoretically measured by Dg’ and SH-type dilemma evaluated by Dr’. I really love to know whether or not the authors statement or say conclusion by the current work can be robust if they presume different Dg’ and Dr’. At least they should mention this point in the discussion.
+\end{quote}
+
+Thank you for the helpful comment and suggested references, a comment about this
+has been added to the discussion.
+
+\end{document}
