@@ -243,10 +243,9 @@ the game are defined by the matrix $\begin{pmatrix} R & S \\ T & P
 round game, but is commonly studied in a manner where the prior outcomes
 matter. This repeated form is called the Iterated Prisoner's
 Dilemma (IPD).
-The IPD is a common model in game theory,
+The IPD is 
 frequently used  to understand the evolution of cooperative behaviour from complex
-dynamics \cite{Axelrod1984}.
-
+dynamics~\cite{Axelrod1984}.
 
 This manuscript uses the Axelrod library \cite{knight2016open, axelrodproject},
 open source software for conducting IPD research with
@@ -271,7 +270,7 @@ probabilistic ending~\cite{Axelrod1980b} tournaments are carried out as more
 strategies are added to the Axelrod library.
 Details and results are available here:
 \url{http://axelrod-tournament.readthedocs.io}. This work presents a detailed
-analysis of a tournament with 176 strategies.
+analysis of tournaments with 176 strategies.
 
 \begin{table}[!hbtp]
     \caption{\bf An overview of a selection of published tournaments. Not all
@@ -344,7 +343,6 @@ This is illustrated diagrammatically in Fig~\ref{fig:lookerup}.
     \label{fig:lookerup}
 \end{figure}
 
-
 Training of this strategy corresponds to finding maps from partial histories to
 actions, either a cooperation or a defection. Although various
 combinations of $n_1, m_1,$ and $m_2$ have been tried, the best performance at
@@ -381,8 +379,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:gambler}.
 Training of this strategy corresponds to finding maps from histories to
 a probability of cooperation. The library includes a strategy trained
 with $n_1 = m_1 = m_2 = 2$ that is \emph{mostly deterministic}, with 52 of the 64
-probabilities being 0 or 1. At one time this strategy outperformed
-EvolvedLookerUp2\_2\_2.
+probabilities being 0 or 1. 
 
 This strategy type can be used to train arbitrary memory-$n$ strategies. A
 memory one strategy called PSOGamblerMem1 was trained, with
@@ -426,7 +423,7 @@ computed from the history of play:
 \end{itemize}
 
 These are then input into a feed forward neural network with one layer and
-user-supplied width.  This is illustrated diagrammatically in
+user-supplied width. This is illustrated diagrammatically in
 Fig~\ref{fig:ann}.
 
 \begin{figure}[!hbtp]
@@ -440,7 +437,7 @@ Training of this strategy corresponds to finding parameters of the neural
 network. An inner layer with just five nodes performs quite well in both deterministic and
 noisy tournaments. The output of the ANN used in this work is deterministic;
 a stochastic variant that outputs probabilities rather than exact moves could
-be easily created.
+be created.
 
 \subsubsection*{Finite State Machines}\label{sec:fsm}
 
@@ -468,7 +465,7 @@ used, this is also an outcome of the training process.
 \begin{figure}[!hbtp]
     \centering
         \includegraphics[width=.5\textwidth]{FSM16.pdf}
-        \caption{\bf Evolved\_FSM\_16: trained to maximise score in a standard
+        \caption{\bf Evolved\_FSM\_16: trained to maximize score in a standard
         tournament}
         \label{fig:fsm16}
 \end{figure}
@@ -476,7 +473,7 @@ used, this is also an outcome of the training process.
 \begin{figure}
         \centering
         \includegraphics[width=.5\textwidth]{FSM16noise.pdf}
-        \caption{Evolved\_FSM\_16\_Noise\_05: trained to maximise score in a
+        \caption{\bf Evolved\_FSM\_16\_Noise\_05: trained to maximize score in a
         noisy tournament}
         \label{fig:fsm16noise}
 \end{figure}
@@ -509,10 +506,8 @@ composed of a team of other strategies. In each round, each member of the team
 is polled for its desired next
 move. The ensemble then selects the next move based on a rule, such as the
 consensus vote in the case of MetaMajority or the best individual performance
-in the case of MetaWinner. These strategies were among the best in the library
-before the inclusion of those trained by reinforcement learning. The library
-contains strategies containing teams of all the deterministic players, all the
-memory-one players, and some others.
+in the case of MetaWinner. These strategies were among the highest performing in 
+the library before the inclusion of those trained by reinforcement learning. 
 
 Because these strategies inherit many of the properties of the strategies
 on which they are based, including using knowledge of the match length to defect
@@ -526,7 +521,7 @@ described above.
 The trained strategies (denoted by a \(^{*}\) in
 Appendix~\ref{app:list_of_players}) were trained using reinforcement
 learning algorithms. The ideas of reinforcement learning can be attributed to
-the original work of \cite{turing1950computing} in which the notion that
+the original work of~\cite{turing1950computing} in which the notion that
 computers would learn by taking random actions but according to a distribution
 that picked actions with high rewards more often. The two particular algorithms
 used here:
@@ -810,7 +805,7 @@ Finally, Table~\ref{tbl:standard_ranks} and
 Fig~\ref{fig:standard_ranks_boxplot} show the ranks (based on median score)
 of each strategy over the repeated tournaments. Whilst there is some
 stochasticity, the top three strategies almost always rank in the top three. For
-example, the worst that the Evolved Lookerup 2 2 2 ranks in any tournament
+example, the worst that the EvolvedLookerUp\_2\_2\_2 ranks in any tournament
 is 8th.
 
 
@@ -890,7 +885,7 @@ first round) but do learn to quickly retaliate.
 
 \subsection*{Noisy Tournament}\label{sec:noise}
 
-Noisy tournaments in which there is a 5\% chance that an action is
+Results from noisy tournaments in which there is a 5\% chance that an action is
 flipped are now described. As shown in Table~\ref{tbl:noisy_score} and
 Fig~\ref{fig:noisy_score}, the best performing strategies in median payoff
 are DBS, designed to account for noise, followed by two strategies trained in
@@ -943,7 +938,6 @@ winner, it comes at a 6x increased run time over Evolved FSM 16 Noise 05.
         \label{fig:noisy_score}
     \end{figure}
 \end{landscape}
-
 
 Recalling Table~\ref{tbl:standard_score}, the strategies trained in the presence
 of noise are also among the best performers in the absence of noise. As shown in
@@ -1090,7 +1084,7 @@ Gradual                          &  15.163 &  3.672 &    4 &  10.000 &  13.0 &  
 \end{landscape}
 
 Fig~\ref{fig:comparison_cooperation_heatmaps_noisy_1}-~\ref{fig:comparison_cooperation_heatmaps_noisy_3} shows the rate of
-cooperation in each round for the top three strategies (in the absense of noise)
+cooperation in each round for the top three strategies (in the absence of noise)
 and just as for the top performing strategies in the standard tournament
 it is evident that
 the strategies never defect first and learn to quickly punish poorer strategies.
@@ -1133,6 +1127,15 @@ outperform memory-one strategies from the literature. Interestingly, a trained
 memory one strategy produced by a particle swarm algorithm performs well, better
 than human designed strategies such as Win Stay Lose Shift and zero determinant
 strategies (which enforce a payoff difference rather than maximize total payoff).
+
+In opposition to historical tournament results and community folklore,
+our results show that complex strategies can be effective for the
+IPD\@. Of all the human-designed
+strategies in the library, only DBS consistently performs well, and it is
+substantially more complex than traditional tournament winners like TFT, OmegaTFT,
+and zero determinant strategies.
+
+
 The generic structure of the trained strategies did not appear to be
 critical for the standard tournament -- strategies based on lookup tables,
 finite state machines, neural networks, and stochastic variants all performed well.
@@ -1164,16 +1167,9 @@ of play since these action pairs compete with probing defections, apologies, and
 retaliations. Accordingly, it is not surprising that additional parameter space
 is needed to adapt to a noisy environment.
 
-In opposition to historical tournament results and community folklore,
-our results show that complex strategies can be very effective for the
-IPD\@. Designing complex strategies for the prisoner's dilemma appears to be
-difficult for humans. Of all the human-designed
-strategies in the library, only DBS consistently performs well, and it is
-substantially more complex than traditional tournament winners like TFT, OmegaTFT,
-and zero determinant strategies. Furthermore, dealing with noise is difficult
-for most strategies. Two strategies designed specifically to account for noise,
+Two strategies designed specifically to account for noise,
 DBS and OmegaTFT, perform well and only DBS performs better than the trained
-strategies and \textbf{only} in some noisy contexts. Empirically we find that
+strategies and \textbf{only} in noisy contexts. Empirically we find that
 DBS (with its default parameters) does not win tournaments at 1\% noise.
 However DBS has a parameter that accounts for the expected amount of noise and a
 followup study with various noise levels could make a more complete study of
