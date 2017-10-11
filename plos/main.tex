@@ -151,7 +151,8 @@
 \date{}
 
 % Header and Footer with logo
-\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{lastpage,fancyhdr}
+\usepackage[draft]{graphicx}
 \usepackage{epstopdf}
 \pagestyle{myheadings}
 \pagestyle{fancy}
@@ -338,7 +339,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:lookerup}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.7\textwidth]{lookerup.pdf}
+    \includegraphics[width=.7\textwidth]{lookerup.eps}
     \caption{\bf Diagrammatic representation of the Looker up Archetype.}
     \label{fig:lookerup}
 \end{figure}
@@ -371,7 +372,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:gambler}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.7\textwidth]{gambler.pdf}
+    \includegraphics[width=.7\textwidth]{gambler.eps}
     \caption{\bf Diagrammatic representation of the Gambler Archetype.}
     \label{fig:gambler}
 \end{figure}
@@ -428,7 +429,7 @@ Fig~\ref{fig:ann}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.9\textwidth]{ann.pdf}
+    \includegraphics[width=.9\textwidth]{ann.eps}
     \caption{\bf Diagrammatic representation of the ANN Archetype.}
     \label{fig:ann}
 \end{figure}
@@ -448,7 +449,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:fsm}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{fsm.pdf}
+    \includegraphics[width=\textwidth]{fsm.eps}
     \caption{\bf Diagrammatic representation of the Finite State Machine Archetype.}
     \label{fig:fsm}
 \end{figure}
@@ -464,7 +465,7 @@ used, this is also an outcome of the training process.
 
 \begin{figure}[!hbtp]
     \centering
-        \includegraphics[width=.5\textwidth]{FSM16.pdf}
+        \includegraphics[width=.5\textwidth]{FSM16.eps}
         \caption{\bf Evolved\_FSM\_16: trained to maximize score in a standard
         tournament}
         \label{fig:fsm16}
@@ -472,7 +473,7 @@ used, this is also an outcome of the training process.
 
 \begin{figure}
         \centering
-        \includegraphics[width=.5\textwidth]{FSM16noise.pdf}
+        \includegraphics[width=.5\textwidth]{FSM16noise.eps}
         \caption{\bf Evolved\_FSM\_16\_Noise\_05: trained to maximize score in a
         noisy tournament}
         \label{fig:fsm16noise}
@@ -492,7 +493,7 @@ cooperating as well as probabilities of the next internal state.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{hmm.pdf}
+    \includegraphics[width=\textwidth]{hmm.eps}
     \caption{\bf Diagrammatic representation of the Hidden Markov Model Archetype.}
     \label{fig:hmm}
 \end{figure}
@@ -610,7 +611,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_scores.pdf}
+        \includegraphics[width=.5\textwidth]{standard_tft_scores.eps}
         \caption{\bf Scores for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_scores}
@@ -618,7 +619,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_ranks.pdf}
+        \includegraphics[width=.5\textwidth]{standard_tft_ranks.eps}
         \caption{\bf Ranks for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_ranks}
@@ -626,7 +627,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_wins.pdf}
+        \includegraphics[width=.5\textwidth]{standard_tft_wins.eps}
         \caption{\bf Wins for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_wins}
@@ -693,7 +694,7 @@ Fig~\ref{fig:standard_boxplot}.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{standard_scores_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{standard_scores_boxplots.eps}
         \caption{\bf Standard Tournament: Mean score per turn 
             (strategies ordered by median score over 50000 tournaments).}
         \label{fig:standard_boxplot}
@@ -708,7 +709,7 @@ attempt to defect.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{standard_scores_heatmap.pdf}
+    \includegraphics[width=\textwidth]{standard_scores_heatmap.eps}
     \caption{\bf Standard Tournament: Mean score per turn of row players against
     column players (ranked by median over 50000 tournaments).}
     \label{fig:standard_heatmap}
@@ -756,7 +757,7 @@ SolutionB5          &  125.843 &  1.509 &  120 &  123.0 &  125.0 &  126.0 &  127
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{standard_wins_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{standard_wins_boxplots.eps}
         \caption{\bf Standard Tournament: number of wins per tournament (ranked by
         median over
         50000 tournaments).}
@@ -842,7 +843,7 @@ Omega TFT: 3, 8               &  14.275 &  1.301 &    9 &  12.0 &  13.0 &  15.0 
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{standard_ranks_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{standard_ranks_boxplots.eps}
         \caption{\bf Standard Tournament: rank in each tournament (ranked by
         median over
         50000 tournaments).}
@@ -861,7 +862,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.eps}
         \caption{\bf Cooperation rates for EvolvedLookerUp\_2\_2\_2
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_1}
@@ -869,7 +870,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_HMM_5_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_HMM_5_array.eps}
         \caption{\bf Cooperation rates for Evolved\_HMM\_5
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_2}
@@ -877,7 +878,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_array.eps}
         \caption{\bf Cooperation rates for Evolved\_FSM\_16 
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_3}
@@ -931,10 +932,9 @@ winner, it comes at a 6x increased run time over Evolved FSM 16 Noise 05.
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{noisy_scores_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{noisy_scores_boxplots.eps}
         \caption{\bf Noisy (5\%) Tournament: Mean score per turn
             (strategies ordered by median score over 50000 tournaments).}
-        \label{fig:standard_boxplot}
         \label{fig:noisy_score}
     \end{figure}
 \end{landscape}
@@ -947,7 +947,7 @@ matches but again they have a poor total payoff.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{noisy_scores_heatmap.pdf}
+    \includegraphics[width=\textwidth]{noisy_scores_heatmap.eps}
     \caption{\bf Noisy (5\%) Tournament: Mean score per turn of row players against
     column players (ranked by median over
         50000 tournaments).}
@@ -993,7 +993,7 @@ Predator             &  151.406 &  3.403 &  138 &  146.0 &  149.0 &  151.0 &  15
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{noisy_wins_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{noisy_wins_boxplots.eps}
         \caption{\bf Noisy (5\%) Tournament: number of wins per tournament
             (strategies ordered by median score over 50000 tournaments).}
         \label{fig:noisy_winplot}
@@ -1076,7 +1076,7 @@ Gradual                          &  15.163 &  3.672 &    4 &  10.000 &  13.0 &  
 \begin{landscape}
     \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=\paperwidth]{noisy_ranks_boxplots.pdf}
+        \includegraphics[width=\paperwidth]{noisy_ranks_boxplots.eps}
         \caption{\bf Noisy (5\%) Tournament: rank in each tournament 
             (strategies ordered by median score over 50000 tournaments).}
         \label{fig:noisy_ranks_boxplot}
@@ -1091,7 +1091,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.eps}
         \caption{\bf Cooperation rates for DBS
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_1}
@@ -1099,7 +1099,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
         `
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.eps}
         \caption{\bf Cooperation rates for Evolved\_ANN\_5\_Noise\_05
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_2}
@@ -1107,7 +1107,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.pdf}
+        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.eps}
         \caption{\bf Cooperation rates for Evolved\_FSM\_16\_Noise\_05
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_3}

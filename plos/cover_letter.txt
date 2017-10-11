@@ -25,3 +25,20 @@ reinforcement learning.
 Thank you for taking the time to consider our work,
 
 The Authors.
+
+ADDENDUM:
+
+Following the first review, we have been asked to include a Competing Interests
+Statement that clarifies the position Google Inc. (the employer of one of the
+authors):
+
+The funder (Google Inc.)  provided support in the form of salaries for the
+author MH, but did not have any additional role in the study
+design, data collection and analysis, decision to publish, or
+preparation of the manuscript. The specific roles of this author is
+articulated in the 'author contributions' section. This does not alter our
+adherence to PLOS ONE policies on sharing data and materials.
+
+Furthermore, we have documentation that the project is
+officially separate from Google Inc and any IP claims. This documentation can 
+produced upon request.
