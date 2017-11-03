@@ -152,7 +152,7 @@
 
 % Header and Footer with logo
 \usepackage{lastpage,fancyhdr}
-\usepackage[draft]{graphicx}
+\usepackage{graphicx}
 \usepackage{epstopdf}
 \pagestyle{myheadings}
 \pagestyle{fancy}
@@ -193,16 +193,18 @@ Vincent Knight\textsuperscript{2*\Yinyang},
 Martin Jones\textsuperscript{3\ddag},
 Georgios Koutsovoulos\textsuperscript{4\ddag},
 Nikoleta E. Glynatsi\textsuperscript{2\ddag},
-Owen Campbell\textsuperscript{3\ddag},
+Owen Campbell\textsuperscript{5\ddag},
 \\
 \bigskip
-\textbf{1} Affiliation Google Inc., Mountain View, CA, USA
+\textbf{1} Google Inc., Mountain View, CA, USA
 \\
-\textbf{2} Affiliation Cardiff University, School of Mathematics, UK
+\textbf{2} Cardiff University, School of Mathematics, UK
 \\
-\textbf{3} Not affiliated
+\textbf{3} Python for biologist (\url{https://pythonforbiologists.com})
 \\
 \textbf{4} INRA, Université Côte d‘Azur, CNRS, ISA, France
+\\
+\textbf{5} Axelrod-Python Project
 \\
 \bigskip
 
@@ -339,7 +341,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:lookerup}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.7\textwidth]{lookerup.eps}
+    %\includegraphics[width=.7\textwidth]{lookerup.eps}
     \caption{\bf Diagrammatic representation of the Looker up Archetype.}
     \label{fig:lookerup}
 \end{figure}
@@ -372,7 +374,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:gambler}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.7\textwidth]{gambler.eps}
+    %\includegraphics[width=.7\textwidth]{gambler.eps}
     \caption{\bf Diagrammatic representation of the Gambler Archetype.}
     \label{fig:gambler}
 \end{figure}
@@ -429,7 +431,7 @@ Fig~\ref{fig:ann}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=.9\textwidth]{ann.eps}
+    %\includegraphics[width=.9\textwidth]{ann.eps}
     \caption{\bf Diagrammatic representation of the ANN Archetype.}
     \label{fig:ann}
 \end{figure}
@@ -449,7 +451,7 @@ This is illustrated diagrammatically in Fig~\ref{fig:fsm}.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{fsm.eps}
+    %\includegraphics[width=\textwidth]{fsm.eps}
     \caption{\bf Diagrammatic representation of the Finite State Machine Archetype.}
     \label{fig:fsm}
 \end{figure}
@@ -465,7 +467,7 @@ used, this is also an outcome of the training process.
 
 \begin{figure}[!hbtp]
     \centering
-        \includegraphics[width=.5\textwidth]{FSM16.eps}
+    %\includegraphics[width=.5\textwidth]{FSM16.eps}
         \caption{\bf Evolved\_FSM\_16: trained to maximize score in a standard
         tournament}
         \label{fig:fsm16}
@@ -473,7 +475,7 @@ used, this is also an outcome of the training process.
 
 \begin{figure}
         \centering
-        \includegraphics[width=.5\textwidth]{FSM16noise.eps}
+        %\includegraphics[width=.5\textwidth]{FSM16noise.eps}
         \caption{\bf Evolved\_FSM\_16\_Noise\_05: trained to maximize score in a
         noisy tournament}
         \label{fig:fsm16noise}
@@ -493,7 +495,7 @@ cooperating as well as probabilities of the next internal state.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{hmm.eps}
+    %\includegraphics[width=\textwidth]{hmm.eps}
     \caption{\bf Diagrammatic representation of the Hidden Markov Model Archetype.}
     \label{fig:hmm}
 \end{figure}
@@ -611,7 +613,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_scores.eps}
+        %\includegraphics[width=.5\textwidth]{standard_tft_scores.eps}
         \caption{\bf Scores for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_scores}
@@ -619,7 +621,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_ranks.eps}
+        %\includegraphics[width=.5\textwidth]{standard_tft_ranks.eps}
         \caption{\bf Ranks for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_ranks}
@@ -627,7 +629,7 @@ will either draw with mutual cooperation or defect second).
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.5\textwidth]{standard_tft_wins.eps}
+        %\includegraphics[width=.5\textwidth]{standard_tft_wins.eps}
         \caption{\bf Wins for Tit for Tat over
         50000 tournaments.}
         \label{fig:tit_for_tat_wins}
@@ -659,6 +661,10 @@ the second defection, and Omega Tit For Tat \cite{kendall2007iterated}.
 \begin{table}[!hbtp]
         \centering
         \footnotesize
+        \caption{\bf Standard Tournament: Mean score per turn of top 15 strategies
+            (ranked by median over 50000 tournaments).
+        The leaderboard is dominated by the trained strategies (indicated by a
+        $^{*}$).}
 \begin{tabular}{lrrrrrrrrr}
 \toprule
 {} &   mean &    std &    min &     5\% &    25\% &    50\% &    75\% &    95\% &    max \\
@@ -680,10 +686,6 @@ Fool Me Once                  &  2.844 &  0.008 &  2.818 &  2.830 &  2.838 &  2.
 Omega TFT: 3, 8               &  2.841 &  0.011 &  2.800 &  2.822 &  2.833 &  2.841 &  2.849 &  2.859 &  2.882 \\
 \bottomrule
 \end{tabular}
-        \caption{\bf Standard Tournament: Mean score per turn of top 15 strategies
-            (ranked by median over 50000 tournaments).
-        The leaderboard is dominated by the trained strategies (indicated by a
-        $^{*}$).}
         \label{tbl:standard_score}
 \end{table}
 
@@ -691,15 +693,13 @@ For completeness, violin plots showing the distribution of the scores of each
 strategy (again ranked by median score) are shown in
 Fig~\ref{fig:standard_boxplot}.
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{standard_scores_boxplots.eps}
-        \caption{\bf Standard Tournament: Mean score per turn 
-            (strategies ordered by median score over 50000 tournaments).}
-        \label{fig:standard_boxplot}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{standard_scores_boxplots.eps}
+    \caption{\bf Standard Tournament: Mean score per turn 
+        (strategies ordered by median score over 50000 tournaments).}
+    \label{fig:standard_boxplot}
+\end{figure}
 
 Pairwise payoff results are given as a heatmap (Fig~\ref{fig:standard_heatmap})
 which shows that many strategies achieve mutual cooperation (obtaining a score
@@ -709,7 +709,7 @@ attempt to defect.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{standard_scores_heatmap.eps}
+    %\includegraphics[width=\textwidth]{standard_scores_heatmap.eps}
     \caption{\bf Standard Tournament: Mean score per turn of row players against
     column players (ranked by median over 50000 tournaments).}
     \label{fig:standard_heatmap}
@@ -729,7 +729,7 @@ distribution of the number of wins of each strategy is shown.
     \centering
         \caption{\bf Standard Tournament: Number of wins per tournament
         of top 15 strategies (ranked by median wins over
-        50000 tournaments).}
+        50000 tournaments). }
         \label{tbl:standard_wins_top_winners}
 \begin{tabular}{lrrrrrrrrr}
 \toprule
@@ -754,16 +754,14 @@ SolutionB5          &  125.843 &  1.509 &  120 &  123.0 &  125.0 &  126.0 &  127
 \end{tabular}
 \end{table}
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{standard_wins_boxplots.eps}
-        \caption{\bf Standard Tournament: number of wins per tournament (ranked by
-        median over
-        50000 tournaments).}
-        \label{fig:standard_winplot}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{standard_wins_boxplots.eps}
+    \caption{\bf Standard Tournament: number of wins per tournament (ranked by
+    median over
+    50000 tournaments).}
+    \label{fig:standard_winplot}
+\end{figure}
 
 The number of wins of the top strategies of Table~\ref{tbl:standard_score} are
 shown in Table~\ref{tbl:standard_wins}. It is evident that although these
@@ -774,7 +772,8 @@ number of wins is the Evolved FSM 16 strategy that at most won 60
 \begin{table}[!hbtp]
     \caption{\bf Standard Tournament: Number of wins per tournament
         of top 15 strategies (ranked by median score over
-        50000 tournaments).}
+        50000 tournaments)
+        ~$^{*}$ indicates that the strategy was trained.}
         \label{tbl:standard_wins}
     \centering
     \footnotesize
@@ -814,7 +813,8 @@ is 8th.
     \centering
         \caption{\bf Standard Tournament: Rank in each tournament
         of top 15 strategies (ranked by median over
-        50000 tournaments).}
+        50000 tournaments)
+        ~$^{*}$ indicates that the strategy was trained.}
     \footnotesize
 \begin{tabular}{lrrrrrrrrr}
 \toprule
@@ -840,16 +840,14 @@ Omega TFT: 3, 8               &  14.275 &  1.301 &    9 &  12.0 &  13.0 &  15.0 
         \label{tbl:standard_ranks}
 \end{table}
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{standard_ranks_boxplots.eps}
-        \caption{\bf Standard Tournament: rank in each tournament (ranked by
-        median over
-        50000 tournaments).}
-        \label{fig:standard_ranks_boxplot}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{standard_ranks_boxplots.eps}
+    \caption{\bf Standard Tournament: rank in each tournament (ranked by
+    median over
+    50000 tournaments).}
+    \label{fig:standard_ranks_boxplot}
+\end{figure}
 
 Fig~\ref{fig:comparison_cooperation_heatmaps_standard_1}-~\ref{fig:comparison_cooperation_heatmaps_standard_3}
     shows the rate of
@@ -862,7 +860,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_EvolvedLookerUp2_2_2_array.eps}
         \caption{\bf Cooperation rates for EvolvedLookerUp\_2\_2\_2
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_1}
@@ -870,7 +868,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_HMM_5_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_HMM_5_array.eps}
         \caption{\bf Cooperation rates for Evolved\_HMM\_5
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_2}
@@ -878,7 +876,7 @@ first round) but do learn to quickly retaliate.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_array.eps}
         \caption{\bf Cooperation rates for Evolved\_FSM\_16 
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_standard_3}
@@ -929,15 +927,13 @@ winner, it comes at a 6x increased run time over Evolved FSM 16 Noise 05.
 \end{table}
 
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{noisy_scores_boxplots.eps}
-        \caption{\bf Noisy (5\%) Tournament: Mean score per turn
-            (strategies ordered by median score over 50000 tournaments).}
-        \label{fig:noisy_score}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{noisy_scores_boxplots.eps}
+    \caption{\bf Noisy (5\%) Tournament: Mean score per turn
+        (strategies ordered by median score over 50000 tournaments).}
+    \label{fig:noisy_score}
+\end{figure}
 
 Recalling Table~\ref{tbl:standard_score}, the strategies trained in the presence
 of noise are also among the best performers in the absence of noise. As shown in
@@ -947,7 +943,7 @@ matches but again they have a poor total payoff.
 
 \begin{figure}[!hbtp]
     \centering
-    \includegraphics[width=\textwidth]{noisy_scores_heatmap.eps}
+    %\includegraphics[width=\textwidth]{noisy_scores_heatmap.eps}
     \caption{\bf Noisy (5\%) Tournament: Mean score per turn of row players against
     column players (ranked by median over
         50000 tournaments).}
@@ -990,15 +986,13 @@ Predator             &  151.406 &  3.403 &  138 &  146.0 &  149.0 &  151.0 &  15
 \end{table}
 
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{noisy_wins_boxplots.eps}
-        \caption{\bf Noisy (5\%) Tournament: number of wins per tournament
-            (strategies ordered by median score over 50000 tournaments).}
-        \label{fig:noisy_winplot}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{noisy_wins_boxplots.eps}
+    \caption{\bf Noisy (5\%) Tournament: number of wins per tournament
+        (strategies ordered by median score over 50000 tournaments).}
+    \label{fig:noisy_winplot}
+\end{figure}
 
 As shown in Table~\ref{tbl:noisy_wins}, the top ranking strategies win a larger
 number of matches in the presence of noise. For example Spiteful Tit For Tat~\cite{Prison1998}
@@ -1008,7 +1002,8 @@ in one tournament won almost all its matches (167).
     \centering
         \caption{\bf Noisy (5\%) Tournament: Number of wins per tournament
         of top 15 strategies (ranked by median score over
-        50000 tournaments).}
+        50000 tournaments)
+        ~$^{*}$ indicates that the strategy was trained.}
         \footnotesize
 \begin{tabular}{lrrrrrrrrr}
 \toprule
@@ -1047,7 +1042,8 @@ tournaments rank in the top three 95\% of the time.
     \centering
         \caption{\bf Noisy (5\%) Tournament: Rank in each tournament
         of top 15 strategies (ranked by median over
-        50000 tournaments).}
+        50000 tournaments)
+        ~$^{*}$ indicates that the strategy was trained.}
         \footnotesize
 \begin{tabular}{lrrrrrrrrr}
 \toprule
@@ -1073,15 +1069,13 @@ Gradual                          &  15.163 &  3.672 &    4 &  10.000 &  13.0 &  
         \label{tbl:noisy_ranks}
 \end{table}
 
-\begin{landscape}
-    \begin{figure}[!hbtp]
-        \centering
-        \includegraphics[width=\paperwidth]{noisy_ranks_boxplots.eps}
-        \caption{\bf Noisy (5\%) Tournament: rank in each tournament 
-            (strategies ordered by median score over 50000 tournaments).}
-        \label{fig:noisy_ranks_boxplot}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!hbtp]
+    \centering
+    %\includegraphics[width=\paperwidth]{noisy_ranks_boxplots.eps}
+    \caption{\bf Noisy (5\%) Tournament: rank in each tournament 
+        (strategies ordered by median score over 50000 tournaments).}
+    \label{fig:noisy_ranks_boxplot}
+\end{figure}
 
 Fig~\ref{fig:comparison_cooperation_heatmaps_noisy_1}-~\ref{fig:comparison_cooperation_heatmaps_noisy_3} shows the rate of
 cooperation in each round for the top three strategies (in the absence of noise)
@@ -1091,7 +1085,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_DBS_0-75_3_4_3_5_array.eps}
         \caption{\bf Cooperation rates for DBS
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_1}
@@ -1099,7 +1093,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
         `
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_ANN_5_Noise_05_array.eps}
         \caption{\bf Cooperation rates for Evolved\_ANN\_5\_Noise\_05
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_2}
@@ -1107,7 +1101,7 @@ the strategies never defect first and learn to quickly punish poorer strategies.
 
 \begin{figure}[!hbtp]
         \centering
-        \includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.eps}
+        %\includegraphics[width=.7\textwidth]{cooperation_0_0_10000_Evolved_FSM_16_Noise_05_array.eps}
         \caption{\bf Cooperation rates for Evolved\_FSM\_16\_Noise\_05
             (strategies ordered by median score over 10000 tournaments).}
         \label{fig:comparison_cooperation_heatmaps_noisy_3}
@@ -1228,20 +1222,6 @@ A variety of software libraries have been used in this work:
 \end{itemize}
 
 \nolinenumbers
-
-% Either type in your references using
-% \begin{thebibliography}{}
-% \bibitem{}
-% Text
-% \end{thebibliography}
-%
-% or
-%
-% Compile your BiBTeX database using our plos2015.bst
-% style file and paste the contents of your .bbl file
-% here. See http://journals.plos.org/plosone/s/latex for
-% step-by-step instructions.
-%
 
 \begin{thebibliography}{10}
 
@@ -1401,6 +1381,26 @@ Mathieu P, Delahaye JP.
 \newblock 14th International Conference on Autonomous Agents and Multiagent
   Systems (AAMAS 2015). 2015; p. 1665--1666.
 
+\bibitem{turing1950computing}
+Turing AM.
+\newblock Computing machinery and intelligence.
+\newblock Mind. 1950;59(236):433--460.
+
+\bibitem{imran2013overview}
+Imran M, Hashim R, Khalid NEA.
+\newblock An overview of particle swarm optimization variants.
+\newblock Procedia Engineering. 2013;53:491--496.
+
+\bibitem{moriarty1999evolutionary}
+Moriarty DE, Schultz AC, Grefenstette JJ.
+\newblock Evolutionary algorithms for reinforcement learning.
+\newblock J Artif Intell Res(JAIR). 1999;11:241--276.
+
+\bibitem{dojo}
+Harper M, Knight V, Jones M, Koutsovoulos G. Axelrod-Python/axelrod-dojo:
+  V0.0.2; 2017.
+\newblock https://doi.org/10.5281/zenodo.832282.
+
 \bibitem{data}
 Knight V, Harper M. {Data for: Reinforcement Learning Produces Dominant
   Strategies for the Iterated Prisoner's Dilemma}; 2017.
@@ -1432,26 +1432,6 @@ Li J, Kendall G.
 LIFL. PRISON; 2008.
 \newblock http://www.lifl.fr/IPD/ipd.frame.html.
 
-\bibitem{turing1950computing}
-Turing AM.
-\newblock Computing machinery and intelligence.
-\newblock Mind. 1950;59(236):433--460.
-
-\bibitem{imran2013overview}
-Imran M, Hashim R, Khalid NEA.
-\newblock An overview of particle swarm optimization variants.
-\newblock Procedia Engineering. 2013;53:491--496.
-
-\bibitem{moriarty1999evolutionary}
-Moriarty DE, Schultz AC, Grefenstette JJ.
-\newblock Evolutionary algorithms for reinforcement learning.
-\newblock J Artif Intell Res(JAIR). 1999;11:241--276.
-
-\bibitem{dojo}
-Harper M, Knight V, Jones M, Koutsovoulos G. Axelrod-Python/axelrod-dojo:
-  V0.0.2; 2017.
-\newblock https://doi.org/10.5281/zenodo.832282.
-
 \bibitem{axelrodproject2.2}
 project developers TA. Axelrod-Python/Axelrod: v2.2.0; 2016.
 \newblock https://doi.org/10.5281/zenodo.211828.
@@ -1462,6 +1442,16 @@ Ashlock D, Kim EY.
   dilemma agents.
 \newblock In: Foundations of Computational Intelligence (FOCI), 2013 IEEE
   Symposium on. IEEE; 2013. p. 60--67.
+
+\bibitem{wang2015universal}
+Wang Z, Kokubo S, Jusup M, Tanimoto Jun.
+\newblock{Universal scaling for the dilemma strength in evolutionary games}
+\newblock{Physics of life reviews. 2015;(14):1--30.}
+
+\bibitem{tanimoto2007}
+Tanimoto J, Sagara H.
+\newblock {Relationship between dilemma occurrence and the existence of a weakly dominant strategy in a two-player symmetric game.}
+\newblock {BioSystems. 2007 Aug 31;90(1):105--14.}
 
 \bibitem{hunter2007matplotlib}
 Hunter JD.
@@ -1478,6 +1468,7 @@ McKinney W, et~al.
 Walt Svd, Colbert SC, Varoquaux G.
 \newblock The NumPy array: a structure for efficient numerical computation.
 \newblock Computing in Science \& Engineering. 2011;13(2):22--30.
+
 
 \bibitem{Li2011}
 Li J, Hingston P, Member S, Kendall G.
@@ -1590,21 +1581,12 @@ Kuhn S.
 \newblock In: Zalta EN, editor. The Stanford Encyclopedia of Philosophy. spring
   2017 ed. Metaphysics Research Lab, Stanford University; 2017.
 
-\bibitem{wang2015universal}
-Wang Z, Kokubo S, Jusup M, Tanimoto Jun.
-\newblock{Universal scaling for the dilemma strength in evolutionary games}
-\newblock{Physics of life reviews. 2015;(14):1--30.}
-
-\bibitem{tanimoto2007}
-Tanimoto J, Sagara H.
-\newblock {Relationship between dilemma occurrence and the existence of a weakly dominant strategy in a two-player symmetric game.}
-\newblock {BioSystems. 2007 Aug 31;90(1):105--14.}
 
 \end{thebibliography}
 
 \appendix
 
-\section{List of players}\label{app:list_of_players}
+\section{Appendix A: List of players}\label{app:list_of_players}
 
 The players used for this study are from Axelrod version 2.13.0
 \cite{axelrodproject}.
